@@ -15,3 +15,17 @@ explore/do random stuff, slowly update q values as time goes on
 ## In the real World, we have to figure out the parameters!
 - simple tracking system: Reward
 - Basic Q-Learning not meant for complex environment
+
+# Creating a Custom Environment
+- each observation needs 4 valiues if we have 4 actions
+
+# Deep Q Learning (DQN)
+- multilayer deep nn image->(conv layer, conv layer, FC layer, FC layer) many output, regression model
+- Here: input, 2 L, Output
+- barely increase size of q table: quadratic space increase!
+- DOWNSIDE: take a lot longer to train! minutes for q tables, hours for deep q learning!
+- BENEFIT: waaaaay less memory required, so deep Q is pretty cool
+
+### How to?
+- every step, we need to update q value
+- then resample environment, caluclate new q, fit operation
