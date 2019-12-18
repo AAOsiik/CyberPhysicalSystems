@@ -1,0 +1,238 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{13}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Bonasio}{Bonasio}{2018}]%
+        {Trend}
+\bibfield{author}{\bibinfo{person}{Alice Bonasio}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \bibinfo{title}{Report: Growing Wearable Tech Market}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://techtrends.tech/tech-trends/report-growing-wearable-tech-market/}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{B.V.}{B.V.}{[n.d.]}]%
+        {KVEST2}
+\bibfield{author}{\bibinfo{person}{RedFlagGolf B.V.}}
+  \bibinfo{year}{[n.d.]}\natexlab{}.
+\newblock \bibinfo{title}{K-VEST}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{www.redflaggolf.com/du/technologie/k-vest/}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{{Chi}, {Borriello}, {Hunt}, and
+  {Davies}}{{Chi} et~al\mbox{.}}{2005}]%
+        {PervasiveComputing}
+\bibfield{author}{\bibinfo{person}{E.~H. {Chi}}, \bibinfo{person}{G.
+  {Borriello}}, \bibinfo{person}{G. {Hunt}}, {and} \bibinfo{person}{N.
+  {Davies}}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Guest Editors' Introduction: Pervasive Computing in
+  Sports Technologies}.
+\newblock \bibinfo{journal}{\emph{IEEE Pervasive Computing}}
+  \bibinfo{volume}{4}, \bibinfo{number}{3} (\bibinfo{date}{July}
+  \bibinfo{year}{2005}), \bibinfo{pages}{22--25}.
+\newblock
+\showISSN{1536-1268}
+\urldef\tempurl%
+\url{https://doi.org/10.1109/MPRV.2005.58}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Comer}{Comer}{[n.d.]}]%
+        {KVEST}
+\bibfield{author}{\bibinfo{person}{Kandi Comer}.}
+  \bibinfo{year}{[n.d.]}\natexlab{}.
+\newblock \bibinfo{title}{Golf Technology, K-MOTION 3D Swing Analysis}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://kandicomergolf.com/golf-technology}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{{Harle} and {Hopper}}{{Harle} and
+  {Hopper}}{2012}]%
+        {SportSensing}
+\bibfield{author}{\bibinfo{person}{R. {Harle}} {and} \bibinfo{person}{A.
+  {Hopper}}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Sports Sensing: An Olympic Challenge for
+  Computing}.
+\newblock \bibinfo{journal}{\emph{Computer}} \bibinfo{volume}{45},
+  \bibinfo{number}{6} (\bibinfo{date}{June} \bibinfo{year}{2012}),
+  \bibinfo{pages}{98--101}.
+\newblock
+\showISSN{0018-9162}
+\urldef\tempurl%
+\url{https://doi.org/10.1109/MC.2012.216}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Institute}{Institute}{2017}]%
+        {Cruyff}
+\bibfield{author}{\bibinfo{person}{Johann~Cruyff Institute}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \bibinfo{title}{Wearables triumph in the sports industry}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://johancruyffinstitute.com/en/blog-en/wearables-triumph-in-the-sports-industry/}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Jack}{Jack}{2015}]%
+        {PersonalTrainer}
+\bibfield{author}{\bibinfo{person}{Nick Jack}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \bibinfo{title}{Is Personal Training Too Expensive And How To Know
+  When You Need It}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://www.noregretspt.com.au/index.php/resources/blog/43-2014/205-is-personal-training-too-expensive-who-needs-it-the-most}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Ltd.}{Ltd.}{2015}]%
+        {TE}
+\bibfield{author}{\bibinfo{person}{TE~Connectivity Ltd.}}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \bibinfo{title}{The Challenges of Wearable Electronics}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{http://www1.futureelectronics.com/Mailing/etechs/TEConnectivity/etechALERT_TE_ConsumerWearables/Images/WearablesWhitePaper_TE.pdf}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Richter}{Richter}{2018}]%
+        {Statista}
+\bibfield{author}{\bibinfo{person}{Felix Richter}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \bibinfo{title}{The Global Wearables Market Is All About the Wrist}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://www.statista.com/chart/3370/wearable-device-forecast/}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Sawe}{Sawe}{2018}]%
+        {Popularity}
+\bibfield{author}{\bibinfo{person}{Benjamin~Elisha Sawe}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \bibinfo{title}{The Most Popular Sports in the World}.
+\newblock
+\newblock
+\urldef\tempurl%
+\url{https://www.worldatlas.com/articles/what-are-the-most-popular-sports-in-the-world.html}
+\showURL{%
+Retrieved June 2, 2019 from \tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Strohrmann, Harms, Tr\"{o}ster, Hensler, and
+  M\"{u}ller}{Strohrmann et~al\mbox{.}}{2011}]%
+        {InToTheWoods}
+\bibfield{author}{\bibinfo{person}{Christina Strohrmann},
+  \bibinfo{person}{Holger Harms}, \bibinfo{person}{Gerhard Tr\"{o}ster},
+  \bibinfo{person}{Stefanie Hensler}, {and} \bibinfo{person}{Roland
+  M\"{u}ller}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Out of the Lab and into the Woods: Kinematic
+  Analysis in Running Using Wearable Sensors}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 13th International Conference on
+  Ubiquitous Computing}} \emph{(\bibinfo{series}{UbiComp '11})}.
+  \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA},
+  \bibinfo{pages}{119--122}.
+\newblock
+\showISBNx{978-1-4503-0630-0}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/2030112.2030129}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{van~der Westhuizen and van~der Haar}{van~der
+  Westhuizen and van~der Haar}{2018}]%
+        {FootballPitch}
+\bibfield{author}{\bibinfo{person}{Egbert~Johannes van~der Westhuizen} {and}
+  \bibinfo{person}{Dustin~Terence van~der Haar}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Wearable Device-based Framework for Determining
+  Player Effectiveness on the Football Pitch}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 6th International Conference on
+  Information and Education Technology}} \emph{(\bibinfo{series}{ICIET '18})}.
+  \bibinfo{publisher}{ACM}, \bibinfo{address}{New York, NY, USA},
+  \bibinfo{pages}{226--231}.
+\newblock
+\showISBNx{978-1-4503-5359-5}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/3178158.3178203}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Zhao, Salunke, Leavitt, Curtin, Huynh, and
+  Zeagler}{Zhao et~al\mbox{.}}{2016}]%
+        {EArchery}
+\bibfield{author}{\bibinfo{person}{Yiran Zhao}, \bibinfo{person}{Shanu
+  Salunke}, \bibinfo{person}{Alexander Leavitt}, \bibinfo{person}{Kevin
+  Curtin}, \bibinfo{person}{Nghia Huynh}, {and} \bibinfo{person}{Clint
+  Zeagler}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{E-archery: Prototype Wearable for Analyzing Archery
+  Release}. In \bibinfo{booktitle}{\emph{Proceedings of the 2016 ACM
+  International Joint Conference on Pervasive and Ubiquitous Computing:
+  Adjunct}} \emph{(\bibinfo{series}{UbiComp '16})}. \bibinfo{publisher}{ACM},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{908--913}.
+\newblock
+\showISBNx{978-1-4503-4462-3}
+\urldef\tempurl%
+\url{https://doi.org/10.1145/2968219.2968577}
+\showDOI{\tempurl}
+
+
+\end{thebibliography}
