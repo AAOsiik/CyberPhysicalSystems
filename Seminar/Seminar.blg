@@ -1,6 +1,3 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Seminar.aux
-The style file: ACM-Reference-Format.bst
-Database file #1: SeminarReferences.bib
-Warning--empty year in KVEST2
-Warning--empty year in KVEST
-(There were 2 warnings)
+The style file: plainnat.bst
+Database file #1: ./main.bib
