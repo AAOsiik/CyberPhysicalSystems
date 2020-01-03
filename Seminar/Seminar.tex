@@ -28,7 +28,7 @@
 \makeatletter
 \newcommand{\seminar}{Seminar Cyber-Physical Systems (WS 2019/20)}
 \title{\textbf{Prioritized Sweeping Neural DynaQ:\\ Boost Learning by Dreaming}}\let\Title\@title
-\newcommand{\sTitle}{Prioritized Sweeping Neural DynaQ: Boost Learning by Dreaming}
+\newcommand{\sTitle}{Prioritized Sweeping Neural DynaQ}
 \newcommand{\AuthorName}{Alexander Osiik}
 \author{\AuthorName\\
 	\href{mailto:alexander.osiik@student.uni-luebeck.de}{alexander.osiik@student.uni-luebeck.de}\\
@@ -72,26 +72,55 @@
 		\item Aufbau des Experiments
 	\end{itemize}
 
+
 	\section{Reinforcement Learning}
-	\label{sec:rl}
-	see Fig.~\ref{fig:image}	
+%	\label{sec:rl}
+%	see Fig.~\ref{fig:image}	
+
+	\subsection{Markov Decision Problem}
+	A Markov Decision Problem (MDP) is a model for problems, where an agent tries to interact with the environment in such way that the utmost reward is achieved. Specifically, the robot is moving (\textit{transition}) through various \textit{states}, having chosen a specific \textit{action} in each state. Each \textit{reward} is determined by initial state, the action and the following state. 
+	All transitions are not deterministic, but rather probabilistic, where each probability only depends on the current state and the current action, see \textbf{Markov Assumption}. That way there has to be one initial state, but multiple end states are possible.\\
+	The main goal is to find a reward maximizing \textbf{policiy}, by which the agent selects actions where the maximum reward can be expected.\\
+	\begin{itemize}
+		\item $S:$ Set of states $\{s_1,s_2,\dots, s_n\}$
+		\item $A:$ Set of actions $\{a_1,a_2,\dots, a_n\}$ 
+		\item $T: S\times A \times S: $ Transition function, which is the probability of going from state $s$ to state $s'$ via action $a$
+		\item $R: S\times A \times S \rightarrow \mathbb{R}: $ Reward function
+		\item $\Pi:$ Policy, where an optimal action is assigned to each state
+		\item $\gamma \in [0,1]$ Discount factor. This factor determines the degree of exploration for the agent. For $\gamma=0$, the agent will stick to the policy, and explot the current (possibly) optimal policy. For $\gamma=1$, the agent will take into account the next states reward, leading to exploration behaviour. A value <1 is a contraint, which limits the maximal obtainable reward, leading to a reduction of cycles.
+	\end{itemize}
+	The \textbf{V-Values} and \textbf{Q-Values} are certain grading schemes used to solve MDPs. It is the total reward the agent can expect, if it performs the optimal, or maximally benefitting, action $a$ in state $s$, and continues to act optimally.
+	\begin{equation}\label{eq:vvalue}
+		V^*(s) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
+	\end{equation}
+	As the values from equation \ref{eq:vvalue} is hard do compute, a technique called \textbf{Value Iteration} is used. It is used do discretize the equation: 
+	\begin{equation}\label{eq:value-iteration}
+		V^*(s) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
+	\end{equation}
+	where $k$ is the radius from the goal state to the agent. For example, regarding the manhattan norm in a 2D plane, the amount of steps the agent has left until it reaches an end state.\\
+	After that, \textbf{Policy Extraction} is performed. It is the assignment of an action to each state, maximizing the expected total reward.
+	\begin{equation}
+		\Pi^*(s) = \text{arg}\max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
+	\end{equation}
 	\begin{itemize}
 		\item Einführung \textbf{Markov Decision Problem}
 		\item Erklärung der Notation für \textit{state}, \textit{action}, \textit{transition function}, \textit{learning rate}, \textit{discount factor}
 		\item Unterschiede \textit{value iteration}, \textit{policy extraction}, \textit{prioritized sweeping}
 		\item spätestens hier müsste die Bellman Gleichung stehen:
-		$$V^*(s) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]$$
+		
 		\item Erklärung Q-Learning, Vorteile, Nachteile
 		$$Q(s,a) \leftarrow Q(s,a) + \alpha[r + \gamma \max_{a' \in A}Q(s',a')-Q(s,a)]$$
 		\item Exploration/Exploitation TradeOff und Techniken
 		\item \textbf{HIER:} Idee des Papers: künstliche Erweiterung des State space umd RL für vergangenheitsabhängige Probleme anwendbar zu machen.
 	\end{itemize}
 	
+	
 	\section{GALMO}
 	\label{sec:galmo}
 	\begin{itemize}
 		\item Vorstellung der Ergebnisse des Original Paper (GALMO)
 	\end{itemize}
+	
 	
 	\section{Project}
 	\label{sec:project}
@@ -100,6 +129,7 @@
 		\item DQN
 		\item Implementierung GALMO?
 	\end{itemize}
+	
 	
 	\section{Results}
 	\label{sec:results}
