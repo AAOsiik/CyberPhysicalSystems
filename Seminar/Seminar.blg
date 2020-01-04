@@ -1,5 +1,8 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Seminar.aux
 The style file: plainnat.bst
-I found no \citation commands---while reading file Seminar.aux
 Database file #1: ./main.bib
+I was expecting a `,' or a `}'---line 42 of file ./main.bib
+ :  urldate = {2020-01-07} 
+ :                         %date of last access
+I'm skipping whatever remains of this entry
 (There was 1 error message)

@@ -1,8 +1,51 @@
-\begin{thebibliography}{0}
+\begin{thebibliography}{5}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aubin et~al.(2018)Aubin, Khamassi, and Girard]{NeuralDynaQ}
+L.~Aubin, M.~Khamassi, and B.~Girard.
+\newblock Prioritized sweeping neural dynaq with multiple predecessors, and
+  hippocampal replays.
+\newblock In \emph{Living Machines 2018}, LNAI, page TBA, Paris, France, 2018.
+\newblock URL \url{https://hal.archives-ouvertes.fr/hal-01709275}.
+
+\bibitem[Gupta et~al.(2010)Gupta, van~der Meer, Touretzky, and
+  Redish]{GUPTA2010695}
+Anoopum~S. Gupta, Matthijs~A.A. van~der Meer, David~S. Touretzky, and A.~David
+  Redish.
+\newblock Hippocampal replay is not a simple function of experience.
+\newblock \emph{Neuron}, 65\penalty0 (5):\penalty0 695 -- 705, 2010.
+\newblock ISSN 0896-6273.
+\newblock \doi{https://doi.org/10.1016/j.neuron.2010.01.034}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0896627310000607}.
+
+\bibitem[Nakazawa et~al.(2004)Nakazawa, Mchugh, Wilson, and Tonegawa]{Nakazawa}
+Kazu Nakazawa, Thomas Mchugh, Matthew Wilson, and Susumu Tonegawa.
+\newblock Nmda receptors, place cells and hippocampal spatial memory.
+\newblock \emph{Nature reviews. Neuroscience}, 5:\penalty0 361--72, 06 2004.
+\newblock \doi{10.1038/nrn1385}.
+
+\bibitem[O'Keefe and Dostrovsky(1971)]{OKEEFE1971171}
+J.~O'Keefe and J.~Dostrovsky.
+\newblock The hippocampus as a spatial map. preliminary evidence from unit
+  activity in the freely-moving rat.
+\newblock \emph{Brain Research}, 34\penalty0 (1):\penalty0 171 -- 175, 1971.
+\newblock ISSN 0006-8993.
+\newblock \doi{https://doi.org/10.1016/0006-8993(71)90358-1}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/0006899371903581}.
+
+\bibitem[Sutton(1991)]{Dyna}
+Richard~S. Sutton.
+\newblock Dyna, an integrated architecture for learning, planning, and
+  reacting.
+\newblock \emph{SIGART Bull.}, 2\penalty0 (4):\penalty0 160–163, July 1991.
+\newblock ISSN 0163-5719.
+\newblock \doi{10.1145/122344.122377}.
+\newblock URL \url{https://doi.org/10.1145/122344.122377}.
 
 \end{thebibliography}

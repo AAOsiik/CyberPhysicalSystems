@@ -64,15 +64,30 @@
 %	Swarm robotics~\citep{brambilla13} bla bla bla.
 %	\citet{hamann18} describes bla bla bla
 %	see Sec.~\ref{sec:results}
-	\begin{itemize}
-		\item Hier beschreiben welche Hintergründe und Analogien aus der Biologie Reinforcement Learning hat
-		\item State of the Art, medizinische Aspekte, Forschungshintergründe
-		\item Was Zielsetzung im Original-Paper, Übertragen der \textbf{hippocambal replays} auf RL.\\
+\par Hier beschreiben welche Hintergründe und Analogien aus der Biologie Reinforcement Learning hat
+		
+\par State of the Art, medizinische Aspekte, Forschungshintergründe
+\par Was Zielsetzung im Original-Paper, Übertragen der \textbf{hippocambal replays} auf RL.\\
 		``... replay refers to the re-occurrence of a sequence of cell activations that also occurred during activity, but the replay has a much faster time scale.''
-		\item Aufbau des Experiments
-	\end{itemize}
+		
+		\par Main aspect of the work was to convert the reactivation of so called place cells. These cells are located in the hippocampus and are responsive to the current position of the animal within the environment. \cite{OKEEFE1971171} postulated that the hippocampus functions as a spatial map, where single hippocampal neurons increased their firing rate whenever a rat traversed a particular region of an environment, as concluded by \cite{Nakazawa}.
+		
+		\par \cite{NeuralDynaQ} set up a experimental task, which was derived and slightly modified from \cite{GUPTA2010695}. The environment consisted of two succesive T-mazes with lateral return corridors and rewarding food pellets on each side, see Figure \ref{fig:setup}. A rat was placed in the maze, and trained to make a decision at position T2, with the objective of getting the reward on the left or right hand side based on the task pursued at the moment. The tasks were 1) always turn right, 2) always turn left, 3) alternate between left and right. At reward locations, the rat's hippocampal replays were analyzed. It has been shown that the rats reflected recently experienced trajectories, and, in addition, also those that occurred a longer time ago.
+		
+		\begin{figure}[t]
+			\centering
+			\includegraphics[angle=0,width=0.5\textwidth]{./figs/setup.png}
+			\caption{\label{fig:setup}The  maze  is  discretized  into32  positions  (squares).  The  agent  can  use  4  discrete  actions  (N,E,S,W).  The  inputstateφis the concatenation of 32 location components and two reward memory com-ponents. The location part ofφrepresents the activation of 32 place cells co-locatedwith  the  maze  discrete  positions,  their  activityactdepends  on  the  Manhattan  dis-tance  of  the  agent  to  the  cell. \citep{NeuralDynaQ}}
+		\end{figure}
+		
+		\par To mathematiacally model and explain the hippocampal replay phenomenon, algorithms from the Dyna family of algorithms were used. Dyna is an integrated architecture for learning, planning and reacting, proposed by \cite{Dyna}, see Figure~\ref{fig:dyna}. The Dyna idea is a trivial approach that planning is equivalent to trying out multiple things in the own mind, under the condition that a certain internal model of the problem exists. Ultimately, this architecture was chosen because it is designed to make the best possible use of alternation between on-line and off-line learning phases \citep{Dyna}. \cite{NeuralDynaQ} concentrated on the Q-learning version of Dyna (Dyna-Q) extended by prioritized sweeping, by that optimizing the choice of reactivated cells, which will be discussed further in the next section.
 
 
+	\begin{figure}[h]
+		\centering
+		\includegraphics[angle=0,width=0.7\textwidth]{./figs/Dyna-Figure1.png}
+		\caption{\label{fig:dyna}The Problem Formulation Used in Dyna. The agent's objective is to maximize the total reward it receives over time. \citep{Dyna}}
+	\end{figure}
 	\section{Reinforcement Learning}
 %	\label{sec:rl}
 %	see Fig.~\ref{fig:image}	
@@ -87,7 +102,7 @@
 		\item $T: S\times A \times S: $ Transition function, which is the probability of going from state $s$ to state $s'$ via action $a$
 		\item $R: S\times A \times S \rightarrow \mathbb{R}: $ Reward function
 		\item $\Pi:$ Policy, where an optimal action is assigned to each state
-		\item $\gamma \in [0,1]$ Discount factor. This factor determines the degree of exploration for the agent. For $\gamma=0$, the agent will stick to the policy, and explot the current (possibly) optimal policy. For $\gamma=1$, the agent will take into account the next states reward, leading to exploration behaviour. A value <1 is a contraint, which limits the maximal obtainable reward, leading to a reduction of cycles.
+		\item $\gamma \in [0,1]:$ Discount factor. This factor determines the degree of exploration for the agent. For $\gamma=0$, the agent will stick to the policy, and explot the current (possibly) optimal policy. For $\gamma=1$, the agent will take into account the next states reward, leading to exploration behaviour. A value <1 is a contraint, which limits the maximal obtainable reward, leading to a reduction of cycles.
 	\end{itemize}
 	The \textbf{V-Values} and \textbf{Q-Values} are certain grading schemes used to solve MDPs. It is the total reward the agent can expect, if it performs the optimal, or maximally benefitting, action $a$ in state $s$, and continues to act optimally.
 	\begin{equation}\label{eq:vvalue}
@@ -138,7 +153,7 @@
 	\begin{figure}[t]
 		\centering
 		\includegraphics[angle=0,width=0.7\textwidth]{./figs/RL_ANN.png}
-		\caption{\label{fig:image}Basic Q-Learning.}
+		\caption{\label{fig:qlearn}Basic Q-Learning.}
 	\end{figure}
 	
 	
