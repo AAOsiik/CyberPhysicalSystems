@@ -1,7 +1,9 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Reinforcement Learning}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Markov Decision Problem}{section.2}% 3
-\BOOKMARK [1][-]{section.3}{GALMO}{}% 4
-\BOOKMARK [1][-]{section.4}{Project}{}% 5
-\BOOKMARK [1][-]{section.5}{Results}{}% 6
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 7
+\BOOKMARK [2][-]{subsection.1.1}{Experimental setup}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Reinforcement Learning}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Markov Decision Problem}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Q-Learning}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{GALMO}{}% 6
+\BOOKMARK [1][-]{section.4}{Project}{}% 7
+\BOOKMARK [1][-]{section.5}{Results}{}% 8
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 9

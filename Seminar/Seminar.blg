@@ -5,4 +5,9 @@ I was expecting a `,' or a `}'---line 42 of file ./main.bib
  :  urldate = {2020-01-07} 
  :                         %date of last access
 I'm skipping whatever remains of this entry
-(There was 1 error message)
+I was expecting a `,' or a `}'---line 150 of file ./main.bib
+ :  urldate = {2020-01-07} 
+ :                         %date of last access
+I'm skipping whatever remains of this entry
+Warning--empty booktitle in HatemRL
+(There were 2 error messages)

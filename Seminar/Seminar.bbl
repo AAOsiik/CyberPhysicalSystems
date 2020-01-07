@@ -1,4 +1,4 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -12,6 +12,14 @@ L.~Aubin, M.~Khamassi, and B.~Girard.
 \newblock In \emph{Living Machines 2018}, LNAI, page TBA, Paris, France, 2018.
 \newblock URL \url{https://hal.archives-ouvertes.fr/hal-01709275}.
 
+\bibitem[Cazé et~al.(2018)Cazé, Khamassi, Aubin, and
+  Girard]{HippocampalReplaysGirard}
+Romain Cazé, Mehdi Khamassi, Lise Aubin, and Benoît Girard.
+\newblock Hippocampal replays under the scrutiny of reinforcement learning
+  models.
+\newblock \emph{Journal of Neurophysiology}, 120, 10 2018.
+\newblock \doi{10.1152/jn.00145.2018}.
+
 \bibitem[Gupta et~al.(2010)Gupta, van~der Meer, Touretzky, and
   Redish]{GUPTA2010695}
 Anoopum~S. Gupta, Matthijs~A.A. van~der Meer, David~S. Touretzky, and A.~David
@@ -22,6 +30,25 @@ Anoopum~S. Gupta, Matthijs~A.A. van~der Meer, David~S. Touretzky, and A.~David
 \newblock \doi{https://doi.org/10.1016/j.neuron.2010.01.034}.
 \newblock URL
   \url{http://www.sciencedirect.com/science/article/pii/S0896627310000607}.
+
+\bibitem[Hatem and Abdessemed(2009)]{HatemRL}
+Mezaache Hatem and Foudil Abdessemed.
+\newblock Simulation of the navigation of a mobile robot by the qlearning using
+  artificial neuron networks.
+\newblock volume 547, 01 2009.
+
+\bibitem[Klein and Abbeel(2019)]{Lecture}
+Dan Klein and Pieter Abbeel.
+\newblock Uc berkeley cs188 intro to ai, 2019.
+\newblock URL \url{http://ai.berkeley.edu/}.
+
+\bibitem[Maguire et~al.(2006)Maguire, Nannery, and Spiers]{Maguire}
+Eleanor Maguire, Rory Nannery, and Hugo Spiers.
+\newblock Navigation around london by a taxi driver with bilateral hippocampal
+  lesions.
+\newblock \emph{Brain : a journal of neurology}, 129:\penalty0 2894--907, 12
+  2006.
+\newblock \doi{10.1093/brain/awl286}.
 
 \bibitem[Nakazawa et~al.(2004)Nakazawa, Mchugh, Wilson, and Tonegawa]{Nakazawa}
 Kazu Nakazawa, Thomas Mchugh, Matthew Wilson, and Susumu Tonegawa.
