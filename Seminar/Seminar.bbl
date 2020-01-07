@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -37,6 +37,13 @@ Mezaache Hatem and Foudil Abdessemed.
   artificial neuron networks.
 \newblock volume 547, 01 2009.
 
+\bibitem[Jacobs et~al.(1991)Jacobs, Jordan, Nowlan, and
+  Hinton]{AdaptiveMixture}
+Robert Jacobs, Michael Jordan, Steven Nowlan, and Geoffrey Hinton.
+\newblock Adaptive mixture of local expert.
+\newblock \emph{Neural Computation}, 3:\penalty0 78--88, 02 1991.
+\newblock \doi{10.1162/neco.1991.3.1.79}.
+
 \bibitem[Klein and Abbeel(2019)]{Lecture}
 Dan Klein and Pieter Abbeel.
 \newblock Uc berkeley cs188 intro to ai, 2019.
@@ -49,6 +56,12 @@ Eleanor Maguire, Rory Nannery, and Hugo Spiers.
 \newblock \emph{Brain : a journal of neurology}, 129:\penalty0 2894--907, 12
   2006.
 \newblock \doi{10.1093/brain/awl286}.
+
+\bibitem[Moore and Atkeson(1993)]{Moore93}
+Andrew~W. Moore and Christopher~G. Atkeson.
+\newblock Prioritized sweeping: Reinforcement learning with less data and less
+  time.
+\newblock In \emph{Machine Learning}, pages 103--130, 1993.
 
 \bibitem[Nakazawa et~al.(2004)Nakazawa, Mchugh, Wilson, and Tonegawa]{Nakazawa}
 Kazu Nakazawa, Thomas Mchugh, Matthew Wilson, and Susumu Tonegawa.
@@ -74,5 +87,11 @@ Richard~S. Sutton.
 \newblock ISSN 0163-5719.
 \newblock \doi{10.1145/122344.122377}.
 \newblock URL \url{https://doi.org/10.1145/122344.122377}.
+
+\bibitem[Sutton and Barto(2018)]{Sutton1998}
+Richard~S. Sutton and Andrew~G. Barto.
+\newblock \emph{Reinforcement Learning: An Introduction}.
+\newblock The MIT Press, second edition, 2018.
+\newblock URL \url{http://incompleteideas.net/book/the-book-2nd.html}.
 
 \end{thebibliography}

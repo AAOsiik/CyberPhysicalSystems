@@ -5,7 +5,11 @@
 \usepackage{amsmath,amssymb}
 \usepackage{alltt}
 \usepackage{natbib} % please use \citep and \citet instead of \cite
-
+\usepackage{tikz}
+\usetikzlibrary{positioning,automata}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.arrows}
+\usepackage{array}
 \usepackage{hyperref}
 \usepackage{xcolor}
 \definecolor{dark-red}{rgb}{0.4,0.15,0.15}
@@ -33,7 +37,7 @@
 \author{\AuthorName\\
 	\href{mailto:alexander.osiik@student.uni-luebeck.de}{alexander.osiik@student.uni-luebeck.de}\\
 	\small \seminar\\
-%	\small Service Robotics Group\\
+	%    \small Service Robotics Group\\
 	\small Institute of Computer Engineering, University of L\"ubeck\\
 }\let\Author\@author
 \makeatother
@@ -61,40 +65,41 @@
 	
 	\section{Introduction}
 	\label{sec:introduction}
-%	Swarm robotics~\citep{brambilla13} bla bla bla.
-%	\citet{hamann18} describes bla bla bla
-%	see Sec.~\ref{sec:results}
-\par The hippocampus is the main memory of our brain and the switch point between short-term and long-term memory. \citet{OKEEFE1971171} observed in several rat experiments that if there is a disturbance in this area, no new information can be stored in the brain. Regarding animals, the hippocampus is known to be important for navigation since the discovery of place cells, which signal the current allocentric location of the animal in the environment \citep{Maguire}. Interaction within the environment leads to activation these place cells. They are engaged during the consolidation of spatial memories. However, it has been observed that these activations also occur during rest or sleep, at a significally faster pace. This reactivation can be seen as a reprocessing of the experience gained during the day, something that is usually the case when dreaming \citep{HippocampalReplaysGirard}.
-
-\par \citet{NeuralDynaQ} presented an approach to convert the reactivation of the hippocamus' place cells into a reinforcement learning model.  \cite{OKEEFE1971171} postulated that the hippocampus functions as a spatial map, where single hippocampal neurons increased their firing rate whenever a rat traversed a particular region of an environment, as concluded by \cite{Nakazawa}.
-		
-\subsection{Experimental setup}
-\par \cite{NeuralDynaQ} set up a experimental task, which was derived and slightly modified from \cite{GUPTA2010695}. The environment consisted of two succesive T-mazes with lateral return corridors and rewarding food pellets on each side, see Figure \ref{fig:setup}. A rat was placed in the maze, and trained to make a decision at position T2, with the objective of getting the reward on the left or right hand side based on the task pursued at the moment. The tasks were 1) always turn right, 2) always turn left, 3) alternate between left and right. At reward locations, the rat's hippocampal replays were analyzed. It has been shown that the rats reflected recently experienced trajectories, and, in addition, also those that occurred a longer time ago.
-		
-\begin{figure}[t]
-	\centering
-	\includegraphics[angle=0,width=0.5\textwidth]{./figs/setup.png}
-	\caption{\label{fig:setup}Discretized experimental setup. The agent has to make a decision at points T1 and T2, in which the dicision at T2 leads to one of the rewarding sites. \citep{NeuralDynaQ}}
-\end{figure}
-		
-\par To mathematiacally model and explain the hippocampal replay phenomenon, algorithms from the Dyna family of algorithms were used. Dyna is an integrated architecture for learning, planning and reacting, proposed by \cite{Dyna}, see Figure~\ref{fig:dyna}. The Dyna idea is a trivial approach that planning is equivalent to trying out multiple things in the own mind, under the condition that a certain internal model of the problem exists. Ultimately, this architecture was chosen because it is designed to make the best possible use of alternation between on-line and off-line learning phases \citep{Dyna}. \cite{NeuralDynaQ} concentrated on the Q-learning version of Dyna (Dyna-Q) extended by prioritized sweeping, by that optimizing the choice of reactivated cells.
-
-
-	\begin{figure}[h]
+	%    Swarm robotics~\citep{brambilla13} bla bla bla.
+	%    \citet{hamann18} describes bla bla bla
+	%    see Sec.~\ref{sec:results}
+	\par The hippocampus is the main memory of our brain and the switch point between short-term and long-term memory. \citet{OKEEFE1971171} observed in several rat experiments that if there is a disturbance in this area, no new information can be stored in the brain. Regarding animals, the hippocampus is known to be important for navigation since the discovery of place cells, which signal the current allocentric location of the animal in the environment \citep{Maguire}. Interaction within the environment leads to activation of these place cells. They are engaged during the consolidation of spatial memories. However, it has been observed that these activations also occur during rest or sleep, at a significantly faster pace. This reactivation can be seen as a reprocessing of the experience gained during the day, something that is usually the case when dreaming \citep{HippocampalReplaysGirard}.
+	
+	\par \citet{NeuralDynaQ} presented an approach to convert the reactivation of the hippocampus' place cells into a reinforcement learning model.  \cite{OKEEFE1971171} postulated that the hippocampus functions as a spatial map, where single hippocampal neurons increased their firing rate whenever a rat traversed a particular region of an environment, as concluded by \cite{Nakazawa}.
+	
+	\subsection{Experimental setup}
+	\par \cite{NeuralDynaQ} set up an experimental task, which was derived and slightly modified from \cite{GUPTA2010695}. The environment consisted of two successive T-mazes with lateral return corridors and rewarding food pellets on each side, see Figure \ref{fig:setup}. A rat was placed in the maze and trained to decide at position T2, intending to get the reward on the left or right-hand side based on the task pursued at the moment. The tasks were 1) always turn right, 2) always turn left, 3) alternate between left and right. At reward locations, the rat's hippocampal replays were analyzed. It has been shown that the rats reflected recently experienced trajectories, and also those that occurred a long time ago.
+	
+	\begin{figure}[t]
+		\centering
+		\includegraphics[angle=0,width=0.45\textwidth]{./figs/setup.png}
+		\caption{\label{fig:setup}Discretized experimental setup. The agent has to make a decision at points T1 and T2, in which the dicision at T2 leads to one of the rewarding sites. \citep{NeuralDynaQ}}
+	\end{figure}
+	
+	\par To mathematically model and explain the hippocampal replay phenomenon, algorithms from the Dyna family of algorithms were used. Dyna is an integrated architecture for learning, planning and reacting, proposed by \cite{Dyna}, see Figure~\ref{fig:dyna}. The Dyna idea is a trivial approach that planning is equivalent to trying out multiple things in the own mind, under the condition that a certain internal model of the problem exists. Ultimately, this architecture was chosen because it is designed to make the best possible use of alternation between on-line and off-line learning phases \citep{Dyna}. \cite{NeuralDynaQ} concentrated on the Q-learning version of Dyna (Dyna-Q) extended by prioritized sweeping, by that optimizing the choice of reactivated cells.
+	
+	
+	\begin{figure}[b]
 		\centering
 		\includegraphics[angle=0,width=0.7\textwidth]{./figs/Dyna-Figure1.png}
 		\caption{\label{fig:dyna}The Problem Formulation Used in Dyna. The agent's objective is to maximize the total reward it receives over time. \citep{Dyna}}
 	\end{figure}
-\section{Reinforcement Learning}
-To further understand the underlying methods it is important to know the general mathematical rules and machine learning approaches. In the following, the terminology aswell as mathematical background of the research subject is briefly summarized and explained. 
-%	\label{sec:rl}
-%	see Fig.~\ref{fig:image}	
-
-\subsection{Markov Decision Problem}
-	A Markov Decision Problem (MDP) is a model for problems, where an agent tries to interact with the environment in such way that the utmost reward is achieved. Specifically, the robot is moving (\textit{transition}) through various \textit{states}, having chosen a specific \textit{action} in each state. Each \textit{reward} is determined by initial state, the action and the following state. 
-	All transitions are not deterministic, but rather probabilistic, where each probability only depends on the current state and the current action. This memoryless property of stochastic processes is refered to as \textbf{Markov condition}. That way there has to be one initial state, but multiple end states are possible.\\
+	\newpage
+	\section{Reinforcement Learning}
+	To further understand the underlying methods it is important to know the general mathematical rules and machine learning approaches. In the following, the terminology aswell as mathematical background of the research subject is briefly summarized and explained. 
+	%    \label{sec:rl}
+	%    see Fig.~\ref{fig:image}    
+	
+	\subsection{Markov Decision Problem}
+	A Markov Decision Problem (MDP) is a model for problems, where an agent tries to interact with the environment in such way that the utmost reward is achieved. Specifically, the robot is moving (\textit{transition}) through various \textit{states}, having chosen a specific \textit{action} in each state. Each \textit{reward} is determined by the initial state, the action, and the following state. 
+	All transitions are not deterministic, but rather probabilistic, where each probability only depends on the current state and the current action. This memoryless property of stochastic processes is referred to as \textbf{Markov condition}. That way there has to be one initial state, but multiple end states are possible.\\
 	The main goal is to find a reward maximizing \textbf{policy}, by which the agent selects actions where the maximum reward can be expected. This policy is an optimal plan, or sequence of actions, from start to a goal \citep{Lecture}.
-	\par A markov decision process consists of
+	\par A Markov decision process consists of
 	\begin{itemize}
 		\item Set of states $S:$ $\{s_1,s_2,\dots, s_n\}$
 		\item Set of actions $A:$  $\{a_1,a_2,\dots, a_n\}$ 
@@ -104,60 +109,103 @@ To further understand the underlying methods it is important to know the general
 	The main goal is to find an optimal policy $\Pi$ and exploration factor $\gamma$, where
 	\begin{itemize}
 		\item $\Pi$ is the policy, where an optimal action is assigned to each state
-		\item $\gamma \in [0,1]$ is the discount factor. This factor determines the degree of exploration for the agent. For $\gamma=0$, the agent will stick to the policy, and explot the current (possibly) optimal policy. For $\gamma=1$, the agent will take into account the next states reward, leading to exploration behaviour. A value <1 is a contraint, which limits the maximal obtainable reward, leading to a reduction of cycles.
+		\item $\gamma \in [0,1]$ is the discount factor. This factor determines the degree of exploration for the agent. For $\gamma=0$, the agent will stick to the policy, and exploit the current (possibly) optimal policy. For $\gamma=1$, the agent will take into account the next states' reward, leading to exploration behavior. A value <1 is a constraint, which limits the maximally obtainable reward, leading to a reduction of cycles.
 	\end{itemize}
 	The \textbf{V-values} and \textbf{Q-values} are certain grading schemes used To solve MDPs. The values are the total reward the agent can expect if it performs the optimal, or maximally benefitting, action $a$ in state $s$, and continues to act optimally thereafter:
 	\begin{equation}\label{eq:vvalue}
-		V^*(s) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
+	V^*(s) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
 	\end{equation}
 	As the values from equation \ref{eq:vvalue} are hard do compute, a technique called \textbf{value iteration} is used. It is used do discretize the equation: 
 	\begin{equation}\label{eq:value-iteration}
-		V^*(s) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
+	V^*(s) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
 	\end{equation}
 	where $k$ is the radius from the goal state to the agent. For example, regarding the manhattan norm in a 2D plane, the amount of steps the agent has left until it reaches an end state.\\
 	After that, \textbf{policy extraction} is performed. It is the assignment of an action to each state, maximizing the expected total reward:
 	\begin{equation}
-		\Pi^*(s) = \text{arg}\max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
+	\Pi^*(s) = \text{arg}\max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
 	\end{equation}
 	\begin{figure}[t]
 		\centering
 		\includegraphics[angle=0,width=0.7\textwidth]{./figs/RL_ANN.png}
 		\caption{\label{fig:qlearn}The structure of reinforcement learning based on an Artificial Neural Network \citep{HatemRL}}
 	\end{figure}
-\subsection{Q-Learning}
-Q-Learning is a model-free reinforcement learning algorithm which converges to optimal policy even if if the performed actions are suboptimal \citep{Lecture}. The letter \textbf{Q} stands for \textbf{quality} of a certain action in a given state, as the values represent the maximum discounted future reward when action $a$ in state $s$ is performed. Q-values are calculated similar to the value iteration in Equation \ref{eq:value-iteration}:
+	\subsection{Q-Learning}\label{sec:qlearn}
+	Q-Learning is a model-free reinforcement learning algorithm which converges to optimal policy even if if the performed actions are suboptimal \citep{Lecture}. The letter \textbf{Q} stands for \textbf{quality} of a certain action in a given state, as the values represent the maximum discounted future reward when action $a$ in state $s$ is performed. Q-values are calculated similar to the value iteration in Equation \ref{eq:value-iteration}:
 	\begin{equation}\label{eq:qlearn}
-Q^*(s,a) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
-\end{equation}
-The funcion $Q(s,a)$ can be estimated using Q-Learning, which is a form of \textbf{Temporal Difference Learning} (TD). TD means that the performs an update after every action based on a maximum reward estimate, and not only after receiving the reward.
-\par  Here, value $Q(s,a)$ is iteratively updated using the \textbf{Bellman Equation}: \\\\
+	Q^*(s,a) = \max_{a \in A} \sum_{s' \in S}^{} T(s,a,s')[R(s,a,s')+\gamma V^*(s')]
+	\end{equation}
+	The funcion $Q(s,a)$ can be estimated using Q-Learning, which is a form of \textbf{Temporal Difference Learning} (TD). TD means that the performs an update after every action based on a maximum reward estimate, and not only after receiving the reward.
+	\par  Here, value $Q(s,a)$ is iteratively updated using the \textbf{Bellman Equation}: \\\\
 	\begin{equation}\label{eq:qupdate}
-Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a' \in A}Q(s',a')-Q(s,a)]
-\end{equation}
-The Q-values are represented in a \textbf{Q-table} where each cell represents the highest achievable reward performing the state-action pair $(s\in S, a\in A)$. This makes Q-learning suitable for small environments only, as an increase in states or actions increases the memory consumption quadratically. 
-\par The challenge is to tune the parameters $\alpha , \gamma$ such that the best possible policy is found in minimal time.
-
+	Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a' \in A}Q(s',a')-Q(s,a)]
+	\end{equation}
+	The Q-values are represented in a \textbf{Q-table} where each cell represents the highest achievable reward performing the state-action pair $(s\in S, a\in A)$. This makes Q-learning suitable for small environments only, as an increase in states or actions increases the amount of memory required to save and update that table $\mathcal{O}(n^2)$. The amount of time required to explore each state to create the required Q-table would be incredibly large.
+	\par To counteract the use of large Q table for look-up, neural networks are used in \textbf{Deep Q-learning} (DQN) to approximate the Q-value function, where the state represents the network's input and the Q-values of all actions are it's output.
+	\par The challenge is to tune the parameters $\alpha , \gamma$ such that the best possible policy is found in minimal time.
+	\subsubsection{Prioritized Sweeping}
+	As mentioned in Section \ref{sec:qlearn}, the memory consumption of plain Q-Learning increases signifacantly with the amount of possible states and actions. Regarding large environments, update of each value is extremely inefficient and time consuming.
+	\par This is the idea behind \textit{prioritized sweeping}(PS) proposed by \citet{Moore93}. In PS, a queue is maintained of every state-action pair whose estimated value would have the most significant change. \citep{Sutton1998}. The Q-values are then updated multiple times, without actually performing any action. This is advantageous, since the execution of a movement usually takes more time than the calculations of the simulated actions, significantly shortening learning time.
 	
 	\section{GALMO}
+	\begin{figure}[b]
+		\centering
+		\includegraphics[angle=0,width=0.9\textwidth]{./figs/MultiplePredecessors.png}
+		\caption{\label{fig:predecessors}Example of multiple predecessors in the alternation task. At the last position on the third run (right), the location component of the predecessor state (white mouse) is identical but the memory component is different. \citep{NeuralDynaQ}}
+	\end{figure}
 	\label{sec:galmo}
-	\textbf{TODO}
-	\begin{itemize}
-		\item Brief summary of the proposed algorithm (GALMO)
-		\item Why this algorithm? What are the benefits of dynamic DQN over simple Q-Learn?
-		\item Present results
-	\end{itemize}
-	
+	\citet{NeuralDynaQ} encountered a problem when modelling the experimental environment, namely that under certain circumstances some states may have more than one predecessor, see Figure \ref{fig:predecessors}. This occurs especially during the third task, where reward sides alternate each lap.
+	\par To confront this issue, \citet{NeuralDynaQ} created a growing type of algorithm called \textbf{GALMO}, an abbreviation for \textit{growing algorithm to learn multiple outputs}. This algorithm allows the creation of multiple $N_i$ networks so that multiple outputs can be generated for a single input. Each of the $N_i$ networks is coupled with a gating network $G_i$ deciding which network's output is considered for further calculations, see a schematic example on Figure \ref{fig:example}. The algorithm should also track the statistics of the minimal training errors of each sample to detect outliers. It is assumed that an outlier is caused by an input that should predict multiple outputs. GALMO then creates a new network based on a copy of the most suitable network for this input and trains it once. 
+	\par The second part of the algorithm works as neural network-based Dyna-Q with prioritized sweeping. The rat moves in the maze environment and stores the samples in a priority queue, where the priority is the absolute value of the reward prediction error. At point of reward, replays are simulated given a certain budget, representing the phenomenon of hippocampal replays that occur in real-life situations \citep{OKEEFE1971171}. As expected, the higher prioritized samples are replayed first. Their predecessors are then estimated and placed back into the queue until budget exhaustion.
+	\begin{figure}[t]
+		\centering
+		\begin{tikzpicture} [
+		scale=0.6,  every node/.style={scale=0.6},
+		block/.style    = { rectangle, draw=blue, thick, 
+			fill=green!20, text width=5em, text centered,
+			rounded corners, minimum height=2em },
+		gate/.style    = { rectangle, draw=blue, thick, 
+			fill=blue!20, text width=5em, text centered,
+			rounded corners, minimum height=2em },
+		outss/.style    = {diamond, draw=blue, thick, 
+			fill=red!20, text width=4em, text centered,
+			rounded corners, minimum height=1.5em },
+		line/.style     = { draw, thick, ->, shorten >=2pt },
+		]
+		% Define nodes in a matrix
+		\matrix [column sep=5mm, row sep=10mm] {
+			
+			& & \node [outss] (s) {Selector};  & &\\
+			& \node [block] (n1) {Expert\\ Network\\ $N_1$}; & \node [block] (n2) {Expert\\ Network\\ $N_2$}; & \node [block] (n3) {Expert\\ Network\\ $N_3$}; & \node [gate] (g) {Gating\\ Network\\ $G$};\\
+		};
+		% connect all nodes defined above
+		\begin{scope} [every path/.style=line]
+		\path (n1)        --    (s) ;
+		\path (n2)        --    (s);
+		\path (n3)        --    (s);
+		% Draw the links between gating
+		\path[->,thick,red]
+		([xshift=3mm] g.north west) |- ([yshift=-3mm] s.south west);
+		\path[->,thick,red]
+		([xshift=0mm] g.north) |- ([xshift=0mm] s.south);
+		\path[->,thick,red]
+		([xshift=-3mm] g.north east) |- ([xshift=0mm] s.south east);
+		\path[->,thick,black!80]
+		([yshift=-1mm] s.north) -- ([yshift=5mm] s.north);
+		\end{scope}
+		\end{tikzpicture}
+		\caption{\label{fig:example}A system of expert and gating networks. Each expert as well as gating network is a feedforward network with same amount of inputs and outputs\citep{AdaptiveMixture}. Derived scheme.}
+	\end{figure}
 	
 	\section{Project}
 	\label{sec:project}
 	As part of practical work, a simplified T-maze configuration with a discrete environment similar to the work of \cite{NeuralDynaQ} has been reproduced. The programming language of choice was Python, as it offers many up-to-date machine learning libraries and allows a readable and understandable implementation.
 	\par For the successful completion of task 3 (reward sites alternate) the state space was extended by two components: the left side reward memory (L) and the right side reward memory (R). 
-	As proposed by \citet{NeuralDynaQ}, they take a value 1 if the last reward was obtained on that side, 0.5 if the penultimate reward was obtained on that side and 0 if that side has not been reward during the last 2 runs. Thus Q-Learning is also applicable in situations that actually depend on the past, by this violating the Markov condition.\\
+	As proposed by \citet{NeuralDynaQ}, they take a value 1 if the last reward was obtained on that side, 0.5 if the penultimate reward was obtained on that side and 0 if that side has not been reward during the last 2 runs. 
 	\par \textbf{TODO}
 	\begin{itemize}
 		\item Umsetzung von Q-Learning in Python
 		\item DQN
-		\item Implementierung GALMO? prolly not, fam
+		\item Implementierung GALMO? probably not, fam
 	\end{itemize}
 	
 	
@@ -165,7 +213,7 @@ The Q-values are represented in a \textbf{Q-table} where each cell represents th
 	\label{sec:results}
 	\textbf{TODO}\\
 	Compare own results and GALMO results
-		
+	
 	
 	
 	\section{Conclusion}
