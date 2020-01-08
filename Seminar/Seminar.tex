@@ -2,6 +2,7 @@
 
 %%% packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx}
+\usepackage{subcaption}
 \usepackage{amsmath,amssymb}
 \usepackage{alltt}
 \usepackage{natbib} % please use \citep and \citet instead of \cite
@@ -12,6 +13,9 @@
 \usepackage{array}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+
 \definecolor{dark-red}{rgb}{0.4,0.15,0.15}
 \definecolor{dark-blue}{rgb}{0.15,0.15,0.8}
 \definecolor{medium-blue}{rgb}{0,0,0.5}
@@ -31,7 +35,7 @@
 
 \makeatletter
 \newcommand{\seminar}{Seminar Cyber-Physical Systems (WS 2019/20)}
-\title{\textbf{Prioritized Sweeping Neural DynaQ:\\ Boost Learning by Dreaming}}\let\Title\@title
+\title{\textbf{Prioritized Sweeping Neural DynaQ:\\ Neural Networks over All?}}\let\Title\@title
 \newcommand{\sTitle}{Prioritized Sweeping Neural DynaQ}
 \newcommand{\AuthorName}{Alexander Osiik}
 \author{\AuthorName\\
@@ -57,17 +61,12 @@
 	
 	\begin{abstract}
 		\noindent%
-		Hier beschreiben welche Hintergründe und Analogien aus der Biologie Reinforcement Learning hat.\\
-		State of the Art.\\
-		Was Zielsetzung im Original-Paper war, wie sie erreicht wurde und wie es im Projekt umgesetzt wurde.
+		\textbf{TODO}
 	\end{abstract}
 	
 	
 	\section{Introduction}
 	\label{sec:introduction}
-	%    Swarm robotics~\citep{brambilla13} bla bla bla.
-	%    \citet{hamann18} describes bla bla bla
-	%    see Sec.~\ref{sec:results}
 	\par The hippocampus is the main memory of our brain and the switch point between short-term and long-term memory. \citet{OKEEFE1971171} observed in several rat experiments that if there is a disturbance in this area, no new information can be stored in the brain. Regarding animals, the hippocampus is known to be important for navigation since the discovery of place cells, which signal the current allocentric location of the animal in the environment \citep{Maguire}. Interaction within the environment leads to activation of these place cells. They are engaged during the consolidation of spatial memories. However, it has been observed that these activations also occur during rest or sleep, at a significantly faster pace. This reactivation can be seen as a reprocessing of the experience gained during the day, something that is usually the case when dreaming \citep{HippocampalReplaysGirard}.
 	
 	\par \citet{NeuralDynaQ} presented an approach to convert the reactivation of the hippocampus' place cells into a reinforcement learning model.  \cite{OKEEFE1971171} postulated that the hippocampus functions as a spatial map, where single hippocampal neurons increased their firing rate whenever a rat traversed a particular region of an environment, as concluded by \cite{Nakazawa}.
@@ -196,25 +195,36 @@
 		\caption{\label{fig:example}A system of expert and gating networks. Each expert as well as gating network is a feedforward network with same amount of inputs and outputs\citep{AdaptiveMixture}. Derived scheme.}
 	\end{figure}
 	
-	\section{Project}
+	\section{Project and Results}
 	\label{sec:project}
-	As part of practical work, a simplified T-maze configuration with a discrete environment similar to the work of \cite{NeuralDynaQ} has been reproduced. The programming language of choice was Python, as it offers many up-to-date machine learning libraries and allows a readable and understandable implementation.
-	\par For the successful completion of task 3 (reward sites alternate) the state space was extended by two components: the left side reward memory (L) and the right side reward memory (R). 
-	As proposed by \citet{NeuralDynaQ}, they take a value 1 if the last reward was obtained on that side, 0.5 if the penultimate reward was obtained on that side and 0 if that side has not been reward during the last 2 runs. 
-	\par \textbf{TODO}
-	\begin{itemize}
-		\item Umsetzung von Q-Learning in Python
-		\item DQN
-		\item Implementierung GALMO? probably not, fam
-	\end{itemize}
-	
-	
-	\section{Results}
-	\label{sec:results}
-	\textbf{TODO}\\
-	Compare own results and GALMO results
-	
-	
+	As part of practical work, a simplified T-maze configuration with a discrete environment similar to the work of \cite{NeuralDynaQ} has been reproduced. The programming language of choice was Python, as it offers many up-to-date machine learning libraries and allows a fast and understandable implementation. Helpful tutorials by \citet{harrison.2019} were used for orientation and knowledge acquisition in the present metier. 
+	\par Again, the agent can choose between four actions: North, South, East and West. However, an extension was implemented where the agent can decide to run into the boundary. Although this does not change the position of the agent, it will be detected and punished with a higher penalty than the one for ``successful'' movement.\\
+	\par The environment was modified in such way that the tasks mentioned above can be executed. For task 1) and 2), the food pellet (\textit{reward}) was placed in a rigid position on the left or the right-hand side.  For the successful completion of task 3 (reward sides alternate) the state space was extended by two components: the left side reward memory (L) and the right side reward memory (R), as proposed by \citet{NeuralDynaQ}. They take a value 2 if the last reward was obtained on that side, 1 if the reward was obtained on that side the previous time, and 0 if there was no reward found on that side during the last 2 runs. \\
+	\par A posteriori, comparison of efficiency between the developed environment model with the corresponding Q-learning and the Dyna-Q model with GALMO from \citet{NeuralDynaQ}. The present model is capable of learning every of the given tasks. The performance of task 1) and 2) were nearly identical since the distance to reward sides from starting position is identical left and right, see Figure \ref{fig:task12}. \\
+	Besides, there was a surprising conclusion that the performance of the projects Q-learning implementation and the advanced GALMO by was quite similar as well, as both algorithms only needed about 200 episodes to converge, see Figures \ref{fig:task3},\ref{fig:galmo}.  
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[height=4cm]{./figs/Task1.png}
+			\caption{Performance during Task 1 in the project. Results for Task 2 are nearly identical.}
+			\label{fig:task12}
+		\end{subfigure}\\
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[height=4cm]{./figs/Task3.png}
+			\caption{Performance during Task 3.}
+			\label{fig:task3}
+		\end{subfigure}\\
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[height=4cm]{./figs/QvsDyna2.pdf}
+			\caption{Learning without (left) and with (right) replays \citep{NeuralDynaQ}.}
+			\label{fig:galmo}
+		\end{subfigure}
+		\caption{\textbf{Learning dynamics of the own Q-learning implementation in comparison to GALMO performance}.}
+		\label{fig:tasks}
+	\end{figure}
 	
 	\section{Conclusion}
 	\label{sec:conclusion}
@@ -224,5 +234,7 @@
 	\footnotesize
 	\bibliographystyle{plainnat}
 	\bibliography{./main}
-	
+	\newpage
+	%    \appendix
+	%    \lstinputlisting[language=python, caption={Q-Learning in Python}]{../Code/QLearningOriginalEnv.py}
 \end{document}
