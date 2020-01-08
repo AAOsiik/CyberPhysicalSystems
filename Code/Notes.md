@@ -29,3 +29,6 @@ explore/do random stuff, slowly update q values as time goes on
 ### How to?
 - every step, we need to update q value
 - then resample environment, caluclate new q, fit operation
+
+### Deep Q
+- train on batch of specific size (32 or 64), train on 10.000
