@@ -16,6 +16,7 @@ BOUNDARIES =   [(1, 1), (2, 1), (3, 1), (5, 1), (6, 1), (7, 1),
                 (1, 2), (5, 2), (6, 2), (7, 2),
                 (1, 3), (2, 3), (4, 3), (5, 3), (6, 3), (7, 3),
                 (1, 4), (2, 4), (4, 4), (5, 4), (6, 4), (7, 4)]
+T2_POS = (4, 0)
 
 # Declaring Rewards and Penalties
 MOVE_PENALTY = 2
@@ -34,12 +35,12 @@ COLOR_DICT =    {1: (255, 175, 0),  # BGR Format
                  3: (0, 0, 255)}
 
 # Parameter Tuning
-HM_EPISODES = 500    # how many episodes
+HM_EPISODES = 600    # how many episodes
 LEARNING_RATE = 0.2
 DISCOUNT = 0.95
 EPSILON = 0.1               # setting and decaying works good
 EPSILON_DECAY = 0.99
-SHOW_EVERY = 1
+SHOW_EVERY = 50
 
 
 # Remember: Position of everything is depending on the agent's observation!
@@ -176,109 +177,153 @@ class QFood:
 
 
 # Set the Task
-TASK = 3
-
-# Set the Q table
-if START_Q_TABLE is None:
-    q_table = {}
-    for x1 in range(-SIZE_X+1, SIZE_X):              
-        for y1 in range(-SIZE_Y+1, SIZE_Y):          
-            for x2 in range(-SIZE_X+1, SIZE_X):      
-                for y2 in range(-SIZE_Y+1, SIZE_Y):   
-                    q_table[((x1, y1), (x2, y2))] = [np.random.uniform(-10, 0) for i in range(4)]
-else:
-    with open(START_Q_TABLE, "rb") as f:
-        q_table = pickle.load(f)
-
-
-# RUN
-episode_rewards = []
-tmp_L = 0
-tmp_R = 0
-for episode in range(HM_EPISODES):
-    player = QAgent()
-    player.L = tmp_L
-    player.R = tmp_R
-    food = QFood(TASK, episode)
-
-    if episode % SHOW_EVERY == 0:
-        print(f"on # {episode}, epsilon: {EPSILON}, Memory {(player.L, player.R)}")
-        print(f"{HM_EPISODES} ep mean {np.mean(episode_rewards[-SHOW_EVERY:])}")
-        show = True
+TASK = 1
+N_RUNS = 100
+full_error_avg = [ [] for n in range(N_RUNS)]
+for run in range(N_RUNS):
+    # Set the Q table
+    if START_Q_TABLE is None:
+        q_table = {}
+        for x1 in range(-SIZE_X+1, SIZE_X):              
+            for y1 in range(-SIZE_Y+1, SIZE_Y):          
+                for x2 in range(-SIZE_X+1, SIZE_X):      
+                    for y2 in range(-SIZE_Y+1, SIZE_Y):   
+                        q_table[((x1, y1), (x2, y2))] = [np.random.uniform(-10, 0) for i in range(4)]
     else:
-        show = False
+        with open(START_Q_TABLE, "rb") as f:
+            q_table = pickle.load(f)
 
-    episode_reward = 0
-    for i in range(STEPS_PER_EPISODE):
-        obs = (player-food, (player.L, player.R))
-        if np.random.random() > EPSILON:
-            action = np.argmax(q_table[obs])
+
+    # RUN
+    episode_rewards = []
+    episode_errors = []
+    tmp_L = 0
+    tmp_R = 0
+    for episode in range(HM_EPISODES):
+        player = QAgent()
+        player.L = tmp_L
+        player.R = tmp_R
+        food = QFood(TASK, episode)
+        pos_old = (0,0)
+        decision_made = False
+
+        if episode % SHOW_EVERY == 0:
+            print(f"on # {episode}, epsilon: {EPSILON}, Memory {(player.L, player.R)}")
+            print(f"{HM_EPISODES} ep mean {np.mean(episode_rewards[-SHOW_EVERY:])}")
+            show = True
         else:
-            action = np.random.randint(0, 4)
-        player.action(action)
+            show = False
+
+        episode_reward = 0
+        episode_error = 0
+        for i in range(STEPS_PER_EPISODE):
+            # save old position
+            pos_old = (player.x, player.y)
+            obs = (player-food, (player.L, player.R))
+            if np.random.random() > EPSILON:
+                action = np.argmax(q_table[obs])
+            else:
+                action = np.random.randint(0, 4)
+            player.action(action)
+
+            # Handle the Rewarding
+            if player.x == food.x and player.y == food.y:
+                reward = FOOD_REWARD
+            elif player.collision:
+                player.collision = False
+                reward = -BOUNDARY_PENALTY
+            else:
+                reward = -MOVE_PENALTY
+            
+            # Handle decision Error
+            if not decision_made and pos_old == T2_POS: # if last position was at decision point
+                if TASK == 1 and player.x > T2_POS[0]:
+                    episode_error = 1 # wrong decision
+                if TASK == 2 and player.x < T2_POS[0]:
+                    episode_error = 1 # correct decision
+                if TASK == 3:
+                    if episode%2 == 0:
+                        if player.x > T2_POS[0]:
+                            episode_error = 1
+                    else:
+                        if player.x < T2_POS[0]:
+                            episode_error = 1
+                decision_made = True
 
 
-        # Handle the Rewarding
-        if player.x == food.x and player.y == food.y:
-            reward = FOOD_REWARD
-        elif player.collision:
-            player.collision = False
-            reward = -BOUNDARY_PENALTY
-        else:
-            reward = -MOVE_PENALTY
+            new_obs = (player-food, (player.L, player.R))
+            max_future_q = np.max(q_table[new_obs])
+            current_q = q_table[obs][action]
 
-        new_obs = (player-food, (player.L, player.R))
-        max_future_q = np.max(q_table[new_obs])
-        current_q = q_table[obs][action]
-
-        if reward == FOOD_REWARD:
-            new_q = FOOD_REWARD
-        else:
-            new_q = (1-LEARNING_RATE)*current_q + LEARNING_RATE*(reward + DISCOUNT * max_future_q)
-
-        q_table[obs][action] = new_q
-
-        if show:
-            # Visualize everything
-            env = np.zeros((SIZE_Y, SIZE_X, 3), dtype=np.uint8)
-            env[food.y][food.x] = COLOR_DICT[FOOD]
-            env[player.y][player.x] = COLOR_DICT[PLAYER]
-            for b in BOUNDARIES:
-                env[b[1]][b[0]] = COLOR_DICT[BOUNDARY]
-
-            img = Image.fromarray(env, "RGB")
-            img = img.resize((500, 300))
-            cv2.imshow("", np.array(img))
-            sleep(0.05)
-            # break
             if reward == FOOD_REWARD:
-                if cv2.waitKey(500) & 0xFF == ord("q"):
-                    break
-            else: 
-                if cv2.waitKey(1) & 0xFF == ord("q"):
-                    break
+                new_q = FOOD_REWARD
+            else:
+                new_q = (1-LEARNING_RATE)*current_q + LEARNING_RATE*(reward + DISCOUNT * max_future_q)
 
-        episode_reward += reward
-        if reward == FOOD_REWARD:
-            # Update Memory with reward
-            player.update_memory(task=TASK, ep=episode, success=True)
-            print(f"Success on Episode {episode}")
-            break
-        if i == STEPS_PER_EPISODE-1:
-            # Memory will just be shifted
-            player.update_memory(task=TASK, ep=episode)
-        
-    tmp_L = player.L
-    tmp_R = player.R
-    episode_rewards.append(episode_reward)
-    EPSILON *= EPSILON_DECAY
+            q_table[obs][action] = new_q
 
-moving_avg = np.convolve(episode_rewards, np.ones((SHOW_EVERY, )) / SHOW_EVERY, mode="valid")
+            if False:
+                # Visualize everything
+                env = np.zeros((SIZE_Y, SIZE_X, 3), dtype=np.uint8)
+                env[food.y][food.x] = COLOR_DICT[FOOD]
+                env[player.y][player.x] = COLOR_DICT[PLAYER]
+                for b in BOUNDARIES:
+                    env[b[1]][b[0]] = COLOR_DICT[BOUNDARY]
 
-plt.plot([i for i in range(len(moving_avg))], moving_avg)
-plt.ylabel(f"Reward during {SHOW_EVERY} Step Interval")
+                img = Image.fromarray(env, "RGB")
+                img = img.resize((500, 300))
+                cv2.imshow("", np.array(img))
+                sleep(0.05)
+                # break
+                if reward == FOOD_REWARD:
+                    if cv2.waitKey(500) & 0xFF == ord("q"):
+                        break
+                else: 
+                    if cv2.waitKey(1) & 0xFF == ord("q"):
+                        break
+
+            episode_reward += reward
+            
+            if reward == FOOD_REWARD:
+                # Update Memory with reward
+                player.update_memory(task=TASK, ep=episode, success=True)
+                # print(f"Success on Episode {episode}")
+                break
+            if i == STEPS_PER_EPISODE-1:
+                # Memory will just be shifted
+                player.update_memory(task=TASK, ep=episode)
+                if not decision_made:
+                    episode_error = 1
+            
+        tmp_L = player.L
+        tmp_R = player.R
+        episode_rewards.append(episode_reward)
+        episode_errors.append(episode_error)
+        EPSILON *= EPSILON_DECAY
+
+    moving_avg = np.convolve(episode_rewards, np.ones((SHOW_EVERY, )) / SHOW_EVERY, mode="valid")
+    error_avg = np.convolve(episode_errors, np.ones((SHOW_EVERY, )) / SHOW_EVERY, mode="valid")
+
+    # plt.plot([i for i in range(len(moving_avg))], moving_avg, color='b')
+    # plt.ylabel(f"Reward during {SHOW_EVERY} Step Interval")
+    # plt.xlabel("Number of Episodes")
+    # plt.show()
+
+    # plt.plot([i for i in range(len(error_avg))], error_avg, color='b')
+    # plt.suptitle("Error evaluation at state T2")
+    # plt.ylabel(f"Error during {SHOW_EVERY} Step Interval")
+    # plt.xlabel("Number of Episodes")
+    # plt.show()
+
+    # with open(f"QTable-TASK{TASK}-{int(time.time())}.pickle", "wb") as f:
+    #     pickle.dump(q_table, f)
+    full_error_avg[run] = error_avg
+
+plt.suptitle("Error evaluation at state T2")
+plt.ylabel(f"Error")
 plt.xlabel("Number of Episodes")
+for k in range(len(full_error_avg)):
+    error_avg = full_error_avg[k]
+    plt.plot([i for i in range(len(error_avg))], error_avg, color='#a29ef0')
+plt.plot([i for i in range(len(error_avg))], list(map(lambda x: sum(x)/len(x), zip(*full_error_avg))), color='b')
 plt.show()
-
-with open(f"QTable-TASK{TASK}-{int(time.time())}.pickle", "wb") as f:
-    pickle.dump(q_table, f)
