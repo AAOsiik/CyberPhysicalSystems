@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -30,6 +30,12 @@ Anoopum~S. Gupta, Matthijs~A.A. van~der Meer, David~S. Touretzky, and A.~David
 \newblock \doi{https://doi.org/10.1016/j.neuron.2010.01.034}.
 \newblock URL
   \url{http://www.sciencedirect.com/science/article/pii/S0896627310000607}.
+
+\bibitem[Harrison(2019)]{harrison.2019}
+Harrison.
+\newblock Reinforcement learning tutorial series, 2019.
+\newblock URL
+  \url{https://pythonprogramming.net/q-learning-reinforcement-learning-python-tutorial/}.
 
 \bibitem[Hatem and Abdessemed(2009)]{HatemRL}
 Mezaache Hatem and Foudil Abdessemed.
