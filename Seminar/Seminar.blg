@@ -5,9 +5,18 @@ I was expecting a `,' or a `}'---line 42 of file ./main.bib
  :  urldate = {2020-01-07} 
  :                         %date of last access
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 168 of file ./main.bib
+I was expecting a `,' or a `}'---line 167 of file ./main.bib
  :  urldate = {2020-01-07} 
  :                         %date of last access
 I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 194 of file ./main.bib
+ :  urldate = {2020-01-09} 
+ :                         %date of last access
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 202 of file ./main.bib
+ :  urldate = {2020-01-09} 
+ :                         %date of last access
+I'm skipping whatever remains of this entry
 Warning--empty booktitle in HatemRL
-(There were 2 error messages)
+Warning--empty journal in Atari
+(There were 4 error messages)

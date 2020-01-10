@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -55,6 +55,13 @@ Dan Klein and Pieter Abbeel.
 \newblock Uc berkeley cs188 intro to ai, 2019.
 \newblock URL \url{http://ai.berkeley.edu/}.
 
+\bibitem[Le(2018)]{James2018}
+James Le.
+\newblock The 8 neural network architectures machine learning researchers need
+  to learn, 2018.
+\newblock URL
+  \url{https://www.kdnuggets.com/2018/02/8-neural-network-architectures-machine-learning-researchers-need-learn.html}.
+
 \bibitem[Maguire et~al.(2006)Maguire, Nannery, and Spiers]{Maguire}
 Eleanor Maguire, Rory Nannery, and Hugo Spiers.
 \newblock Navigation around london by a taxi driver with bilateral hippocampal
@@ -62,6 +69,13 @@ Eleanor Maguire, Rory Nannery, and Hugo Spiers.
 \newblock \emph{Brain : a journal of neurology}, 129:\penalty0 2894--907, 12
   2006.
 \newblock \doi{10.1093/brain/awl286}.
+
+\bibitem[Mnih et~al.(2013)Mnih, Kavukcuoglu, Silver, Graves, Antonoglou,
+  Wierstra, and Riedmiller]{Atari}
+Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis
+  Antonoglou, Daan Wierstra, and Martin Riedmiller.
+\newblock Playing atari with deep reinforcement learning.
+\newblock 12 2013.
 
 \bibitem[Moore and Atkeson(1993)]{Moore93}
 Andrew~W. Moore and Christopher~G. Atkeson.
