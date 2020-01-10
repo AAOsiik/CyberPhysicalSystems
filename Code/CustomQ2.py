@@ -1,4 +1,9 @@
-import time                         # Needed to set dynamic q-table filenames
+'''
+Q-Learing for a simple environment.
+Set ``TASK`` variable for Task 1 (reward left), 2 (reward right), 3 (alternating).
+Set ``N_RUNS`` to simulate multiple runs for one task
+author: Alexander Osiik
+'''
 import pickle                       # Save and load q table
 import numpy as np                  # Array types of stuff
 from PIL import Image               #
@@ -34,7 +39,9 @@ COLOR_DICT =    {1: (255, 175, 0),  # BGR Format
                  2: (0, 255, 0),
                  3: (0, 0, 255)}
 
-# Parameter Tuning
+
+
+################ PARAMETER TUNING #############
 HM_EPISODES = 600    # how many episodes
 LEARNING_RATE = 0.2
 DISCOUNT = 0.95
@@ -176,9 +183,11 @@ class QFood:
         return (self.x-other.x, self.y-other.y)
 
 
-# Set the Task
+##############    SET TASK HERE     #################
 TASK = 1
+############## SIMULATE RUNS HERE #################
 N_RUNS = 100
+##################################################
 full_error_avg = [ [] for n in range(N_RUNS)]
 for run in range(N_RUNS):
     # Set the Q table
@@ -262,7 +271,7 @@ for run in range(N_RUNS):
 
             q_table[obs][action] = new_q
 
-            if False:
+            if show:
                 # Visualize everything
                 env = np.zeros((SIZE_Y, SIZE_X, 3), dtype=np.uint8)
                 env[food.y][food.x] = COLOR_DICT[FOOD]
@@ -272,7 +281,7 @@ for run in range(N_RUNS):
 
                 img = Image.fromarray(env, "RGB")
                 img = img.resize((500, 300))
-                cv2.imshow("", np.array(img))
+                cv2.imshow(f"Task {TASK}, Episode {episode}", np.array(img))
                 sleep(0.05)
                 # break
                 if reward == FOOD_REWARD:
@@ -304,6 +313,7 @@ for run in range(N_RUNS):
     moving_avg = np.convolve(episode_rewards, np.ones((SHOW_EVERY, )) / SHOW_EVERY, mode="valid")
     error_avg = np.convolve(episode_errors, np.ones((SHOW_EVERY, )) / SHOW_EVERY, mode="valid")
 
+    ############# UNCOMMENT TO SEE EVOLUTION OF REWARD ##########
     # plt.plot([i for i in range(len(moving_avg))], moving_avg, color='b')
     # plt.ylabel(f"Reward during {SHOW_EVERY} Step Interval")
     # plt.xlabel("Number of Episodes")
@@ -315,10 +325,12 @@ for run in range(N_RUNS):
     # plt.xlabel("Number of Episodes")
     # plt.show()
 
+    ############# UNCOMMENT TO SAVE Q TABLES ###############
     # with open(f"QTable-TASK{TASK}-{int(time.time())}.pickle", "wb") as f:
     #     pickle.dump(q_table, f)
     full_error_avg[run] = error_avg
 
+############ PLOT LEARNING DYNAMICS FOR N_RUNS RUNS + MEAN ###################
 plt.suptitle("Error evaluation at state T2")
 plt.ylabel(f"Error")
 plt.xlabel("Number of Episodes")
