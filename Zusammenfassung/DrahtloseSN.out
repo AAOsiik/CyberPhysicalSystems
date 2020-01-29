@@ -13,3 +13,38 @@
 \BOOKMARK [3][-]{subsubsection.2.1.1}{System \334berblick}{subsection.2.1}% 13
 \BOOKMARK [3][-]{subsubsection.2.1.2}{Fazit}{subsection.2.1}% 14
 \BOOKMARK [2][-]{subsection.2.2}{Brutverhalten}{section.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Architektur}{subsection.2.2}% 16
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Fazit}{subsection.2.2}% 17
+\BOOKMARK [2][-]{subsection.2.3}{Cane Toad \334berwachung}{section.2}% 18
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Architektur}{subsection.2.3}% 19
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Fazit}{subsection.2.3}% 20
+\BOOKMARK [2][-]{subsection.2.4}{Vulkane}{section.2}% 21
+\BOOKMARK [3][-]{subsubsection.2.4.1}{Architektur}{subsection.2.4}% 22
+\BOOKMARK [3][-]{subsubsection.2.4.2}{Fazit}{subsection.2.4}% 23
+\BOOKMARK [2][-]{subsection.2.5}{Gletscher}{section.2}% 24
+\BOOKMARK [3][-]{subsubsection.2.5.1}{Architektur}{subsection.2.5}% 25
+\BOOKMARK [3][-]{subsubsection.2.5.2}{Fazit}{subsection.2.5}% 26
+\BOOKMARK [2][-]{subsection.2.6}{Lokalisierung von Sch\374ssen}{section.2}% 27
+\BOOKMARK [3][-]{subsubsection.2.6.1}{Positionsbestimmung}{subsection.2.6}% 28
+\BOOKMARK [3][-]{subsubsection.2.6.2}{Fazit}{subsection.2.6}% 29
+\BOOKMARK [2][-]{subsection.2.7}{Funktionalit\344t und Herausforderung}{section.2}% 30
+\BOOKMARK [1][-]{section.3}{Hardware}{}% 31
+\BOOKMARK [2][-]{subsection.3.1}{Motes}{section.3}% 32
+\BOOKMARK [2][-]{subsection.3.2}{Prozessor}{section.3}% 33
+\BOOKMARK [2][-]{subsection.3.3}{Kommunikation}{section.3}% 34
+\BOOKMARK [2][-]{subsection.3.4}{Sensoren}{section.3}% 35
+\BOOKMARK [2][-]{subsection.3.5}{Energieversorgung}{section.3}% 36
+\BOOKMARK [3][-]{subsubsection.3.5.1}{Energiegewinnung}{subsection.3.5}% 37
+\BOOKMARK [3][-]{subsubsection.3.5.2}{Energieverbrauch}{subsection.3.5}% 38
+\BOOKMARK [2][-]{subsection.3.6}{Miniaturisierung}{section.3}% 39
+\BOOKMARK [1][-]{section.4}{Betriebssysteme}{}% 40
+\BOOKMARK [2][-]{subsection.4.1}{Nebenl\344ufigkeit}{section.4}% 41
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Speicherverwaltung}{subsection.4.1}% 42
+\BOOKMARK [2][-]{subsection.4.2}{Kommunikation}{section.4}% 43
+\BOOKMARK [2][-]{subsection.4.3}{TinyOS}{section.4}% 44
+\BOOKMARK [2][-]{subsection.4.4}{Events: Freund oder Feind?}{section.4}% 45
+\BOOKMARK [2][-]{subsection.4.5}{OSM, andere}{section.4}% 46
+\BOOKMARK [1][-]{section.5}{Vernetzung von Sensoren}{}% 47
+\BOOKMARK [2][-]{subsection.5.1}{Senken}{section.5}% 48
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Sensor Internet}{subsection.5.1}% 49
+\BOOKMARK [3][-]{subsubsection.5.1.2}{Sensor-Aktor-Netze}{subsection.5.1}% 50
