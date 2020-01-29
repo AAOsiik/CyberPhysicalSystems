@@ -1,0 +1,41 @@
+\begin{thebibliography}{}
+
+\bibitem[Aubin et~al., 2018]{NeuralDynaQ}
+Aubin, L., Khamassi, M., and Girard, B. (2018).
+\newblock Prioritized sweeping neural dynaq with multiple predecessors, and
+  hippocampal replays.
+\newblock In {\em Living Machines 2018}, LNAI, page TBA, Paris, France.
+
+\bibitem[Dishpande, 2016]{Dishpande}
+Dishpande, A. (2016).
+\newblock Categories of machine learning.
+
+\bibitem[Hatem and Abdessemed, 2009]{HatemRL}
+Hatem, M. and Abdessemed, F. (2009).
+\newblock Simulation of the navigation of a mobile robot by the qlearning using
+  artificial neuron networks.
+\newblock volume 547.
+
+\bibitem[Irpan, 2018]{BlogRL}
+Irpan, A. (2018).
+\newblock Deep reinforcement learning doesn't work yet.
+\newblock \url{https://www.alexirpan.com/2018/02/14/rl-hard.html}.
+
+\bibitem[Jacobs et~al., 1991]{AdaptiveMixture}
+Jacobs, R., Jordan, M., Nowlan, S., and Hinton, G. (1991).
+\newblock Adaptive mixture of local expert.
+\newblock {\em Neural Computation}, 3:78--88.
+
+\bibitem[Maguire et~al., 2006]{Maguire}
+Maguire, E., Nannery, R., and Spiers, H. (2006).
+\newblock Navigation around london by a taxi driver with bilateral hippocampal
+  lesions.
+\newblock {\em Brain : a journal of neurology}, 129:2894--907.
+
+\bibitem[O'Keefe and Dostrovsky, 1971]{OKEEFE1971171}
+O'Keefe, J. and Dostrovsky, J. (1971).
+\newblock The hippocampus as a spatial map. preliminary evidence from unit
+  activity in the freely-moving rat.
+\newblock {\em Brain Research}, 34(1):171 -- 175.
+
+\end{thebibliography}

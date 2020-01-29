@@ -47,7 +47,7 @@ LEARNING_RATE = 0.2
 DISCOUNT = 0.95
 EPSILON = 0.1               # setting and decaying works good
 EPSILON_DECAY = 0.99
-SHOW_EVERY = 50
+SHOW_EVERY = 51
 
 
 # Remember: Position of everything is depending on the agent's observation!
@@ -184,9 +184,9 @@ class QFood:
 
 
 ##############    SET TASK HERE     #################
-TASK = 1
+TASK = 3
 ############## SIMULATE RUNS HERE #################
-N_RUNS = 100
+N_RUNS = 1
 ##################################################
 full_error_avg = [ [] for n in range(N_RUNS)]
 for run in range(N_RUNS):

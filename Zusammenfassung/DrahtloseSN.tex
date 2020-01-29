@@ -1,0 +1,203 @@
+\documentclass[a4paper]{article}
+
+%%% packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{ngerman}
+\usepackage{subcaption}
+\usepackage{amsmath,amssymb}
+\usepackage{alltt}
+\usepackage{natbib} % please use \citep and \citet instead of \cite
+\usepackage{tikz}
+\usetikzlibrary{positioning,automata}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.arrows}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+
+\definecolor{dark-red}{rgb}{0.4,0.15,0.15}
+\definecolor{dark-blue}{rgb}{0.15,0.15,0.8}
+\definecolor{medium-blue}{rgb}{0,0,0.5}
+\hypersetup{
+	colorlinks, linkcolor={dark-red},
+	citecolor={dark-blue}, urlcolor={medium-blue}
+}
+
+\graphicspath{{./figs/}}
+\DeclareGraphicsExtensions{.pdf}
+
+\setlength{\parindent}{0mm}
+
+\usepackage{fancyhdr}
+
+%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\newcommand{\seminar}{Drahtlose Sensornetze (SS 2019)}
+\title{\textbf{Drahtlose Sensornetze: Zusammenfassung}}\let\Title\@title
+\newcommand{\sTitle}{Drahtlose Sensornetze}
+\newcommand{\AuthorName}{Alexander Osiik}
+\author{\AuthorName\\
+	\href{mailto:alexander.osiik@student.uni-luebeck.de}{alexander.osiik@student.uni-luebeck.de}\\
+	\small \seminar\\
+	%    \small Service Robotics Group\\
+	\small Institute of Computer Engineering, University of L\"ubeck\\
+}\let\Author\@author
+\makeatother
+
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{\seminar}
+\cfoot{}
+\rfoot{\thepage}
+\lhead{\AuthorName}
+\rhead{\sTitle}
+
+%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	\maketitle
+
+\section{Einführung}
+\subsection{Sensorknoten?}
+\begin{itemize}
+	\item sind autonome Miniaturcomputer
+	\item können: \begin{itemize}
+		\item über Sensoren Wahrnehmen
+		\item über Prozessoren verarbeiten
+		\item über Funk kommunizieren
+	\end{itemize}
+\end{itemize}
+\subsection{Sensornetz?}
+\begin{itemize}
+	\item drahtloses Netz aus vielen Sensorknoten
+	\item weiträumig, langlebig
+	\item erlaubt detaillierte Umweltbeobachtung
+\end{itemize}
+\subsection{Anwendungen?}
+\begin{itemize}
+	\item kann als wissenschaftliches Instrument benutzt werden\begin{itemize}
+		\item Beobachtung von Tieren, Pflanzen, Umwelphänomene
+	\end{itemize}
+	\item Industrie\begin{itemize}
+		\item Kontrolle von Infrastruktureinrichtungen
+		\item Energiemanagement
+	\end{itemize}
+	\item Gesundheitswesen\begin{itemize}
+		\item drahtlose Intensivstationene
+		\item medizinische Forschung
+	\end{itemize}
+	\item Militär / Polizei\begin{itemize}
+		\item Erkennung ``feindlicher'' Aktivitäten
+	\end{itemize}
+\end{itemize}
+\subsection{Vorlesung}
+Es soll Überblick zu Grundlegenden und einigen weiterführenden	Aspekten drahtloser Sensornetze verschaffen werden.\\
+Es ist ein multidiziplinäres Gebiet:
+\begin{itemize}
+	\item Verteilte Systeme
+	\item Informationssysteme
+	\item Computer Systeme
+	\item Eingebettete Systeme
+	\item Ambient Computing
+	\item Verteilte Algorithmen
+\end{itemize}
+\subsection{5G}
+Handy verbindet sich mit Base Station Subsystem, dieses verbindet sich mit dem Network Switching System
+\begin{itemize}
+	\item Enhanced Mobile Breitband: Bisher wurden Frequenzen 1-6Gz genutzt. 5G nutzt nun bis 100GHz
+	\item Ultra reliable und geringe Latenzen
+	\item höhere Datenraten und mehr Frequenzen bei verringertem Energieverbrauch
+\end{itemize}
+\subsubsection{Kanalbündelung und Small Cells}
+Kanalbündelung ist eine Bündelung der genutzten
+Funkfrequenzbereiche eines Netzbetreibers
+(Kanäle in einem Frequenzblock). Dies erlaubt es,
+Datenrate pro Nutzer zu erhöhen.\\
+Small Cell ist die Mobilfunkzelle mit geringer Sendeleistung, dementsprechend kleinem Versorgungsbereich. Der Radius liegt bei etwa 150m, die Sendeleistung ist gering
+\subsubsection{MIMO: Massive Multiple Input Multiple Output}
+Mehrantennensystem, das die zeitliche und räumliche Dimension nutzt.\\
+Durch Space-Time-Coding wird die Zuverlässigkeit und Daterate gestigert (redundante Datenpakete)
+\subsubsection{Versteigerung}
+Man erhöht den Kaufpreis und spekuliert auf das Ausscheiden eines weiteren Anbieters. Falls der Anbieter spät ausscheidet, ist die investierte Summe im Endeffekt um ein vielfaches höher
+\subsection{Betrachtete Netze}
+die hier betrachteten Netze agieren anders, als z.B. 5G
+\begin{itemize}
+	\item Kommunikation geschieht nicht über Handy Netz
+	\item Die Netzstruktur ist dezentral und selbst-organisiert
+	\item hohe Energieeffizienz enorm wichtig für Sensorknoten -> Lange Lebenszeit
+	\item Alles für die wissenschaftliche Messung / Überwachung
+\end{itemize}
+
+\section{Anwendungen}
+Viele durch Sensornetze erreichte Optimierungen für das alltägliche Leben denkbar:
+\begin{itemize}
+	\item Neues Wissen ermöglichen
+	\item Sicherheit erweitern
+	\item Ressourcenmanagement
+	\item Prävention von Fehlverhalten usw.
+	\item[]
+\end{itemize}
+
+\par In folgende Kategorien kann unterteilt werden
+\begin{itemize}
+	\item Wissenschaftliches Instrument (``Macroscope'')
+	\begin{itemize}
+		\item Tiere, Pflanzen, Umweltphänomene
+	\end{itemize}
+	
+	\item Industrielle Anwendungen
+	\begin{itemize}
+		\item Infrastruktureinrichtungen (Pipelines, Maschinen)
+		\item Energiemanagement
+	\end{itemize}
+	
+	\item Landwirtschaft
+	\begin{itemize}
+		\item Pflanzen (Wachstum, Reife, Bodenqualität)
+		\item Tiere (Krankheiten, Fruchtbarkeit, virtuelle Zäune)	
+	\end{itemize}
+	
+	\item Gesundheitswesen (``Body Sensor Networks'')
+	\begin{itemize}
+		\item drahtlose Intensivstation
+		\item Verhaltensauffälligkeiten alter Menschen
+		\item Lifestyle	
+	\end{itemize}
+	
+	\item Militär / Polizei
+	\begin{itemize}
+		\item Erkennung, Klassifizierung, Lokalisierung des ``Bösen''	
+	\end{itemize}
+\end{itemize}
+
+\subsection{Mikroklima}
+Betrachtet wurden Redwoodbäume an der Küste Kaliforniens. Zur Motivation zählte die starke Variation und Dynamik klimatischer Bedingungen im Baum; kleine Wetterfronten bewegen sich entlang des Stamms. 
+\subsubsection{System Überblick}
+\textbf{Aufbau}
+\begin{itemize}
+	\item Sampling alle 5min
+	\item 40-50 Knoten pro Baum
+	\item Multi Hop Netz
+	\item Messung von Temperatur, Feuchte, Sonneneinstrahlung
+\end{itemize}
+\textbf{Knoten:} Mote\\
+\textbf{Netz:} TinyDB Sensor Netzwerk, Verbund über TASK Gateway, Funk über GPRS Modem\\
+
+\subsubsection{Fazit}
+\textbf{Beobachtung:} Trotz geringer Datenrate gab es einen hohen Datenverlust: 60\%  oder mehr\\
+
+Ergebnis waren Zeitreihen pro Knoten, die gesamte Lebensdauer betrug 1,5 Monate. Pro Baum wurden 50 Knoten verwendet. Das Netz war \textbf{multihop}, \textbf{homogen} und \textbf{statisch}
+
+\subsection{Brutverhalten}
+Man möchte ein Modell für Brutpräferenzen des Wellenläufers erstellen. Dabei betrachtet man
+\begin{itemize}
+	\item Nestbelegung
+	\item Klimatische Bedingungen in Höhlen
+	\item Umweltbedingungen
+\end{itemize}	
+Die Beobachtung \textbf{muss} dezent erfolgen, da eine Abschreckung der Vögel blöd wäre.
+	
+\end{document}
