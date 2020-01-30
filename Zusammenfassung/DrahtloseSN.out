@@ -48,3 +48,24 @@
 \BOOKMARK [2][-]{subsection.5.1}{Senken}{section.5}% 48
 \BOOKMARK [3][-]{subsubsection.5.1.1}{Sensor Internet}{subsection.5.1}% 49
 \BOOKMARK [3][-]{subsubsection.5.1.2}{Sensor-Aktor-Netze}{subsection.5.1}% 50
+\BOOKMARK [1][-]{section.6}{Bit\374bertragung und Sicherung}{}% 51
+\BOOKMARK [2][-]{subsection.6.1}{Frequenzbereiche}{section.6}% 52
+\BOOKMARK [2][-]{subsection.6.2}{Modulation}{section.6}% 53
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Probleme}{subsection.6.2}% 54
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Synchronisation}{subsection.6.2}% 55
+\BOOKMARK [2][-]{subsection.6.3}{Sicherung}{section.6}% 56
+\BOOKMARK [3][-]{subsubsection.6.3.1}{Backward Error Control}{subsection.6.3}% 57
+\BOOKMARK [3][-]{subsubsection.6.3.2}{Forward Error Control}{subsection.6.3}% 58
+\BOOKMARK [2][-]{subsection.6.4}{Framing}{section.6}% 59
+\BOOKMARK [2][-]{subsection.6.5}{Link Management}{section.6}% 60
+\BOOKMARK [1][-]{section.7}{Medienzugriff}{}% 61
+\BOOKMARK [2][-]{subsection.7.1}{Probleme}{section.7}% 62
+\BOOKMARK [2][-]{subsection.7.2}{Kollisionen}{section.7}% 63
+\BOOKMARK [2][-]{subsection.7.3}{Verkehrsaufkommen}{section.7}% 64
+\BOOKMARK [2][-]{subsection.7.4}{MAC Einf\374hrung}{section.7}% 65
+\BOOKMARK [2][-]{subsection.7.5}{Carrier Sense Multiple Access/Collision Avoidance}{section.7}% 66
+\BOOKMARK [2][-]{subsection.7.6}{S-MAC}{section.7}% 67
+\BOOKMARK [2][-]{subsection.7.7}{Timeout MAC}{section.7}% 68
+\BOOKMARK [2][-]{subsection.7.8}{B-MAC}{section.7}% 69
+\BOOKMARK [2][-]{subsection.7.9}{IEEE 802.15.4 ``ZigBee''}{section.7}% 70
+\BOOKMARK [3][-]{subsubsection.7.9.1}{Beacon Mode}{subsection.7.9}% 71

@@ -453,9 +453,169 @@ Im allgemeinen unterscheiden sich Netze aus Sensorknoten gerade dadurch. Bei Sen
 
 In WSN werden zudem die Protokollstacks verschmolzen. Dies wird als Hilfsmittel zur Optimierung von Energie- und Ressourcenverbrauch genutzt. Ein \textbf{gezielter Austausch} von Informationen wird somit ermöglicht.
 
+\newpage
+\section{Bitübertragung und Sicherung}
+Bitübertragung stellt die unterste Schicht des \textbf{ISO/OSI Modells} dar. In WSN geschieht die drahtlose Kommunikation meist über Funk: Die Bits werden über Funkwellen übertragen. Es ist wichtig, einige grundlegende Aspekte zu betrachten um sein Verständnis zum Thema Medienzugriff zu festigen.\\
+\subsection{Frequenzbereiche}
+Es gibt unterschiedliche Frequenzbereiche mit unterschiedlichen Eigenschaften, wie \textbf{Durchdringung und Dämpfung}, \textbf{Reflektion}, \textbf{Energieaufwand} etc.\\
+\begin{itemize}
+	\item $<30$kHz: VLF
+	\item $<300$MHz: Koaxial-Kabel
+	\item $300$MHz bis $6G$Hz: Unser Funk Kommunikationsspektrum
+	\item $>300$THz: Licht
+	\item$\implies$ Je größer die Frequenz desto geringer die Reichweite/stärker die Dämpfung
+\end{itemize}
+Die Frequenzbereiche sind bestimmten Anwendungen zugeordnet, wobei die Verwendung üblicherweise lizensiert ist. Für WSN sind die \textbf{lizenzfreien ISM} Bereiche interessant (Industrial, Scientific,  Medical).
+\subsection{Modulation}
+Modulation ist die Art, wie Bits übertragen werden. Die Übertragung geschiet meist mittels \textbf{sinusförmiger EM-Wellen}, welche auf deren Parameter untersucht wird:
+\begin{itemize}
+	\item Amplitude
+	\item Phase
+	\item Frequenz
+\end{itemize}
+Man unterscheidet dabei in drei Arten des Keying (Auswahl der Modulation aus einem bestimmten Alphabet):\\
 
+\textbf{Amplitude Shift Keying:} Die Amplitude variiert je nach Bit\\
+\textbf{Frequency Shift Keying:} Die Frequenz variiert (1 Hoch, 0 Tief)\\
+\textbf{Phase Shift Keying:} Die Phase ändert sich bei Flanken\\
+
+Als Demodulation bezeichnet man nun die Rekonstruktion der übertragenen Informationen aus der empfangenen EM-Welle. Hierbei wird die EM-Welle im Empfänger \textbf{abgetastet}.
+\subsubsection{Probleme}
+Meist ist die empfangene Welle nicht gleich der gesendeten Welle. Die Welle wird nämlich durch
+\begin{itemize}
+	\item Dämpfung
+	\item Reflektion
+	\item Brechung etc
+\end{itemize}
+verzerrt. Dadurch ist zwar eine Kommunikation ohne Sichtverbindung möglich, aber mehrere \textbf{reflektierte Pfade interferieren}, und \textbf{Echos} lassen sich schwer filtern.\\
+
+Zudem ist die \textbf{Synchronisation} schwierig, da festgehalten werden muss, wann ein \textbf{Bit}, \textbf{Byte} oder \textbf{Packet} beginnt.\\
+
+Die empfangene Signalstärke lässt sich grob abschätzen durch eine Funktion des Funkkanals und des Abstandes $d$ zwischen Sender $s$ und Empfänger $r$
+$$P_r = P_s \cdot K \cdot \frac{1}{d^n}$$
+$n$ ist dabei in freien Räumen klein, und Gebäuden zwischen 2 und 6.\\
+
+Weiter Störungen stellen (weißes) Rauschen dar. Außerdem sind Interferenzen möglich, wenn andere Sender im gleichen Frequenzbereich sind. Die \textbf{Signal-to-Interference-Noise-Ratio}:
+$$\textsc{SINR} = \dfrac{P_r}{P_{\textsc{noise}} + P_{\textsc{inf}}}$$
+Aus \textbf{SINR} und Art der Modulation resultiert die \textbf{Bitfehlerrate (BER)}.
+\begin{center}
+	\includegraphics[height = 6cm]{BER-PSK.png}
+\end{center}
+\subsubsection{Synchronisation}
+Synchronisation wird durch \textbf{Präambeln} realisiert. Präambeln sind ein spezieller Bitstrom vor jeder Nachricht, der oft sehr lang ist. Dieser erlaubt die Unterscheidung einer \textbf{Übertragung} von \textbf{Rauschen}.
 	
-	
+\subsection{Sicherung}
+Unter Sicherung versteht man die \textbf{fehlerfreie Übertragung von Bits} über einen fehlerbehafteten Kanal. Die Sicherungsschicht ist die zweite Schicht im ISO/OSI Modell.\\
+
+Zur \textbf{Fehlerkontrolle} zählen Mechanismen, die fehlerhaft übertragene Bits \textbf{erkennen} und \textbf{korrigieren}. Hierbei unterscheidet man in zwei Varianten:
+\begin{itemize}
+	\item \textbf{Backward Error Control:} Ein Fehler wird erkannt und eine Neuübertragung wird veranlasst (kostenintensiv!)
+	\item \textbf{Forward Error Control:} Redundante Kodierung des Signals, sodass Bitfehler ohne Neuübertragung erkannt und korrigiert werden können
+\end{itemize}
+\subsubsection{Backward Error Control}
+Generell werden hier Bits in Blöcke aufgeteilt. Den Blöcken wird eine Prüfsumme hinzugefügt. Stimmen die Daten überein, schicht Empfänger ein \textbf{positive ACK}, ansonsten \textbf{negative ACK}. Beim Senden gibt es dabei die Varianten \textbf{Stop-And-Wait} (jedes Frame muss bestätigt werden) und \textbf{Sliding-Window} (Sequenz wird bestätigt). \\
+
+Dieses Vorgehen erzeugt nur bei Neuübertragung Mehraufwand und ist bei geringer BER zu bevorzugen.
+\subsubsection{Forward Error Control}
+Dieses Vorgehen ist dagegen recht komplex. Hier werden Bits zu \textbf{Symbolen} zusammengefasst, und es gibt eine injektive Abbildung der Symbole auf Übertragungssymbole. Eine \textbf{korrekte} inverse Abbildung ist sogar bei Fehlern möglich, wenn die Azahl nicht überschritten wird.\\
+
+Dieses Vorgehen erzeugt immer Aufwand, jedoch bei hoher BER zu favorisieren.
+
+\subsection{Framing}
+Unter Framing versteht man das Zusammenführen von Bits/Symbolen zu Paketen. Hierbei muss ein Tradeoff zwischen langen Paketen (evtl. mehr Bitfehler) und kurzen Paketen (hoher Aufwand für Header).
+\begin{center}
+	\includegraphics[height = 4.7cm]{Packetsize.png}
+\end{center}
+\subsection{Link Management}
+Viele Protokolle gehen davon aus, dass ein Knoten seinen Nachbarn kennt. Ist bei WSN in der Regel jedoch \textbf{nicht} der Fall!\\
+Ein Knoten kann als Nachbar vermutet werden, wenn:
+\begin{itemize}
+	\item SINR $\geq$ min
+	\item BER, PER $\leq$ max
+\end{itemize}
+Die Qualität der Kommunikation zu den Nachbarn ist dabei \textbf{irregulär} und nicht zwangsweise proportional zum Abstand. Es ist über die Zeit variabel.\\
+
+Für manche Anwendungen braucht ein Knoten das Wissen über die Position der Nachbarn. Dabei kann die Nachbarliste gemanaged werden durch eine adaptive Abschätzung der Linkqualität.
+$$P_n = \alpha P_{n-1} + (1-\alpha)\frac{r_n}{r_n+f_n}$$
+$r_n$: im Intervall empfangene Pakete\\
+$f_n$: verlorene Pakete
+
+\newpage
+\section{Medienzugriff}
+Knoten reden kreuz und quer - Wer bestimmt da den korrekten, konfliktlosen Zugriff von Ressourcen?\\
+
+Medienzugriff (\textbf{MAC}, 2.Schicht ISO/OSI) regelt den Zugriff der Knoten auf ein gemeinsam genutztes Kommunikationsmedium. Dadurch sollen wechselseitige Störungen vermieden werden. Das Hauptziel ist die Reduktion des Energieverbrauchs, denn das Funkmodul ist primärer Energieverbraucher.	\\
+
+Dies impliziert, dass möglichst viel geschlafen werden sollte, dafür aber taub.
+\subsection{Probleme}
+Die Energie wird oft einfach verschwendet, zum Beispiel bei \textbf{nutzlosem Lauschen}, \textbf{Kollisionen} von Nachrichten bei Überlagerung, \textbf{Mithören} von Nachrichtenm die man selbst nicht braucht, und \textbf{Protokoll-Overhead}.\\
+
+\subsection{Kollisionen}
+\textbf{Kollisionen} entstehen, wenn eine Empfänger mehrere Sender gleichzeitig hört. Dabei kann ein Sender die Kollision nicht erkennen, wenn er nicht im Empfangsbereich des anderen Senders ist.\\
+
+Eine mögliche Lösung ist der \textbf{Capture-Effekt}, wo der Empfänger die Nachrichten des Senders verstärkt, wenn der Sender stärker ist. Alternativ kann man mehrere Synchronisierte Sender durch ein \textbf{logisches ODER} beim Empfänger abhören (gilt nur bei on-off-keying).\\
+
+Um Energie zu sparen, muss man Abstriche bei anderen Eigenschaften machen. Hierzu zählen \textbf{Fairness}, \textbf{Durchsatz} und \textbf{Nachrichtenverzögerung}.
+
+\subsection{Verkehrsaufkommen}
+Weiteres Einsparpotenzial gibt es durch Beobachtung und Nutzung typischer Muster im Nachrichtenverkehr:
+\begin{itemize}
+	\item \textbf{Convergecast}: Alle Sensoren senden zur Senke
+	\item \textbf{Broadcast}: Senke sendet an alle Knoten
+	\item \textbf{lokale Interaktion}: Nachabrn tauschen Nachrichten untereinander aus
+\end{itemize}
+Auch die Art der Nachrichtengenerierung ist ein wichtiger Faktor. Man unterscheidet zwischen \textbf{gleichmäßigen Strömen} (regelmäßiges Auslesen) und \textbf{Burst} (Ereignis löst hohe Aktivität aus).
+\subsection{MAC Einführung}
+MAC Protokolle haben verfolgen zwei Ziele: Zum einen \textbf{Verdrängung} (Contention), wobei der Zugriff auf Medien wahlfrei ist und Kollisionen weitesgehend vermieden werden. Zum anderen \textbf{Zuteilung} (Schedule), wo ein Medium exklusiv zu den Knoten zugeteilt wird. Hierbei ist der Knoten nur während eines bestimmten \textbf{time slice aktiv} $\implies$ Zeitsynchronisation notwendig!
+\subsection{Carrier Sense Multiple Access/Collision Avoidance}
+Bei \textbf{CSMA} wird der Kanal abgehört. Wenn dieser frei ist, wird gesendet.\\
+\textbf{CA} reguliert Kollisionen durch Kanalreservierung:
+\begin{enumerate}
+	\item Request to send: Anforderung mit geplanter Dauer $T$
+	\item Clear to send: Bestätigung mit $T$
+	\item DATA nach Empfang von CTS
+	\item ACK nach Empfang von DATA
+\end{enumerate}
+Die Anzahl der \textbf{Kollisionen} steigt, je mehr Stationen auf das Übertragungsmedium Zugriff haben wollen. Durch lange Leitungen, sehr viele Stationen und Repeater (Signalaufbereiter und -verstärker) entstehen je nach Ort der Einspeisung unterschiedliche Signallaufzeiten. Sie führen dazu, dass eine Station ein freies Übertragungsmedium feststellt und ihr Signal sendet, obwohl das Signal einer anderen Station bereits unterwegs ist. Es kommt zur Kollision, also der Überlagerung von zwei Signalen.\\
+
+\textbf{Verzögerung-Strategien} wie \textbf{Binary-Exponential-Backoff} (gleichverteilte Verzögerung aus festem Zeitfenster) klappen hierbei nur bedingt. Die Zeitfenster verdoppeln sich nach jeder erneuten Kollision, dies führt unter Umständen zu sehr langen Verzögerungen.\\
+
+\textbf{Sift} ist eine Alternative zu BEB. Hierbei sind die Zeitfenster ebenfalls fest, aber die Wahl der Slots ist nicht gleichverteilt. Wenige Knoten wählen frühen Slot, wodurch die Kollisionswahrscheinlichkeit klein ist.\\
+
+Will man nun in WSN CSMA/CA verwendet, so steht man vor einem Problem. Man möchte aus Gründen der Energieeffizienz für die Dauer $T$ das Radio ausschalten. Jedoch verpasst man dadurch andere \textbf{RTS}/\textbf{CTS}! Zudem muss der Protokeoll Overhead für jedes Datenpaket betrachtet werden, oder für mehrere Pakete (keine Fairness!).
+
+\subsection{S-MAC}
+\textbf{Sensor-MAC} funktioniert nach dem Rendevouz-Schema. Die Knoten verabreden quasi eine Zeit, in der sie miteinander arbeiten/kommunizieren. Es ist also eine \textbf{CSMA/CA mit Duty-Cycling}, die Knoten sind untereinander synchronisiert; auf kurze Aktivphasen folgt eine lange Schlafphase.\\
+
+Synchronisierung bei S-MAC geschieht während der \textbf{SYNCH Phase}. Ein neuer Knoten lauscht dabei, und übernimmt das \textbf{Schedule}, ansonsten hält er sich an ein eigenes Schedule. Die \textbf{Latenz} bei Hops wird reduziert indem ein Knoten 3 nach \textbf{Lauschen des CTS} eine zusätzliche Aktivphase einführt und Knoten 2 \textbf{nach ACK direkt ein RTS} an 3 sendet.\\
+
+$\implies$ Problem: Was wenn viele Nachbarn mit verschiedenen Schedules vorhanden sind?
+
+\subsection{Timeout MAC}
+Im Gegensatz zu S-MAC, wo die Aktivphase eine feste Länge hat, wird bei T-MAC die Aktivphase \textbf{an das Verkehrsaufkommen adaptiert}. Der Knoten wechselt frühzeitig in die Schlafphase, wenn eine gewisse Zeit $T_A$ nichts passiert.\\
+
+\textbf{Early Sleeping:}Knoten geht zu früh in die Schlafphase, CTS blockiert Medium. Lösung: \textbf{FRTS}\\
+\textbf{Volle Puffer:} Es kann vorkommen, dass man zum Empfangen gezwungen wird. Als Lösung wird vorgeschlagen, direkt ein RTS zu senden, statt mit CTS zu antworten. Jedoch erst, wenn der Puffer mehrmals überlief.\\
+
+\textbf{Präambeln:} Diese werden zur Synchronisation benötigt. Wenn Knoten während der Aktivphase Präambel hört, bleibt er wach zum Datenaustausch. Jedoch sind Präambeln unnötig lang, wenn der Knoten schon wach ist. Stattdessen könnte man \textbf{mehrmals die Daten} schicken oder \textbf{Wakeup-Pakete}, die den Zeitpunkt der Datenübertragung enthalten.
+
+\subsection{B-MAC}
+Bei B-MAC wird das digitale Tonsignal in der Austastlücke eingespielt, also mit den Bildsignalen zeitgemultiplext. Da es nicht genügend Platz für eine geeignet große Anzahl an Tonkanälen bietet, wurde es hauptsächlich für Satelliten-Überspielungen zwischen Fernsehstationen verwendet sowie (verschlüsselt) für die Versorgung im Ausland stationierter Einheiten der US-Army mit Satellitenfernsehen. \\
+
+B-MAC basiert auf einfachen Präambeln, die Philosophie ist: Minimum an Funktionalität mit einfacher Schnittstelle (TinyOS) $\implies$ maximale Flexibilität!
+
+\subsection{IEEE 802.15.4 ``ZigBee''}
+Bei ZigBee gibt es mehrere Knotenrollen:
+\begin{itemize}
+	\item PAN Coordinator
+	\item Coordinator
+	\item Device (Reduced Function Device)
+\end{itemize}
+Stern (Beacon-Mode) und Peer-to-Peer (Non-Beacon-Mode) Topologien möglich.
+\subsubsection{Beacon Mode}
+Coordinator und Device bilden sternförmiges Netz, wobei der Coordinator ständig Beacon sendet zwecks \textbf{Synchronisation} und \textbf{Zeitanteilung} im Frame.\\
+Im \textbf{Active Period} werden Daten per CSMA übertragen (oder TDMA). Im \textbf{Inactive Period} wird geschlafen.
+
 	
 	
 	
