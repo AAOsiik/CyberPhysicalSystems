@@ -48,32 +48,79 @@
 \BOOKMARK [2][-]{subsection.5.1}{Senken}{section.5}% 48
 \BOOKMARK [3][-]{subsubsection.5.1.1}{Sensor Internet}{subsection.5.1}% 49
 \BOOKMARK [3][-]{subsubsection.5.1.2}{Sensor-Aktor-Netze}{subsection.5.1}% 50
-\BOOKMARK [1][-]{section.6}{Bit\374bertragung und Sicherung}{}% 51
-\BOOKMARK [2][-]{subsection.6.1}{Frequenzbereiche}{section.6}% 52
-\BOOKMARK [2][-]{subsection.6.2}{Modulation}{section.6}% 53
-\BOOKMARK [3][-]{subsubsection.6.2.1}{Probleme}{subsection.6.2}% 54
-\BOOKMARK [3][-]{subsubsection.6.2.2}{Synchronisation}{subsection.6.2}% 55
-\BOOKMARK [2][-]{subsection.6.3}{Sicherung}{section.6}% 56
-\BOOKMARK [3][-]{subsubsection.6.3.1}{Backward Error Control}{subsection.6.3}% 57
-\BOOKMARK [3][-]{subsubsection.6.3.2}{Forward Error Control}{subsection.6.3}% 58
-\BOOKMARK [2][-]{subsection.6.4}{Framing}{section.6}% 59
-\BOOKMARK [2][-]{subsection.6.5}{Link Management}{section.6}% 60
-\BOOKMARK [1][-]{section.7}{Medienzugriff}{}% 61
-\BOOKMARK [2][-]{subsection.7.1}{Probleme}{section.7}% 62
-\BOOKMARK [2][-]{subsection.7.2}{Kollisionen}{section.7}% 63
-\BOOKMARK [2][-]{subsection.7.3}{Verkehrsaufkommen}{section.7}% 64
-\BOOKMARK [2][-]{subsection.7.4}{MAC Einf\374hrung}{section.7}% 65
-\BOOKMARK [2][-]{subsection.7.5}{Carrier Sense Multiple Access/Collision Avoidance}{section.7}% 66
-\BOOKMARK [2][-]{subsection.7.6}{S-MAC}{section.7}% 67
-\BOOKMARK [2][-]{subsection.7.7}{Timeout MAC}{section.7}% 68
-\BOOKMARK [2][-]{subsection.7.8}{B-MAC}{section.7}% 69
-\BOOKMARK [2][-]{subsection.7.9}{IEEE 802.15.4 ``ZigBee''}{section.7}% 70
-\BOOKMARK [3][-]{subsubsection.7.9.1}{Beacon Mode}{subsection.7.9}% 71
-\BOOKMARK [1][-]{section.8}{Routing}{}% 72
-\BOOKMARK [2][-]{subsection.8.1}{Link-Qualit\344t}{section.8}% 73
-\BOOKMARK [2][-]{subsection.8.2}{Nachbarverwaltung}{section.8}% 74
-\BOOKMARK [2][-]{subsection.8.3}{Gute Nachbarn}{section.8}% 75
-\BOOKMARK [3][-]{subsubsection.8.3.1}{Nachbarn sch\344tzen}{subsection.8.3}% 76
-\BOOKMARK [2][-]{subsection.8.4}{Gute Links}{section.8}% 77
-\BOOKMARK [3][-]{subsubsection.8.4.1}{Guter Baum}{subsection.8.4}% 78
-\BOOKMARK [2][-]{subsection.8.5}{Aggregation und Interaktion}{section.8}% 79
+\BOOKMARK [1][-]{section.6}{Modulations Techniken}{}% 51
+\BOOKMARK [2][-]{subsection.6.1}{Analoge Modulation}{section.6}% 52
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Amplitude Modulation}{subsection.6.1}% 53
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Frequenz Modulation}{subsection.6.1}% 54
+\BOOKMARK [3][-]{subsubsection.6.1.3}{Phasen Modulation}{subsection.6.1}% 55
+\BOOKMARK [2][-]{subsection.6.2}{Digitale Modulation}{section.6}% 56
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Amplitude Shift Key}{subsection.6.2}% 57
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Frequency Shift Key}{subsection.6.2}% 58
+\BOOKMARK [3][-]{subsubsection.6.2.3}{Phase Shift Key}{subsection.6.2}% 59
+\BOOKMARK [3][-]{subsubsection.6.2.4}{Quadrature Amplitude Modulation}{subsection.6.2}% 60
+\BOOKMARK [2][-]{subsection.6.3}{Fazit}{section.6}% 61
+\BOOKMARK [1][-]{section.7}{Bit\374bertragung und Sicherung}{}% 62
+\BOOKMARK [2][-]{subsection.7.1}{Frequenzbereiche}{section.7}% 63
+\BOOKMARK [2][-]{subsection.7.2}{Modulation}{section.7}% 64
+\BOOKMARK [3][-]{subsubsection.7.2.1}{Probleme}{subsection.7.2}% 65
+\BOOKMARK [3][-]{subsubsection.7.2.2}{Synchronisation}{subsection.7.2}% 66
+\BOOKMARK [2][-]{subsection.7.3}{Sicherung}{section.7}% 67
+\BOOKMARK [3][-]{subsubsection.7.3.1}{Backward Error Control}{subsection.7.3}% 68
+\BOOKMARK [3][-]{subsubsection.7.3.2}{Forward Error Control}{subsection.7.3}% 69
+\BOOKMARK [2][-]{subsection.7.4}{Framing}{section.7}% 70
+\BOOKMARK [2][-]{subsection.7.5}{Link Management}{section.7}% 71
+\BOOKMARK [1][-]{section.8}{Medienzugriff}{}% 72
+\BOOKMARK [2][-]{subsection.8.1}{Probleme}{section.8}% 73
+\BOOKMARK [2][-]{subsection.8.2}{Kollisionen}{section.8}% 74
+\BOOKMARK [2][-]{subsection.8.3}{Verkehrsaufkommen}{section.8}% 75
+\BOOKMARK [2][-]{subsection.8.4}{MAC Einf\374hrung}{section.8}% 76
+\BOOKMARK [2][-]{subsection.8.5}{Carrier Sense Multiple Access/Collision Avoidance}{section.8}% 77
+\BOOKMARK [2][-]{subsection.8.6}{S-MAC}{section.8}% 78
+\BOOKMARK [2][-]{subsection.8.7}{Timeout MAC}{section.8}% 79
+\BOOKMARK [2][-]{subsection.8.8}{B-MAC}{section.8}% 80
+\BOOKMARK [2][-]{subsection.8.9}{IEEE 802.15.4 ``ZigBee''}{section.8}% 81
+\BOOKMARK [3][-]{subsubsection.8.9.1}{Beacon Mode}{subsection.8.9}% 82
+\BOOKMARK [1][-]{section.9}{Routing}{}% 83
+\BOOKMARK [2][-]{subsection.9.1}{Link-Qualit\344t}{section.9}% 84
+\BOOKMARK [2][-]{subsection.9.2}{Nachbarverwaltung}{section.9}% 85
+\BOOKMARK [2][-]{subsection.9.3}{Gute Nachbarn}{section.9}% 86
+\BOOKMARK [3][-]{subsubsection.9.3.1}{Nachbarn sch\344tzen}{subsection.9.3}% 87
+\BOOKMARK [2][-]{subsection.9.4}{Gute Links}{section.9}% 88
+\BOOKMARK [3][-]{subsubsection.9.4.1}{Guter Baum}{subsection.9.4}% 89
+\BOOKMARK [2][-]{subsection.9.5}{Aggregation und Interaktion}{section.9}% 90
+\BOOKMARK [1][-]{section.10}{Zeitsynchronisation}{}% 91
+\BOOKMARK [2][-]{subsection.10.1}{Arten von Synchronisation}{section.10}% 92
+\BOOKMARK [2][-]{subsection.10.2}{Synchronisation von Knoten}{section.10}% 93
+\BOOKMARK [3][-]{subsubsection.10.2.1}{Unidirektional}{subsection.10.2}% 94
+\BOOKMARK [3][-]{subsubsection.10.2.2}{Round Trip}{subsection.10.2}% 95
+\BOOKMARK [3][-]{subsubsection.10.2.3}{Referenz Broadcast}{subsection.10.2}% 96
+\BOOKMARK [3][-]{subsubsection.10.2.4}{Dauerhafte Synchronisation?}{subsection.10.2}% 97
+\BOOKMARK [2][-]{subsection.10.3}{Mehrere Klienten}{section.10}% 98
+\BOOKMARK [3][-]{subsubsection.10.3.1}{Out-of-Band}{subsection.10.3}% 99
+\BOOKMARK [3][-]{subsubsection.10.3.2}{Cluster}{subsection.10.3}% 100
+\BOOKMARK [3][-]{subsubsection.10.3.3}{Baum}{subsection.10.3}% 101
+\BOOKMARK [3][-]{subsubsection.10.3.4}{Unstrukturiert}{subsection.10.3}% 102
+\BOOKMARK [1][-]{section.11}{Lokalisierung}{}% 103
+\BOOKMARK [2][-]{subsection.11.1}{Lokalisierungs-Algorithmen}{section.11}% 104
+\BOOKMARK [2][-]{subsection.11.2}{Relationen zwischen Knoten}{section.11}% 105
+\BOOKMARK [2][-]{subsection.11.3}{Platzierung}{section.11}% 106
+\BOOKMARK [3][-]{subsubsection.11.3.1}{Zentroid}{subsection.11.3}% 107
+\BOOKMARK [3][-]{subsubsection.11.3.2}{Bounding Box}{subsection.11.3}% 108
+\BOOKMARK [2][-]{subsection.11.4}{Multi-Hop}{section.11}% 109
+\BOOKMARK [2][-]{subsection.11.5}{Verfeinerung}{section.11}% 110
+\BOOKMARK [1][-]{section.12}{Datensammlung und Verarbeitung}{}% 111
+\BOOKMARK [2][-]{subsection.12.1}{Sampling}{section.12}% 112
+\BOOKMARK [2][-]{subsection.12.2}{Resampling}{section.12}% 113
+\BOOKMARK [2][-]{subsection.12.3}{Coverage}{section.12}% 114
+\BOOKMARK [2][-]{subsection.12.4}{Kalibrierung}{section.12}% 115
+\BOOKMARK [2][-]{subsection.12.5}{Cleaning}{section.12}% 116
+\BOOKMARK [2][-]{subsection.12.6}{Kalman Filter}{section.12}% 117
+\BOOKMARK [2][-]{subsection.12.7}{Partikel Filter}{section.12}% 118
+\BOOKMARK [2][-]{subsection.12.8}{Kompression und Pr\344diktive Filter}{section.12}% 119
+\BOOKMARK [2][-]{subsection.12.9}{Tracking}{section.12}% 120
+\BOOKMARK [1][-]{section.13}{Dezentrale Ans\344tze}{}% 121
+\BOOKMARK [2][-]{subsection.13.1}{Kuramoto Modell}{section.13}% 122
+\BOOKMARK [2][-]{subsection.13.2}{Millenium Bridge}{section.13}% 123
+\BOOKMARK [2][-]{subsection.13.3}{Van-der-Pol-System}{section.13}% 124
+\BOOKMARK [2][-]{subsection.13.4}{Skalierbarkeit}{section.13}% 125
+\BOOKMARK [3][-]{subsubsection.13.4.1}{Universal Scalability Law \(USL\)}{subsection.13.4}% 126

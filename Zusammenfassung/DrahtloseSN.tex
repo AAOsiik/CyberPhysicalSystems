@@ -425,7 +425,7 @@ Die Problematik bei Events ist, dass die Funktion aufgespalten werden muss. Dies
 \end{enumerate}
 \textbf{Verkettung} ist durch Aufruf des Events im Event möglich.
 \subsection{OSM, andere}
-
+\newpage
 \section{Vernetzung von Sensoren}
 Es stellt sich die Frage, wie man einen Sensorknoten zum Netz verbindet.
 \begin{itemize}
@@ -453,6 +453,30 @@ Im allgemeinen unterscheiden sich Netze aus Sensorknoten gerade dadurch. Bei Sen
 
 In WSN werden zudem die Protokollstacks verschmolzen. Dies wird als Hilfsmittel zur Optimierung von Energie- und Ressourcenverbrauch genutzt. Ein \textbf{gezielter Austausch} von Informationen wird somit ermöglicht.
 
+\newpage
+\section{Modulations Techniken}
+Unter Modulation versteht man die Modifizierung eines Signals in eine Form, die es möglich macht, dieses Signal zu verschicken. Wird vor allem für langwellige Signale genutzt. Dabei wird das Signal mit einem \textbf{sinusförmigen Carrier Signal} verbunden
+\subsection{Analoge Modulation}
+\subsubsection{Amplitude Modulation}
+Simpelste Art der Modulation, sehr simpel und kosteneffektiv, jedoch anfällig für Störungen.
+$$S_{AM}(t)=[A_c+S_m(t)]\cdot\cos(W_c t)$$ 
+\subsubsection{Frequenz Modulation}
+Frequenz wird moduliert. Schaltung komplexer, aber weniger anfällig.
+$$S_{FM}(t)=A_c\cdot\cos([W_c t + S_m(t)]t)$$
+\subsubsection{Phasen Modulation}
+Phase wird bei übertritt der x-Achse umgeswitcht.
+$$S_{PM}(t)=A_c\cdot\cos(W_c t + S_m(t))$$
+\subsection{Digitale Modulation}
+Bei der digitalen Modulation ist der input eine binäre Sequenz, die mit einem sinusoiden Carrier moduliert wird. Dies ist robuster, einfacher zu multiplexen, und sicherer.
+\subsubsection{Amplitude Shift Key}
+Eigentlich simples ON-OFF Signal.
+\subsubsection{Frequency Shift Key}
+Es gibt 2 vordefinierte Frequenzen für Bit 1 und Bit 0.
+\subsubsection{Phase Shift Key}
+Phase des Cariiers wird instantan geshifted. 
+\subsubsection{Quadrature Amplitude Modulation}
+\subsection{Fazit}
+PSK ist besser, da mehr Energieffizienz und weniger Fehleranfälligkeit. Höherlevelige PSK können die datenrate noch mehr erhöhen.
 \newpage
 \section{Bitübertragung und Sicherung}
 Bitübertragung stellt die unterste Schicht des \textbf{ISO/OSI Modells} dar. In WSN geschieht die drahtlose Kommunikation meist über Funk: Die Bits werden über Funkwellen übertragen. Es ist wichtig, einige grundlegende Aspekte zu betrachten um sein Verständnis zum Thema Medienzugriff zu festigen.\\
@@ -706,16 +730,179 @@ Zeitsynchronisation dient dem gemeinsamen Zeitverständnis. Alle Uhren zeigen di
 	\item \textbf{Skalen und Uhren:} Lokale Uhren auf gleicher Zeit oder Uhren mit unterschiedlichen skalen?
 	\item \textbf{Zeitpunkte/Intervalle:} fehlerhafter Zeitpunkt oder korrektes Intervall?
 \end{itemize}
-Zu den Hindernissen zählen natürlich die Eigenschaften der Hardware Synchronisation und die Eigenschaften der drahtlosen Kommunikation. \textbf{Hardware Uhren} zählen Intervalle fester Länge, kann aber von HW zu HW abweichen! Eine Atomuhr ist zwar $10^5$ genauer, aber verbraucht $100$mW.
+Zu den Hindernissen zählen natürlich die Eigenschaften der Hardware Synchronisation und die Eigenschaften der drahtlosen Kommunikation. \textbf{Hardware Uhren} zählen Intervalle fester Länge, kann aber von HW zu HW abweichen! Eine Atomuhr ist zwar $10^5$ genauer, aber verbraucht $100$mW.\\
+
+Bei der Kommunikation gibt es zudem Schwankungen durch \textbf{Interrupts}, \textbf{Zugriffe}, \textbf{Encoding}, \textbf{Decoding} etc.
+
+\subsection{Synchronisation von Knoten}
+Wenn Klinet R die Zeit $h_R$ anzeigt, was zeigt dann die Zeit von K $h_K$ an? Klient kann seine Zeit dann $h_R-h_K$ korrigieren.
+\subsubsection{Unidirektional}
+R sendet Nachricht, die $h_R$ enthält, der Klient nimmt dann $h_K := h$ an. Dies ist mit mehr Klienten per Broadcast Problemlos möglich.
+\subsubsection{Round Trip}
+$h_1$ an $h_R$, $h_R$ an $h_2$. $h_K$ nimmt dann die Zeit
+$$h_K:=\frac{h_1 + h_2}{2}$$
+Dies ist mit mehreren Knoten jedoch aufwändig!
+\subsubsection{Referenz Broadcast}
+Beacon sendet Broadcast an Referenz und Client. Danach kommunizieren die Knoten. Vergleichsweise genau, weil Broadcast nahezu Zeitgleich empfangen wird.
+\subsubsection{Dauerhafte Synchronisation?}
+Eine dauerhafte Synchronisation ist schwer umzusetzen. Dabei gibt es 2 Varianten:
+\begin{itemize}
+	\item periodisches Wiederholen: Die Genauigkeit hängt von der Synchronisierung ab. Stetigkeit ist ein Nachteil, verbunden mit hohem Energieaufwand
+	\item Anpassung der Ganggeschwindigkeit: Man misst, wie viel $h_K$ schneller als $h_R$ läuft, passt dann die Geschwindigkeit an. Möglichkeit sind \textbf{Lineare Regression} oder \textbf{Phase-Locked Loops} (Steigung abhängig von der Messung ändern)
+\end{itemize}
+\subsection{Mehrere Klienten}
+\subsubsection{Out-of-Band}
+Klient hat eine Clique, und mindestens einen Referenzknoten als Nachbarn. Hierfür ist eine genaue Infrastruktur notwendig!
+\subsubsection{Cluster}
+Das Netz ist in Cluster strukturiert, und man hat Gateways, die die überlappenden Cluster verbinden. Wartung der Struktur ist aufwändig!\\
+\textbf{BSP:} Reference Broadcast Synchronization
+\subsubsection{Baum}
+Referenz ist an der Wurzel, Kinder synchronisieren sich mit Vätern. Das führt zu langen Pfaden und größeren Ungenauigkeiten, und vergleichsweise ungenauen Pfaden\\
+\textbf{Bsp:} \textbf{Time Sync Protocol for Sensor Networks}
+\subsubsection{Unstrukturiert}
+Kein Overlay - kein Aufwand! Knoten nutzen dann beliebige Pfade zur Synchronisation.\\
+\textbf{Bsp:} Time Stamp Synchronization, die Zeitstempel werden entlang eines Pfades syncronisiert, Round Trip zwischen Nachbarknoten
 	
-	
-	
-	
-	
-	
-	
-	
-	
+\newpage
+\section{Lokalisierung}
+Man will die Koordinaten eines Knotens in einem (Euklidischen) Koordinatensystem bestimmen. Ziel ist eine genauere \textbf{Interpretation} der Sensordaten, \textbf{Daten-Fusion} etc. Hier sind die Unterscheidungen ähnlich der Zeitsynchronisation. \\
+
+\textbf{GPS} für alle Sensorknoten ist aus Gründen der Energie nicht machbar, und Kosten im Vergleich zum Sensorknoten deutlich mehr. Und man braucht eine Sichtverbindung zum Satelliten.
+\subsection{Lokalisierungs-Algorithmen}
+In der Regel drei typische Phasen:
+\begin{enumerate}
+	\item \textbf{Relationen zwischen Knoten messen} 
+	\item \textbf{Platzierung}
+	\item \textbf{Verfeinerung}
+\end{enumerate}
+\subsection{Relationen zwischen Knoten}
+Meist Abstand basiert, \textbf{Winkel im freien Feld} jedoch besser. Gemessen wird anhand von \textbf{Schall}, Indikatoren sind \textbf{Signallaufzeit} und Stärke. Das Signal ist speziell kodiert, der Empfänger sucht nach dem ersten Match (\textbf{Echos!}). Genauigkeit best case sind 1cm, Reichweite 10m\\
+
+\textbf{ABER:} Schall hängt von \textbf{Temperatur} ab (Sensor rauf), \textbf{Orientierung} (spezielle Reflektoren) und \textbf{Hindernisse} (große Fehler durch Multi-Path)\\
+
+Die empfangene Signalstärke lässt sich abschätzen:
+$$P_r(d)\approx P_s \dfrac{1}{d^n}$$
+oder \textbf{Received Signal Strength Indicator}
+$$\textsc{RSSI} = 10 \log_{10} P_s - 10n\log_{10}d$$
+Bestenfalls sind 2m-3m möglich.\\
+
+Ausrichtung der Antennen zueinander und Höhe über Boden hat starken Einfluss (Reflektion/Dämpfung)! Indoor ist RSSI quasi \textbf{unkorreliert}!\\
+\\
+\textbf{Interferometrie} ist genauer, aber Funktionalität ist unklar!  
+\subsection{Platzierung}
+Die Position ist durch \textbf{Anker mit bekannter Position} und Relationen zwischen Knoten gegeben. Gesucht sind die Positionen von Nicht-Anker-Knoten.
+
+\subsubsection{Zentroid}
+Knoten liegt im Schwerpunkt aller Anker. 
+$$x,y = \frac{1}{n} \sum_{i=1}^{n}x_i,y_i$$
+\subsubsection{Bounding Box}
+Platziere Knoten im Schnitt der Bounding Boxen um alle Anker.
+$$x = \frac{1}{2}(\min _i(x_i+d_i) + \max _i(x_i-d_i))$$
+\subsection{Multi-Hop}
+Bisher hat jeder Knoten 3 Anker gebraucht, skaliert schlecht! Sehr viele Anker sind keine Lösung.\\
+ 
+\textbf{Multi-Hop:} Jeder Anker flutet das Netz, in jeder Nachricht ist der kürzeste Abstand zum Anker vermerkt\\
+
+\textbf{Rekursion:} Berechnete Positionen werden als weitere Anker betrachtet $\implies$ Fehler akkumuliert sich! 
+
+\subsection{Verfeinerung}
+Jeder Knoten bekommt eine Abschätzung seiner Position. Diese verbessert er \textbf{iterativ}, indem er alle seine Nachbar als Anker verwendet. So lange, bis keine signifikante Veränderung der Position mehr da ist.
+
+\newpage
+\section{Datensammlung und Verarbeitung}
+\subsection{Sampling}
+Sampling bedeutet Messung einer bestimmten Quantität $q(x,y,t)$ in regelmäßigen Abständen. Die Frage ist, wie groß man $f_t$ und $f_x$ wählt. Man möchte eine \textbf{Aliasing} verhindern, bei dem hohr Frequenzen wie tiefe Frequenzen erscheinen, weil die Sampling-Rate zu gering ist.\\
+
+\textbf{Nyquist Kriterium}: $f_t$ doppelt so groß wie der höchste \textbf{zeitliche} Frequenzanteil, $f_x$ doppelt so groß wie der größte \textbf{räumliche} Frequenzanteil
+\subsection{Resampling}
+Die Verteilung der Sensoren ist typischerweise\textbf{ nicht uniform}. Dadurch \textbf{interpoliert} man stückweise das Signal, eine \textbf{Approximation}, mit der man zB Werte an Gitterpunkten bestimmt.
+\subsection{Coverage}
+Man möchte sicherstellen, dass eine hinreichende räumliche Sampling-Rate $f_x$ ausreichend ist. Oftmals hat man mehr Sensoren als notwendig, man schaltet also nur so viele wie nötig ein, und behält die restlichen als \textbf{Reserve}.\\
+
+\textbf{k-Coverage:} Jeder Punkt ist im Sensorbereich von mindestens $k$ Knoten
+\subsection{Kalibrierung}
+Unterschieden wird in \textbf{absolute} Kalibrierung und \textbf{relative} Kalibrierung.
+\subsection{Cleaning}
+Unter Cleaning versteht man das Bereinigen roher Messwerte. Dazu gehören \textbf{``Outlier''}, \textbf{fehlende Messwerte}, und \textbf{Rauschen}. \\
+
+Realisiert	 wird dies durch verschiedene \textbf{Filter}. 
+\begin{itemize}
+	\item Hochpassfilter (keine Tiefen, Betonung hoher Frequenzen)
+	\item Tiefpassfilter (keine Hohen)
+	\item Mittelwert Filter (Mittelwert in Nachbarschaft der Größe $N$)
+	\item Median Filter (Sortieren und die Mitte nehmen)
+	\item Konvolution
+	\item Kantenerkennung (Sobel)
+	\item EMWA: \ \  $s_{new}(t) = (1-\alpha)s_{new}(t-1) + \alpha s(t)$
+\end{itemize}
+\subsection{Kalman Filter}
+\begin{center}
+	\includegraphics[height = 5cm]{Kalman.png}
+\end{center}
+Man hat ein \textbf{Zustandsmodell} und ein \textbf{Messmodel}. Man verbinden die beiden Zustände zu einer besseren Abschätzung, je nachdem ob man der Messung oder der Odometrie mehr traut.\\
+
+Kalman Filter kann mehrere Sensoren mit optimaler Gewichtung integrieren!
+
+\subsection{Partikel Filter}
+Die Verteilung ist beliebig, multimodal. Particle-Filter sind jedoch weniger effizient.
+Die Idee ist, das eine Verteilung durch die Dichte der Partikel symbolisiert wird.
+
+\subsection{Kompression und Prädiktive Filter}
+Wenn $s(t)$ aus der Vergangenheit berechnet werden kann, dann wird $s(t)$ nicht effizient übertragen!\\
+
+Man kann Filter wie bisher anwenden, jedoch deren Ausgabe als Vorhersage verwenden! \\
+
+Mit \textbf{Least Mean Squares Adaptation} lässt sich der Kernel automatisch anpassen, wodurch die Vorhersage möglichst genau wird. Das funktioniert so gut, weil \textbf{zeitlich benachbarte Daten} sehr ähnlich sind.
+
+\subsection{Tracking}
+Unter Tracking versteht man das Verfolgen der Bewegung eines Objektes (\textbf{Position, Richtung, Geschwindigkeit}). Das Objekt taucht dabei auf, bewegt sich auf einem Pfad, und verschwindet dann wieder.\\
+
+Objekte lassen sich mittels von ihnen emittierten Signale detektieren. Klassifikation erfolgt dann anhand eines \textbf{Spektrogramms}. Die Lokalisierung des Objekts ermittelt sich durch den Sensor mit dem höchsten Signal.\\
+
+Die Detektion von mehreren Objekten ist jedoch schwierig! Objekte sind für Sensoren meist ununterscheidbar.
+
+\section{Dezentrale Ansätze}
+Man möchte ein dezentrales und impliziertes Synchronisieren von Phasen, wie bei Glühwürmchen, erreichen.\\
+
+Das \textbf{Glühwürmchen-Modell} sieht dabei folgendermaßen aus:\\
+Das Licht wird alle $L$ Sekunden angemacht. Wenn Mehrheit der Nachbarn bereits Licht an hat, dann soll die Uhr vorgestellt werden, ansonsten nichts tun. Alternativ vice versa.
+
+\subsection{Kuramoto Modell}
+Es handelt sich um gekoppelte Oszillatoren. Global gilt:
+$$\dfrac{d \theta_i}{dt} = \omega_i+\dfrac{K}{N}\sum_{j=1}^{N}\sin(\theta_j-\theta_i)$$ 
+Für eine Nachbarschaft $\mathcal{G}_i$ gilt dann lokal:
+$$\dfrac{d \theta_i}{dt} = \omega_i+\dfrac{K}{|\mathcal{G}_i|}\sum_{j\in \mathcal{G}_i}\sin(\theta_j-\theta_i)$$ 
+\subsection{Millenium Bridge}
+Der Fußgänger auf der Brücke wird als ein Inverses Pendel beobachtet:
+$$\ddot{\theta}-\dfrac{g}{l}\sin\theta = 0$$
+\subsection{Van-der-Pol-System}
+Ein Van-der-Pol System ist ein schwingungsfähiges System mit nichtlinearer Dämpfung und Selbsterregung.
+$$\dfrac{d^2x}{dt^2}-\mu (1-x^2)\dfrac{dx}{dt}+x = 0$$
+\begin{center}
+	\includegraphics[height = 5cm]{VDP.png}
+\end{center}
+
+\subsection{Skalierbarkeit}
+Man möchte untersuchen, wie vernetzte Systeme mit der Anzahl der Knoten skalieren. Es werden also dem Netz mehr und mehr Knoten hinzugefügt und geschaut, wie sich die Leistung des gesamten Netzes entwickelt.
+\begin{itemize}
+	\item Menschliche Teams: Ringelmann-Effekt
+	\item Computer Server
+\end{itemize}
+Bei geteilten Ressourcen erzeugen \textbf{Zugriffskonflikte} lange Wartezeiten.
+\subsubsection{Universal Scalability Law (USL)}
+Systemkapazität $C(N)$
+$$C(N) = \dfrac{N}{1+\alpha(N-1)+\beta N (N-1)}$$
+$\alpha \ $ Grad an Zugangskonflikten, $\ \beta \ $ Mangel an Kohärenz.\\
+\\
+Man Unterscheidet in vier Bereiche
+\begin{enumerate}
+	\item equal bang for the buck
+	\item Kosten durch Ressourcenteilung
+	\item Vermehrte Zugangskonflikte
+	\item negative Rendite
+	\item ``inoffiziel'': Superlineare Skalierung
+\end{enumerate}	
+	Unter \textbf{Payback-Zone} versteht man die sublineare Skalierung nach einer superlinearen skalierung.
 	
 	
 	
