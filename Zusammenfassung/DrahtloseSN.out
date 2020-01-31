@@ -69,3 +69,11 @@
 \BOOKMARK [2][-]{subsection.7.8}{B-MAC}{section.7}% 69
 \BOOKMARK [2][-]{subsection.7.9}{IEEE 802.15.4 ``ZigBee''}{section.7}% 70
 \BOOKMARK [3][-]{subsubsection.7.9.1}{Beacon Mode}{subsection.7.9}% 71
+\BOOKMARK [1][-]{section.8}{Routing}{}% 72
+\BOOKMARK [2][-]{subsection.8.1}{Link-Qualit\344t}{section.8}% 73
+\BOOKMARK [2][-]{subsection.8.2}{Nachbarverwaltung}{section.8}% 74
+\BOOKMARK [2][-]{subsection.8.3}{Gute Nachbarn}{section.8}% 75
+\BOOKMARK [3][-]{subsubsection.8.3.1}{Nachbarn sch\344tzen}{subsection.8.3}% 76
+\BOOKMARK [2][-]{subsection.8.4}{Gute Links}{section.8}% 77
+\BOOKMARK [3][-]{subsubsection.8.4.1}{Guter Baum}{subsection.8.4}% 78
+\BOOKMARK [2][-]{subsection.8.5}{Aggregation und Interaktion}{section.8}% 79

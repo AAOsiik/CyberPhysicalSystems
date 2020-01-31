@@ -616,8 +616,97 @@ Stern (Beacon-Mode) und Peer-to-Peer (Non-Beacon-Mode) Topologien möglich.
 Coordinator und Device bilden sternförmiges Netz, wobei der Coordinator ständig Beacon sendet zwecks \textbf{Synchronisation} und \textbf{Zeitanteilung} im Frame.\\
 Im \textbf{Active Period} werden Daten per CSMA übertragen (oder TDMA). Im \textbf{Inactive Period} wird geschlafen.
 
+\newpage
+\section{Routing}
+Klassische Netze basieren typischerweise auf Adressen. Die verwendete Hauptkommunikationsform ist \textbf{Unicast} (1zu1 Kommunikation) oder \textbf{Multicast} (Nachricht an mehrere).\\
+
+Bei Sensornetzen ist das etwas anders. Es wird vorwiegend \textbf{Convergecast} (alle senden Nachrichten an die Senke) und \textbf{Broadcast} (Senke sendet Nachricht an alle) verwendet.
+Zudem gibt es auch lokale Interaktion zwischen zwei Knoten.\\
+
+\textbf{Convergecast} ist die wichtigste Primitive. Es ist ein Spannbaum mit Senke an der Wurzel. Jedoch ist nicht klar, wie der TradeOff zwischen \textbf{Baumtiefe} und \textbf{Knotenentfernung} ist. \\
+
+Es stellt sich also die Frage, wie man stabile Spannbäume erstellt bzw. auswählt. Die Prioriätatn wären dabei: 
+\begin{enumerate}
+	\item Link-Qualität
+	\item Nachbar-Verwaltung
+	\item Routen-Auswahl
+\end{enumerate}
+
+\subsection{Link-Qualität}
+Man benötigt einen Mechanismus zur Abschätzung der Qualität der Verbindung zu einem Knoten.
+Gemessen wird das anhand der \textbf{Paketverlustrate} \textbf{(PER)}
+$$P_n = \alpha P_{n-1} + (1-\alpha) \underbrace{\dfrac{r_n}{r_n + f_n}}_{1-\text{PER}}$$
+\textbf{Exponentially Weighted Moving Average}
+$$P_n(t) = \alpha P_{n-1}(t) + (1-\alpha) (1-\text{PER})$$
+\subsection{Nachbarverwaltung}
+In WSN sind die Sensornetze dicht ($>200$ Nachbarn), viele Nachbarn haben dabei eine schlechte Link-Qualität, nur wenige sind gut. In der Regel wird eine \textbf{Nachbarschaftstabelle} verwaltet, aus der $T$ beste Nachbarn gefunden werden müssen.\\
+
+Für die \textbf{Auswahl des $T$} gibt es verschiedene Herangehensweisen:
+\begin{itemize}
+	\item Xue and Kumar: $T>5.1774 \log n$: fast sicher verbunden
+	\item Penrose: Wenn jeder $T$ Nachbarn hat, dann gibt es zwischen 2 Knoten wahrscheinlich T Pfade 
+\end{itemize}
+\subsection{Gute Nachbarn}
+Jeder Knoten sendet ein ``Hallo''. Jeder Empfänger notiert sich Knoten, von denen die meisten ``Hallo'' empfangen worden sind. Ist er schon drin, wird er verstärkt. Ist die Tabelle voll, so wird per \textbf{LRU} oder \textbf{FIFO} ein alter Knoten gelöscht.\\
+
+Dabei könnte man auch für jedes Inkrement ein Dekrement durchführen. Am Ende gibt es einen \textbf{einzigen Kandidaten}.\\
+
+Am Ende sind die Nachbarn wahrscheinlich gut, aber durch \textbf{häufige Einfügeoperationen } ändern sich die Nachbarn oft, \textbf{nicht stabil!}.
+Ein Einfügekriterium wäre, die Nachbarn mit Wahrscheinlichkeit $P=\frac{T}{N}$ einzufügen, wobei $N$ nun nicht bekannt ist...
+\subsubsection{Nachbarn schätzen}
+Man kann die Anzahl der Nachbarn mithilfe einer Hashfunktion schätzen... siehe:\\
+``Probabilistic Counting Algorithms for Data Base Applications''
+
+$\implies$ nun hat jeder noten eine stabile Menge an guten Nachbarn!
+
+\subsection{Gute Links}
+Ein guter Link ist ein Link mit \textbf{geringem Paketverlust}. Man vedient sich einer Routing-Metrik:
+$$m(L)= \frac{1}{Q_{in}(L)} \cdot \frac{1}{Q_{out}(L)}$$
+Dabei sind Links häufig asymmetrisch, die Knoten müssten also die Nachbarn über die Qualität derer Nachbarn aufklären.\\
+
+\subsubsection{Guter Baum}
+Guter Spannbaum bedeutet, dass es einen guten Pfad von jedem Knoten zur Senke gibt. Man möchte also den kürzesten Pfad gemäß Routing-Metrik finden:
+$$\min \sum m(L)$$
+Verfahren? \textbf{Distance Vector Routing:} Jeder Knoten merkt sich Abstand zur Senke und zu aktuellem Vater $V$. Beim \textbf{Update} schicken die Knoten ein Paket $P$ mit Abstand $D$ zur Senke an Nachbarn. Der Nachbar empfängt dann $P$ über Link $L$.\\
+Falls $P.D + m(L) < D$:\\
+$D := P.D+m(L)$\\
+$V := S$\\
+Update an Nachbarn sofort verschickt.\\
+
+\textbf{Stabilität} (periodische Ausführung führt zu geringem Vaterwechsel), \textbf{Zyklen} (selbst gesendete Pakete erkennen) und \textbf{Fairness} (lokale Nachrichten haben Priorität vor anderen)
 	
-	
+\subsection{Aggregation und Interaktion}
+Theoretisch könnte jeder Knoten die Daten seiner Kinder aggregieren. Man muss jedoch berücksichtigen, welche Daten von Interesse sind, von welchem Knoten sie kommen, wie oft sie aggregiert werden etc.\\
+
+\textbf{Fluten} mit beschränktem Hop-Radius gilt als eine Art der lokalen Interaktion. Dabei wird die Nachricht mit Hop-Radius $r$ verschickt, diese wird dann mit $r-1$ weitergeleitet usw.\\
+Probleme beim Fluten wäre eine \textbf{Implosion} (identische Daten erreichen Knoten über mehrere Wege) oder eine \textbf{Überlappung} überlappende Sensorknoten hat selbe Daten mehrfach.\\
+
+\textbf{FireCracker:} Die Nachricht entlang des Spannbaums verteilen und dann Fluten.\\
+
+Andere Methoden:
+\begin{itemize}
+	\item Geo Routing (Schick an bestimmte Position)
+	\item Face Routing (Polygone im Netz)
+\end{itemize}
+
+\newpage
+\section{Zeitsynchronisation}
+Zeitsynchronisation dient dem gemeinsamen Zeitverständnis. Alle Uhren zeigen die selbe Zeit, Knoten $A$ weiß also, wie spät es bei Knoten $B$ um 12 war. Nützlich für Interaktion mit \textbf{Nutzer}, \textbf{Koordination im Sensornetz} und die Interaktion des Netzes mit der \textbf{realen Welt}.
+\begin{itemize}
+	\item Nutzer: Wann soll was beobachtet werden? Wie lange dauert ein Vorgang?
+	\item Reale Welt: konsistente verteilte Messungen, Fusion verteilter Beobachtungen
+	\item Sensorknoten: drahtlose Kommunikation, Energieeffizienz, Lokalisierung
+\end{itemize}
+\subsection{Arten von Synchronisation}
+\begin{itemize}
+	\item \textbf{Intern/Extern:} Knoten einigen sich auf eine Zeit vs. Zeit wird von außen vorgegeben
+	\item \textbf{Lebenszeit:} immer, oder dann, wenn benötigt? Energie!
+	\item \textbf{Scope:} Welche Knoten? Alle oder Manche?
+	\item \textbf{Rate/Offset:} Uhren laufen gleich schnell, es ist also die \textbf{Dauer} wichtig, oder die Uhren zeigen alle die \textbf{gleiche Zeit}
+	\item \textbf{Skalen und Uhren:} Lokale Uhren auf gleicher Zeit oder Uhren mit unterschiedlichen skalen?
+	\item \textbf{Zeitpunkte/Intervalle:} fehlerhafter Zeitpunkt oder korrektes Intervall?
+\end{itemize}
+Zu den Hindernissen zählen natürlich die Eigenschaften der Hardware Synchronisation und die Eigenschaften der drahtlosen Kommunikation. \textbf{Hardware Uhren} zählen Intervalle fester Länge, kann aber von HW zu HW abweichen! Eine Atomuhr ist zwar $10^5$ genauer, aber verbraucht $100$mW.
 	
 	
 	
