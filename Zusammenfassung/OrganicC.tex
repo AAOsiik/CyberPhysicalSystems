@@ -477,10 +477,336 @@ Repositorium für Symptome, Guidelines, Änderungsanfragen etc. Kann von vielen 
 \newpage
 
 \section{Schwarm Intelligenz (ACO)}
+	Wie kann man neue Mapping Regeln erstellen?\\
+	Wie können wir die Auswahl an Mapping Regeln verbessern?\\
+	$\implies$ Anpassung, Optimierung, Lernen
 	
+\subsection{Von Ameisen zu Algorithmen}
+Rückblick: Ameisen Kolonie, Verhalten bei Binary Bridge Problem\\
+\textbf{Erweiterung:} Ein Pfad ist doppelt so lang wie der andere. Im Endeffekt ist die Pheromon-Konzentration auf dem kürzeren Pfad höher. Der längere wird trotzdem ab und zu gewählt.\\
+\subsubsection{Double Bridge Experiment}
+\textbf{2. Erweiterung:} Der kurze Pfad wird erst später eingefügt. Die Ameisen vergessen jedoch nicht den langen Pfad, da die Pheromon-Konzentration dort höher ist.\\
+Als Stochastisches Modell: $p_{is}(t)$ als Wahrscheinlichkeit, an Stelle $i$ den kürzeren Pfad zu nehmen.
+$$p_{is}(t) = \dfrac{(\frac{1}{t_s}+\phi_{is}(t))^\alpha}{(\frac{1}{t_s}+\phi_{is}(t))^\alpha + (\frac{1}{t_l}+\phi_{il}(t))^\alpha}$$
+Zeit für den kürzeren Pfad ist $t_s = \frac{l_s}{v}$\\
+Pheromon-Konzentration auf kurzem und langem Pfad $\phi_{is}, \phi{il}$\\
+$\alpha = 2$ experimentell bestimmt\\
+
+Die Pheromonkonzentration wird bestimmt durch
+$$\dfrac{d\phi_{is}}{dt}=\psi p_{js}(t-t_s)+\psi p_{is}(t) \ \ \ \ (i=1,j=2;i=2,j=1)$$
+$$\dfrac{d\phi_{il}}{dt}=\psi p_{jl}(t-rt_s)+\psi p_{il}(t) \ \ \ \ (i=1,j=2;i=2,j=1)$$
+\subsubsection{Double Bridge Experiment als diskretes Model}
+$$p_{is}(t) = \dfrac{(+\phi_{is}(t))^\alpha}{(\phi_{is}(t))^\alpha + ({t_l}+\phi_{il}(t))^\alpha}$$
+Update von Pheromonen-Konzentrationen:
+$$\phi_{is}(t)=\phi_{is}(t-1)+p_{is}(t-1)\psi_i(t-1)+p_{js}(t-1)\psi_{j} (t-1)$$
+$$\phi_{il}(t)=\phi_{il}(t-1)+p_{il}(t-1)\psi_i(t-1)+p_{jl}(t-r)\psi_{j} (t-r)$$
+$$(i=1,j=2;i=2,j=1)$$
+\subsubsection{Kürzeste Pfade in Graphen}
+Ein Graph $G=(N,A)$ ist gegeben mit Menge der Knoten $N$ und Menge der unidirektionalen Kanten $A$. Es besteht das Risiko, dass ungewollte Zyklen entstehen, wenn Ameisen immer Pheromone ablegen. \\
+Ein Ansatz ist, dass die Ameisen ihre Pheromone nur auf dem \textbf{Rückweg} ablegen (\textbf{unnatürlich}).\\
+
+Noch eine Erweiterung wäre, den Ameisen eine \textbf{Erinnerung} an den\textbf{ bisherigen Pfad} und die entstandenen \textbf{Kosten} zu geben. Dadurch werden Zyklen detektiert. Die Menge der abgelegten Pheromone ist proportional zur Qualität der Lösung.
+
+\subsubsection{Simpler Ant Colony Algorithm}
+Die Pfadwahl ist \textbf{probabilistisch} und hängt von der Pheromon-Konzentration ab. Auf dem Weg zum Ziel werden keine Pheromone abgelegt. Die Sequenz der \textbf{Wegpunkte} wird gespeichert. Durch \textbf{Backtracking} werden die Pheromone aktualisiert, die \textbf{Kosten} für den gefundenen Pfad werden berechnet und die \textbf{Evaporation} der Pheromone wird simuliert.\\
+
+Die Pheromon-Konzentration $\tau_{ij}$ von $i$ zu $j$ ist initial $= 1$.\\
+Die Wahrscheinlichkeit, dass die Ameise $k$ einen Pfad $i\rightarrow j$ wählt, wird berechnet als
+$$p_{ij}^k = \left\{
+\begin{matrix}
+\dfrac{\tau_{ij}^\alpha}{\sum_{l \in N_i^k}\tau_{il}^\alpha}, \ \ \ \text{ if } j \in N_i^k\\\\
+0, \ \ \ \ \ \ \ \ \text{ if } j\notin N_i^k
+\end{matrix}
+\right.$$
+$N_i^k$ sind alle Knoten die von $i$ erreichbar sind.\\
+
+Zyklen werden eliminiert, indem der Pfad nochmal durchsucht wird und Sequenzen zwischen zwei Zahlen eliminiert.\\
+\\
+Update der Pheromon-Konzentration durch ablegen (kann von Länge des Pfades abhängen)
+$$\tau_{ij} \leftarrow \tau_{ij}+\triangle\tau^k$$ 
+Evaporation der Pheromone dann durch
+$$\tau_{ij} \leftarrow (1-p)\tau_{ij}$$ 
+
+\subsubsection{Fazit}
+Update basierend auf der Qualität der Lösung konvergiert zur optimalen Lösung. Für größere Werte $\alpha,p$ konvergiert S-ACO jedoch schneller auf sub-optimalen Lösungen.
+
+ 
+\subsection{ACO Metaheuristik}
+Eine Metaheuristik ist ein allgemein anwendbares, generisches, nicht vom Problem abhängendes Schema zur Entwicklung heuristischer Prozesse. Es ist eine allgemein anwendbare Heuristik, die (iterativ oder konstruktiv) problemspezifische Heuristiken zu vorteilhaften Bereichen des Suchraums führt.\\
+
+Künstliche Ameisen generieren potentielle Lösungen, indem sie zufällig durch einen verbundenen Graphen $G_C=(C,L)$ laufen. \\
+Die Knoten sind Komponenten, $G_C$ ist der Konstruktionsgraph, $L$ sind die Verbindungen.\\
+Die Beschränkungen $\Omega$ sind Verhaltensregeln der Ameisen.\\
+Für jede $c_i\in C$ und eine Verbindung $l_{ij}$ wird eine Pheromon-Konzentration $\tau_i$ gesetzt.\\
+Hinzu kommt die Komponente $\eta$ für jedes $c_i$ und $l_{ij}$, welche die heuristische Information ist.\\
+Die Ameise $k$ sucht den Graphen nach einer optimalen Lösung $s^*\in S^*$. \\
+Darüber hinaus besitzt er die Memory $M^k$, die wichtig ist, um Beschränkungen zu erfüllen und die aktuelle Lösung zu evaluieren.\\
+Es hat einen Anfangszustand und Endzustand, wobei der aktuelle Zustand $x_r=\langle x_{r-1},i \rangle$ ist.
+\begin{lstlisting}
+procedure ACOMetaheuristic
+  ScheduleActivities
+    ConstructAntSolutions
+    UpdatePheromones
+    DaemonActions % optional
+  end-ScheduleActivities
+ end-procedure
+\end{lstlisting}
+ 
+\subsection{Traveling Salesman Problem}
+Ziel: Finde den kürzesten Pfad, der alle Städte verbindet (Funktion $f$). Jede Stadt kann nur ein mal besucht werden (Beschränkung $\Omega$). Eine Ameise wandert von Stadt zu Stadt, bis alle Städte durch sind. Die Entscheidung, in die Stadt $i$ zu gehen, hängt davon ab, ob man schon drin war, oder von der Anzahl der Pheromone.\\
+\textbf{Formal:} Gewichteter Graph $G=(N,A)$, wobei $(i,j)\in A$ ein Gewicht $d_{ij}$ hat.
+\subsubsection{Ant System Algorithmus}
+\begin{lstlisting}
+procedure ACOMetaheuristic
+  set parameters, initialize pheromone trails
+  while (termination condition not met) do
+	ConstructAntSolutions
+	UpdatePheromones  
+end-procedure
+\end{lstlisting}
+\newpage
+
+Folgendes Vorgehen:
+\begin{enumerate}
+	\item Setze alle Konzentrationen auf $\tau_0 = \frac{m}{C^{nn}}$
+	\item in jedem Schritt bewegt sich die Ameise gemäß \textbf{random proportional rule}
+	$$p_{ij}^k=\dfrac{[\tau_{ij}]^\alpha\cdot[\eta_{ij}]^\beta}{\sum_{l\in N_i^k} [\tau_{il}]^\alpha\cdot[\eta_{il}]^\beta}$$
+	Als Heuristik wird der Abstand der Knoten gewählt 
+	$$\eta = \frac{1}{d_{ij}}$$
+	Hierbei $\alpha = 1$ und $\beta= 2-5$ ganz gut
+	\item Update der Pheromone ist dann Evaporation
+	$$\tau_{ij} \leftarrow (1-p)\tau_{ij}$$ 
+	und erhöhte Konzentration (je nachdem wie oft der Pfad begangen wurde)
+	$$\tau_{ij} \leftarrow \tau_{ij}+\sum_{k=1}^{m} \triangle \tau_{ij}^k$$ 
+	Wobei $\triangle \tau_{ij}^k = \dfrac{1}{C^k}$, $C^k$ kosten der Tour
+\end{enumerate}
+\textbf{Weitere Optimierungen:}
+\begin{itemize}
+	\item 2 Exchange
+	\item Mehr Fokus auf Ausnutzen der Erfahrung
+	\item Pheromon-Konzentration für die Ameise mit der besten Tour Updaten.
+	\item Pheromone früher evapoieren
+\end{itemize} 
+
+\subsection{Anwendungsbeispiele}
+\subsubsection{Vehicle Routing Problem}
+Es gibt ein Depot mit dem Index $0$. Es gibt $n$ Kunden, wobei jeder Kunde $i$ die Nachfrage $b_i$ nach dem selben Produkt hat. Es gibt mehrere Transportvehikel, alle haben Kapazität $B$. Es gibt verschiedene Kosten zwischen Knoten $d_{ij}$.\\
+
+\subsubsection{VRP mit Zeitfenster}
+Hierbei hat jeder Kunde noch ein vorgegebenes Zeitfenster. Dabei sind die Constraints hierarchisch, d.h. man minimiert lieber die Anzahl der Vehikel statt die Reisezeit.
 	
-	
-	
-	
-	
+\subsubsection{AntNet}
+Best-Effort-Routing gesucht in IP Netzwerken. Dabei soll das Verhalten adaptiv zum aktuellen Datenverkehr reguliert werden.\\
+
+Das Netzwerk ist charakterisiert durch
+\begin{itemize}
+	\item Bandbreite und Latenz von Links (Kanten)
+	\item Router (Store-And-Forward, Buffer, Routing Lookup)
+\end{itemize}
+Der ACO kann hierbei wie folgt angewendet werden:
+\begin{enumerate}
+	\item Die Prozedur ist das Aussenden der Ameisen zu einer Destination. Die Ameise sucht Pfad mit minimalen Kosten, basierend auf der Heuristik des Routers und der Memory der Ameise.
+	\item Die Modellierung erfolgt durch Graph $G_C$ von Routern. Jeder Router erhält eine Pheromone Matrix, die angibt, wie gut es ist von $i$ nach $d$ via $j$ zu gehen.
+\end{enumerate}
+Und so weiter.
+\newpage
+
+\section{Analyse von OC Systemen}
+Wie kann man ein OC System/ SuOC verstehen?\\
+Von wo kommen die kreativen Ideen?\\
+Kann Wissenschaft automatisiert werden?
+\subsection{Wissenschaftliche Bemühungen}
+Herausforderungen bei Analyse von OC Systemen:
+\begin{itemize}
+	\item Systeme sind komplex und nicht-linear
+	\item Es herrscht selbst-Organisation und viele Interaktionen
+	\item Es ist schwer, alle Effekte zu antizipieren
+\end{itemize}
+$\implies$ Kreativität ist gefordert!\\
+
+\subsubsection{Wie entdeckt man?}
+Wie und woher kommen sie Ideen zu wissenschaftlichen Entdeckungen? Zufall? Gibt es einen Algorithmus dafür?\\
+
+``Art of Thought''
+\begin{enumerate}
+	\item Preparation: Am Problem arbeiten
+	\item Inkubation: Problem verinnerlichen
+	\item Andeutung: Spüren, dass eine Lösung auf dem Weg ist
+	\item Erleuchtung: Kreative Idee wird bewusst
+	\item Verifizierung: Lösung wird geprüft
+\end{enumerate}
+
+\subsubsection{Hypothese}
+Eine Hypothese ist eine gebildete Vermutung in der empirischen Wissenschaft. Sie ist \textbf{testbar}(Es gibt evtl. Gegenbeispiele, Plausibilität) oder \textbf{falsifizierbar}.\\
+
+Was kommt zuerst: Hypothese oder Daten? Formuliert man die Hypothese, weil man Daten gesehen hat (\textbf{Induktion})? Sammle ich Daten weil ich eine Hypothese habe (\textbf{Deduktion})?
+
+\subsubsection{Norwood Russell Hanson}
+Norwood Russel Hanson war ein amerikanischer Philosoph. Seine wissenschaftliche Entdeckung war die Argumentation von Daten zu Hypothesen. Er entwickelte das \textbf{Hypothesis Catching}
+\begin{enumerate}
+	\item Fange eine Hypothese
+	\item Teste sie
+	\item Verfeinere oder Verwerfe
+	\item Fang nochmal an!
+\end{enumerate}
+\textbf{Markov Ketten} können benutzt werden, um auf micro-level einen \textbf{individuellen Agenten} zu beschreiben oder auf macro-level das ganze\textbf{ SuOC }zu beschreiben.\\
+
+Selbst-Organisation basiert auf 4 Komponenten:
+\begin{itemize}
+	\item positive und negative Rückkopplung
+	\item Fluktuationen (zufällige Ereignisse)
+	\item Mehrere Interaktionen
+	\item Balance zwischen Exploitation und Exploration
+\end{itemize}
+
+Um nun OC Systeme zu analysieren, muss man zunächst \textbf{inkrementell} OC Systeme \textbf{modellieren}. Man sucht für das vorliegende System und Szenario ein \textbf{key feature} heraus, welches die relevanteste Eigenschaft des Systems ist. Danach versuchen wir, \textbf{Markov Zustände} $s\in S$ zu finden, die die Klasse der konfigurierten Zustände $C' \subset C$ repräsentiert. $S$ ist dann nach key-feature $s_f\in S_f$ strukturiert, $s \in S\backslash S_f$\\
+
+Wir möchten also 
+\begin{enumerate}
+	\item eine Markov Kette erstellen,
+	\item die Rückkopplung überprüfen
+	\item verfeinern und dann mit 2. weitermachen, oder mit 1. von vorne starten
+\end{enumerate}
+\subsubsection{Key Feature Transitionen}
+Eine \textbf{bool'sche Funktion} $f$ bestimmt, ob ein Agent $a$ das \textbf{key feature} hat. Die Teilmenge der Agenten mit key feature zur Zeit $t$ ist definiert durch
+$$A_f(t)=\{a|f(a,t)\}$$
+Die Verhältnis von Schlüsselmerkmalen $k$ errechnet sich durch
+$$k=\dfrac{|A_f(t)|}{|A(t)|}$$
+Wir sagen dann, dass $s_f\rightarrow s$ und $s\rightarrow s_f$ Key-Feature-Transitionen sind, weil sich dann das Schlüsselmerkmal mind. eines Agenten ändert mit Auswirkung auf das Gesamtsystem.\\
+ Die Wahrscheinlichkeit für eine solche Transition mit einem Verhältnis $k$ ist
+$$P_{s,s_f}(k)=\dfrac{P(s\rightarrow s_f,k)}{P(s\rightarrow s_f,k)+P(s_f\rightarrow s,k)}$$
+Die Transitions-Wahrscheinlichkeit $P_{s,s_f}(k)$ kann auch \textbf{empirisch} gemessen werden und durch einen Octant analysiert werden: 
+\begin{center}
+	\includegraphics[height = 4cm]{TP.png}
+\end{center}
+
+\subsection{Exemplarische Analyse}	
+Heuschrecken Bewegung\\
+$$x_i(t+1) = x_i(t) + v_0 v_i(t)$$
+$$u_i(t+1)=\left\{
+\begin{matrix}
+	G(L_i(t), R_i(t)),\text{ with probability }P_d\\
+	-u_i(t), \text{ with probability }P_n\\
+	u_i(t),\text{ else}
+\end{matrix}
+\right.$$
+
+$$G(L,R)=\left\{
+\begin{matrix}
+-1, \ L>R\\
++1, \ R > L\\
+u_r, \ R=L
+\end{matrix}
+\right.$$
+
+\begin{center}
+	\includegraphics[height = 6cm]{LR.png}
+\end{center}
+
+\subsubsection{Interpretation}
+Micro-lvel Markov Ketten reflektieren nicht alle relevanten Systemeigenschaften. Das Wechseln als eine Minorität führt echtes Feedback ein, kleine Komponenten zeigen Fluktuationen, die als negatives Feedback beitragen.
+\newpage
+
+\section{Robustheit und Vertrauen}
+Woher wissen wir, ob das System \textbf{sicher} ist?\\
+Wie verhält sich das System bei Fehlern und Störungen?\\
+Wie Flexibel ist es?\\
+Können wir dem System trauen?
+
+\subsection{Robustheit}
+Unter \textbf{Robustheit} versteht man die Fähigkeit eines Systems, auch im Falle von Parameterwechsel das gewünschte Verhalten zu garantieren. Die Funktion wird beibehalten, egal ob sich die \textbf{interne Struktur} ändert oder die \textbf{Umgebung}.\\
+
+Ursachen für Störungen und Fehler sind in der Regel
+\begin{itemize}
+	\item ein falsches Systemmodell
+	\item Numerische Fehler
+	\item Varianz der Parameter
+	\item oder einfach Abnutzung
+\end{itemize}
+
+Unter \textbf{Flexibilität} versteht man die Fähigkeit des Systems, sein Verhalten anzupassen, wenn sich Parameter oder Ziele ändern. 
+
+\subsubsection{System Modell}
+Ein System $S$ ist ein Tupel $S = (\mathcal{I},\mathcal{O},\beta)$
+\begin{itemize}
+	\item $\mathcal{I}$ ist das \textbf{Input} Interface: $$\mathcal{I} = R_s \cup C_c,$$ wobei $r \in R_s$ der rohe Sensor Input ist, und $c\in C_s$ der Control Input
+	\item $\mathcal{O}$ ist das \textbf{Output} Interface. $o \in \mathcal{O}$ sind alle Parameter, die vom System beeinflusst werden.
+	\item $\beta$ ist das \textbf{Verhalten}. Es definiert die Relation zwischen $R_s$ und $O_s$ zum Zeitpunkt $t$ und Antwort bei $t+1$. Es kann auch \textbf{zeitvariant} sein:
+	$$\beta(t)\subseteq R_S \times O_s$$
+	\item Dazu gibt es noch die Verhaltensspezifikation $\rho \subseteq R_s \times O_s$, welches die Performace Function ist. 
+\end{itemize}
+\subsubsection{Adaptivität}
+Fähigkeit des Systems, sich an verschiedene Verhaltensspezifikationen $\rho$ anzupassen.\\
+Das System ist \textbf{adaptiv} wenn es ein $t_1 \geq t_0$ gibt, sodass für alle $t$, $t_1\leq t \leq t_2$ gilt, dass $\rho(t)$ und $\beta(t)$ erfüllt sind.
+\begin{center}
+	\includegraphics[height = 3cm]{rho.png}
+\end{center}
+
+Zur Evaluation erweitern wir das Systemmodell. Jedes System hat neben der Beschreibung $S=(\mathcal{I},\mathcal{O},\beta)$ auch den \textbf{aktuellen Zustand} $\mathbf{z}(t)$. Hinzu kommen die Parameter der \textbf{Umgebung} und die \textbf{interne Struktur} des Systems.\\
+
+Zur Evaluation wird der Zustandsraum auf den Objective Space \textbf{gemappt}. Anhand der numerische Werte kann beurteilt werden, ob das System sich noch im Akzeptierten Zustandsraum befindet.
+
+\subsubsection{Störung und unterteilter Zustandsraum}
+Der Zustandsraum kann in 4 Zonen eingeteilt werden:
+\begin{itemize}
+	\item idealer Zustandsraum (Target Space TS)
+	\item akzeptabler Zustandsraum (Acceptance State, AS)\\
+	Zustände, die einen Evaluationswert innerhalb eines Grenzwerts haben
+	\item Überlebenszustand (Survival State, SS)\\
+	Das System kann von SS zu AS durch eine Kontrollsequenz noch zurückkehren
+	\item Todeszone (Dead Space, DS)\\
+	Kein zurück
+\end{itemize}
+
+Eine \textbf{Störung} $\delta$ kann intern oder extern vom System sein und führt zu einer Systemtransition von $\mathbf(t)$ zu $\delta(\mathbf{z}(t))$\\
+
+Die Robustheit wird dann anhand der nichtleeren Menge $D=\{\delta_0, \delta_1,\dots  \}$ gemessen.\\
+Es ist \textbf{stark robust} in Bezug auf $D$ wenn es für alle $\delta \in D$ im idealen Zustandsraum (TS) bleibt, sogar wenn sich Parameter ändern.\\
+ Das System ist \textbf{schwach robust} in Bezug auf $D$ wenn es für alle $\delta \in D$ im akzeptablen Zustandsraum bleibt (AS)\\
+ 
+ Ein System ist \textbf{adaptiv}, wenn es in Bezug auf $D$ ohne Fremdeinwirkung in AS zurückkehren kann. Es besitzt \textbf{Potenzial zur Adaptivität} wenn es nur mithilfe eines \textbf{externen Einflusses} zurückkehren kann.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Vertrauen}
 \end{document}
