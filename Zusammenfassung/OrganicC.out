@@ -1,0 +1,65 @@
+\BOOKMARK [1][-]{section.1}{Einf\374hrung}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Motivation}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Emergenz}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Traditionelle Perspektive}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{Organic Computing}{section.1}% 5
+\BOOKMARK [3][-]{subsubsection.1.4.1}{Meta-Design}{subsection.1.4}% 6
+\BOOKMARK [2][-]{subsection.1.5}{Verhalten von Maschinen}{section.1}% 7
+\BOOKMARK [3][-]{subsubsection.1.5.1}{Verhalten}{subsection.1.5}% 8
+\BOOKMARK [3][-]{subsubsection.1.5.2}{Tierverhalten \(Ethologie\)}{subsection.1.5}% 9
+\BOOKMARK [2][-]{subsection.1.6}{Komplexit\344t und Opazit\344t von Algorithmen}{section.1}% 10
+\BOOKMARK [1][-]{section.2}{Von Bewegung zu Intelligenz}{}% 11
+\BOOKMARK [2][-]{subsection.2.1}{Wichtigkeit der Bewegung}{section.2}% 12
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Randomisierte Bewegung}{subsection.2.1}% 13
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Ziel-orientierte Bewegung}{subsection.2.1}% 14
+\BOOKMARK [2][-]{subsection.2.2}{Interaktion}{section.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Simple Interaktion}{subsection.2.2}% 16
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Kollaboration}{subsection.2.2}% 17
+\BOOKMARK [3][-]{subsubsection.2.2.3}{Evolution}{subsection.2.2}% 18
+\BOOKMARK [3][-]{subsubsection.2.2.4}{Gr\374n-Bart-Effekt}{subsection.2.2}% 19
+\BOOKMARK [2][-]{subsection.2.3}{Emergente Taxis}{section.2}% 20
+\BOOKMARK [1][-]{section.3}{Kollektive Intelligenz}{}% 21
+\BOOKMARK [2][-]{subsection.3.1}{El Farol Bar}{section.3}% 22
+\BOOKMARK [2][-]{subsection.3.2}{Weisheit der Menschenmenge}{section.3}% 23
+\BOOKMARK [2][-]{subsection.3.3}{Kollektive Entscheidungsfindung}{section.3}% 24
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Best-Of-n Problem}{subsection.3.3}% 25
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Ising Model}{subsection.3.3}% 26
+\BOOKMARK [3][-]{subsubsection.3.3.3}{Perkolation \(Versickerung\)}{subsection.3.3}% 27
+\BOOKMARK [3][-]{subsubsection.3.3.4}{Individuelle Entscheidungsfindung}{subsection.3.3}% 28
+\BOOKMARK [2][-]{subsection.3.4}{Geschwindigkeit vs. Genauigkeit}{section.3}% 29
+\BOOKMARK [1][-]{section.4}{Modellierung von OC-Systemen}{}% 30
+\BOOKMARK [2][-]{subsection.4.1}{Technische Begriffe}{section.4}% 31
+\BOOKMARK [3][-]{subsubsection.4.1.1}{System}{subsection.4.1}% 32
+\BOOKMARK [3][-]{subsubsection.4.1.2}{Komplex vs Kompliziert}{subsection.4.1}% 33
+\BOOKMARK [3][-]{subsubsection.4.1.3}{Systemperspektive}{subsection.4.1}% 34
+\BOOKMARK [3][-]{subsubsection.4.1.4}{Komplexit\344t}{subsection.4.1}% 35
+\BOOKMARK [3][-]{subsubsection.4.1.5}{Modellierung}{subsection.4.1}% 36
+\BOOKMARK [2][-]{subsection.4.2}{Agenten}{section.4}% 37
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Zustand / State}{subsection.4.2}% 38
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Regelnsatz}{subsection.4.2}% 39
+\BOOKMARK [3][-]{subsubsection.4.2.3}{Aktion}{subsection.4.2}% 40
+\BOOKMARK [3][-]{subsubsection.4.2.4}{Umgebung}{subsection.4.2}% 41
+\BOOKMARK [3][-]{subsubsection.4.2.5}{Zeit}{subsection.4.2}% 42
+\BOOKMARK [3][-]{subsubsection.4.2.6}{Agententypen}{subsection.4.2}% 43
+\BOOKMARK [2][-]{subsection.4.3}{Multi-Agenten-Systeme}{section.4}% 44
+\BOOKMARK [2][-]{subsection.4.4}{Koordinationsmechanismen}{section.4}% 45
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Kommunikationstypen}{subsection.4.4}% 46
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Typen von Koordinationsmechanismen}{subsection.4.4}% 47
+\BOOKMARK [3][-]{subsubsection.4.4.3}{Self X \(OC in anderen L\344ndern\)}{subsection.4.4}% 48
+\BOOKMARK [1][-]{section.5}{Architekturen}{}% 49
+\BOOKMARK [2][-]{subsection.5.1}{Observer-Controller Architektur}{section.5}% 50
+\BOOKMARK [3][-]{subsubsection.5.1.1}{System under Observation and Control \(SuOC\)}{subsection.5.1}% 51
+\BOOKMARK [3][-]{subsubsection.5.1.2}{Observer Modelle}{subsection.5.1}% 52
+\BOOKMARK [3][-]{subsubsection.5.1.3}{Observer}{subsection.5.1}% 53
+\BOOKMARK [3][-]{subsubsection.5.1.4}{Controller}{subsection.5.1}% 54
+\BOOKMARK [3][-]{subsubsection.5.1.5}{Beispiel: Aufzugskontrolle}{subsection.5.1}% 55
+\BOOKMARK [2][-]{subsection.5.2}{Monitor-Analyze-Plan-Execute}{section.5}% 56
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Autonomic Computing}{subsection.5.2}% 57
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Architektur}{subsection.5.2}% 58
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Monitor}{subsection.5.2}% 59
+\BOOKMARK [3][-]{subsubsection.5.2.4}{Analyse}{subsection.5.2}% 60
+\BOOKMARK [3][-]{subsubsection.5.2.5}{Plan}{subsection.5.2}% 61
+\BOOKMARK [3][-]{subsubsection.5.2.6}{Execute}{subsection.5.2}% 62
+\BOOKMARK [3][-]{subsubsection.5.2.7}{Knowledge Source}{subsection.5.2}% 63
+\BOOKMARK [2][-]{subsection.5.3}{Fazit}{section.5}% 64
+\BOOKMARK [1][-]{section.6}{Schwarm Intelligenz \(ACO\)}{}% 65

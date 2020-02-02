@@ -1,0 +1,486 @@
+\documentclass[a4paper]{article}
+
+%%% packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{subcaption}
+\usepackage{amsmath,amssymb}
+\usepackage{alltt}
+\usepackage{natbib} % please use \citep and \citet instead of \cite
+\usepackage{tikz}
+\usetikzlibrary{positioning,automata}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.arrows}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+\definecolor{dark-red}{rgb}{0.4,0.15,0.15}
+\definecolor{dark-blue}{rgb}{0.15,0.15,0.8}
+\definecolor{medium-blue}{rgb}{0,0,0.5}
+\hypersetup{
+	colorlinks, linkcolor={dark-red},
+	citecolor={dark-blue}, urlcolor={medium-blue}
+}
+
+\graphicspath{{./figs/}}
+\DeclareGraphicsExtensions{.pdf}
+
+\setlength{\parindent}{0mm}
+
+\usepackage{fancyhdr}
+
+%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\newcommand{\seminar}{Organic Computing (WS 2019/2020)}
+\title{\textbf{Organic Computing:\\ Zusammenfassung}}\let\Title\@title
+\newcommand{\sTitle}{Drahtlose Sensornetze}
+\newcommand{\AuthorName}{Alexander Osiik}
+\author{\AuthorName\\
+	\href{mailto:alexander.osiik@student.uni-luebeck.de}{alexander.osiik@student.uni-luebeck.de}\\
+	\small \seminar\\
+	%    \small Service Robotics Group\\
+	\small Institute of Computer Engineering, University of L\"ubeck\\
+}\let\Author\@author
+\makeatother
+
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{\seminar}
+\cfoot{}
+\rfoot{\thepage}
+\lhead{\AuthorName}
+\rhead{\sTitle}
+
+%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\maketitle
+\section{Einführung}
+Computersysteme wrden immer komplexer. Die Netzwerke von kleinen, eingebetteten Systemen werden immer größer und komplexer. Es stellt sich die Frage, wie man unter solchen Bedingungen die Komplexität von
+\begin{itemize}
+	\item Design
+	\item Implementierung
+	\item Management
+	\item Adaptation etc.
+\end{itemize}
+betrachtet und verbessert.\\
+\\
+In Organic Computing möchte man deswegen selbst \textbf{organisierte Systeme} entwickeln, die automatisch höherlevelige \textbf{Ziele} erfüllen und sich an die \textbf{Wünsche des Nutzers} anpassen. Dabei orientiert man sich oft an \textbf{lebenden Organismen}.
+\subsection{Motivation}
+Man möchte bei komplexen Systemen herausfinden, wie sie \textbf{funktionieren}, wie man sie \textbf{designed} und wie man sie \textbf{überwacht}.
+
+\textbf{Moore'sches Postulat}
+\begin{center}
+	\includegraphics[height = 4cm]{Moore.png}
+\end{center}
+Bei komplexen Systemen wie autonomen Fahrzeugen stellen sich viele Fragen.
+\begin{itemize}
+	\item Wie \textbf{überwacht} man die Komplexität eines solchen Systems?
+	\item Wie stellt man sicher, dass es keine \textbf{ungewollte Interaktion} zwischen zwei Systemen gibt?
+	\item \textbf{WER} kontrolliert das Auto?
+	\item Wer wird bei Fehlern zur \textbf{Rechenschaft} gezogen?
+\end{itemize}
+\textbf{Man möchte sich die Entwicklung komplexer Systeme dort abgucken, wo es schon erfolgreich war (zB. Gehirn).}\\
+
+Komplexe Systeme entwickeln sich meistens durch \textbf{natürliche Selektion / Evolution}, oder durch tiefgründige \textbf{Forschung}, wo mehr und mehr komplexe selbst-organisierte Systeme gefunden werden können.
+\subsection{Emergenz}
+Unter Emergenz versteht man die spontane \textbf{Entwicklung von Systemcharakteristiken}, die sich durch Interaktion mehrerer Entitäten entwickeln. Diese emergenten Eigenschaften können nicht bei einer \textbf{isolierten} Entität erklärt werden.
+\begin{itemize}
+	\item Interaktion zwischen mehreren Entitäten
+	\item \textbf{keine} zentrale Kontrollinstanz
+	\item resultierende Patterns sind nicht vorher explizit programmiert 
+\end{itemize}
+Die Herausforderungen liegen darin, das emergente Verhalten \textbf{integrativ} zu verstehen (micro$\rightarrow$macro) oder das Verhalten individueller Elemente herauszufinden (macro$\rightarrow$micro).\\
+\textbf{Beispiele:} Shockwave Traffic Jam, V-Formation Vögel\\
+
+\subsection{Traditionelle Perspektive}
+``Deterministic Centralized \textbf{(DC)} Mindset''
+\begin{itemize}
+	\item \textbf{D}: Relevanz von Randomisierung und Rauschen nicht berücksichtigt 
+	\item \textbf{C}: Pattern wird durch Koordinator generiert
+\end{itemize} 
+\textbf{Eine falsche Annahme ist, dass bei systematischen oder systemweiten Effekte nur ein einziger Aktor betrachtet wird.}
+
+\subsection{Organic Computing}
+Bei Organic Computing betrachtet man das Zusammenspiel von (eingebetteten) Systemen mit bestimmten Eigenschaften, wie \textbf{viele Entitäten}, \textbf{Mobilität}, \textbf{Vernetzung} und spontane lokale Interaktionen \textbf{(Emergenz)}.\\
+
+Was wir dafür brauchen sind viele, selbst-organisierte Entitäten, \textbf{robuste} Verhalten, flexible Verhalten, \textbf{Adaption} an dynamische Umweltfeatures und \textbf{Vertrauen} sowie \textbf{Kontrolle}. \\
+
+\textbf{Kann man ein selbst-organisierenden und adaptierenden Mechanismus erstellen, ohne alle mögliche Zustände zu kennen?}
+\subsubsection{Meta-Design}
+\begin{itemize}
+	\item Der Ingenieur macht Gesetze, kein Micromanagement
+	\item Fuzzy-Platzierung statt rigide
+	\item Adaptieren und selbst regulieren statt Kontrolle und Redesign
+\end{itemize}
+\subsection{Verhalten von Maschinen}
+Das Verhalten von Maschinen ist ein kompliziertes wissenschaftliches Feld, sobald es genauso schwer zu verstehen ist wie ein biologisches System.
+\subsubsection{Verhalten}
+Verhalten ist, wie sich ein Lebewesen in bestimmten Situationen oder als Reaktion auf einen bestimmten Stimulus verhält.\\
+
+Es gibt sozial geprägtes Verhalten, Verhaltenswissenschaften (Psychologie, Sozialwissenschaften, Neuralwissenschaften)
+\subsubsection{Tierverhalten (Ethologie)} 	
+Wissenschaftliche und objektive Forschung von Tierverhalten unter natürlichen Voraussetzungen. Verhalten wird als adaptives evolutionäres Extra behandelt.
+\subsection{Komplexität und Opazität von Algorithmen}
+Architektur und Training können sehr simpel sein, jedoch ist das Resultat sehr komplex, eher eine \textbf{black box}. Exakte funktionale Prozesse sind \textbf{hart zu interpretieren}, sogar von Wissenschaftlern, die diese Algorithmen erstellen! Sourcecode und Modell sind nur bedingt prädiktive Kraft.
+\begin{center}
+	\includegraphics[height = 5cm]{AI.png}
+\end{center}
+Man soll zunächst \textbf{individuelles}, \textbf{kollektives} und dann \textbf{hybrides Mensch-Maschine} Verhalten studieren!
+\newpage
+\section{Von Bewegung zu Intelligenz}
+Organic Computing ist Überwachung von komplexen technischen Systemen, und wie man diese Systeme \textbf{selbst-x}(adaptivm optimierend, reparierend etc.) macht. Man will also, dass diese System \textbf{intelligent} sind; sich in nicht antizipierten Situationen clever verhalten.\\
+\textbf{Intelligente Entscheidungsfindung} ist das angemessene Verhalten in neuen Situationen, wobei man die Handlungsalternativen basierend auf den eigenen Präferenzen aussucht. \\
+\\
+Doch was ist die \textbf{Grundlage} der Intelligenz, und wie können wir sie \textbf{finden} oder \textbf{integrieren}?
+\subsection{Wichtigkeit der Bewegung}
+\textbf{Die Wahrnehmung der eigenen Bewegung und die anderer Entitäten ist Grundlage der Intelligenz.} Es ist eine wichtige Kompetenz, die über das Überleben in der Wildnis entscheidet. Was sich bewegt macht einen \textbf{lebendigen} Eindruck.\\
+\subsubsection{Randomisierte Bewegung}
+Die \textbf{randomisierte} Bewegung, bei der ein System sich in irregulärer Weise bewegt.
+$$\sigma_s=\sqrt{\langle s_N^2 \rangle} = \sqrt{N} \ \ \text{Bewegung nach Münzwurfmodell} $$ 
+Beim Random Walk wächst die Distanz zum Ursprung proportional mit der Zeit. Die unterliegende Wahrscheinlichkeitsdichte ähnelt der eines Diffusionsprozesses.\\
+\textbf{Brown'sche Bewegung:} Zufällige Bewegung von Partikel in einer Flüssigkeit abhängig von Temperatur Bewegung.\\
+\textbf{Drunkard's Walk:} Man startet eine Bewegung an Position $c_0$, jeder Schritt $c_i$ hat die \textbf{Länge L}. Nach $N$ Schritten ist die Distanz $\sqrt{N}L$ erreicht.\\
+\textbf{Weitere Variationen:} Brown'sche Bewegung mit Drift:
+$$\frac{\triangle x}{\triangle t} = \mu + \sigma\frac{\triangle W}{\triangle t}$$
+\subsubsection{Ziel-orientierte Bewegung}
+\textbf{Beispiel:} Bakterielle Chemotaxis\\
+Hierbei haben Bakterien zwei Bewegungstypen:\\
+ \textbf{Geradlinige Bewegung} (Rotation CCW), und \textbf{Taumeln}(Rotation CW). Der \textbf{Bias} ist hier die zeitliche Wahrnehmung, ob die Situation sich verbessert (weiterschwimmen) oder nicht (Taumeln). Die Modellierung erfolgt anhande von
+ \begin{itemize}
+ 	\item Intrazellulären Modell
+ 	\item Zellulären Model
+ 	\item Populationsmodel (interzellulär)
+ \end{itemize}
+\subsection{Interaktion}
+Es gibt grundsätzlich zwei Formen der Interaktion
+\begin{itemize}
+	\item Explizit: Es wird ein beabsichtigtes Signal gesendet
+	\item Implizit: Physischer Kontakt, Kommunikation über die Umgebung
+\end{itemize}
+Die Signale können \textbf{Visuell}(Glühen, Farben), \textbf{Auditiv}(Heulen, Rufen), \textbf{Taktil}(Anfassen) und \textbf{Chemisch}(Pheromone, olfagorisches) sein\\
+
+\ \ Bewegung nach Münzwurfmodell Kommunikation/Population braucht man denn? Wieviel Neuronen braucht man für Intelligenz? Wieviele Leute für eine gute Party?\\
+\textbf{Beispiel:} Das Drei Körper Problem aus der Physik (Modellierung von 3 frei beweglichen abhängigen Partikeln)
+\subsubsection{Simple Interaktion}
+$N$ Partikel, die sich zufällig bewegen, Gruppen detektieren, stoppen, und eine gewisse Zeit warten. Wie aggregiert man alle $N$ Partikel in ein Cluster?\\
+\textbf{Ansatz:} In großen Clustern länger bleiben.
+\subsubsection{Kollaboration}
+Bei zwei Agenten hat jeder die Wahl zwischen zwei möglichen Optionen:\\
+ ``\textbf{Cooperate}'' oder ``\textbf{Defect}''\\
+\begin{center}
+	\includegraphics[height = 4cm]{PrisonersDilemma.png}
+\end{center}
+
+ Das \textbf{Iterated Prisoner's Dilemma} untersucht das obige Verhalten nach mehreren Runden. Hierbei ist die Frage, welche Strategie am schlausten ist (Keine Perfekte Information vorhanden, da Entscheidungsbaum simultan!):
+ \begin{itemize}
+ 	\item Revenge!
+ 	\item Sofort Heimzahlen, aber 2.Chance geben
+ 	\item Immer Nett sein
+ 	\item Random
+ \end{itemize}
+\subsubsection{Evolution}
+Idee: Wir benutzen künstliche Evolution für IPD um Strategien zu entwickeln und zu schauen, welche Strategie überlebt. Die getesteten Stratefien sind
+\begin{itemize}
+	\item Konditionale Kooperator
+	\item betrügerische Überläufer
+	\item Purer Überläufer
+\end{itemize}
+Man beobachtet jeweils eine zyklische Dominanz.
+\subsubsection{Grün-Bart-Effekt}
+Der Grün-Bart-Effekt ist ein Gedankenexperiment in verwendete Evolutionsbiologie selektiv zu erklären Altruismus unter den Individuen einer Spezies. Zwei sich erkennende Individuen benehmen sich \textbf{vetternwirtschaftlich}.\\
+
+Dazu gehört
+\begin{itemize}
+	\item Fakultatives Helfen: Nur GB helfen
+	\item Obligatorisches Helfen: Immer helfen, aber nur GB profitiert
+	\item Fakultatives Schaden: Immer den $\neg$GB schaden
+	\item Obligatorisches Schaden: Immer schaden, aber GB immun
+\end{itemize}
+\subsection{Emergente Taxis}
+Kann ein Kollektiv von simplen Agenten zusammen etwas erreichen, was ein einzelner nicht schafft?\\
+\textbf{taxis:} Bewegung als Antwort auf einen Stimulus\\
+\\
+Bei der \textbf{Emergent Phototaxis} möchte man
+\begin{enumerate}
+	\item Die Kollision mit anderen Robotern vermeiden
+	\item Die Kohärenz beibehalten
+	\item Roboter, die Kohärenz erlangen, bewegen sich random.
+\end{enumerate}
+Fazit: Es funktioniert!
+\newpage
+
+\section{Kollektive Intelligenz}
+In Agentensystemen gibt es wenig bis \textbf{gar keine zentralisierte Kommunikation} oder Kontrolle. Es können nicht alle Agenten reden.\\
+
+Exemplarische Design Probleme, die verteilte Computersysteme beinhalten, sind
+\begin{itemize}
+	\item Kontrollsystem für Routing in einem Netzwerk
+	\item Routing in einem Stromnetz
+	\item Verkehrskontrolle
+\end{itemize}
+\subsection{El Farol Bar}
+Das El Farol Bar Problem ist ein Problem aus der Spieltheorie. Jeden Donnerstag wollen die Bewohner in die El Farol Bar. Die Bar ist klein, und niemand hat Spaß, wenn es zu voll ist.\\
+Wenn weniger als $60\%$ gehen, haben alle mehr Spaß, als sie zu Hause gehabt hätten. Vice Versa.\\
+\textbf{Problem:} Jeder entscheidet zur selben Zeit!
+\subsection{Weisheit der Menschenmenge}
+Idee: Man sammle Meinungen von einer Anzahl an Experten. Diese Meinungen werden verarbeitet (Mittel/Median). Die ``\textbf{kollektive}'' Lösung ist meistens \textbf{besser}, als die ``\textbf{individuelle}''.\\
+\textbf{Francis Galton, Plymouth 1906}\\
+\\
+Die Effektivität der Weisheit wird oft auf das \textbf{Gesetz der Großen Zahlen} reduziert, bei dem der Durchschnitt eines statistischen Experiments den Erwartungswert $\mu$ erreicht, je mehr Versuche gemacht werden.\\
+Hier ist es jedoch wichtig, dass die \textbf{Unabhängigkeit} jeder Wertung vorliegt, und Experten sich nicht gegenseitig beeinflussen. Das \textbf{Mitteln} reduziert zufällige Fehler, aber nicht \textbf{systematische Fehler}. 
+\subsection{Kollektive Entscheidungsfindung}
+\subsubsection{Best-Of-n Problem}
+Man möchte aus $n$ Alternativen die beste finden.
+\begin{itemize}
+	\item jede Option hat die Qualität $\rho_i\in (0,1]$
+	\item Mehrheit $M\geq (1-\delta)N$ wird gesucht, mit $0<\delta<<0.5$
+\end{itemize}
+\textbf{Wie lange} braucht der Prozess zum konvergieren?\\
+\textbf{Wie oft} wird die Mehrheit erreicht?
+
+\subsubsection{Ising Model}
+Populäres Modell, welches aus dem Ferromagnetismus kommt. Jede Zelle eines Grids hat dabei die Zustände $s=\pm1$. Nachbarn wollen dabei im gleichen Zustand sein (Energieminimierung). Ein spontaner Wechsel ist abhängig vn der Temperatur möglich.
+\begin{itemize}
+	\item Magnetisierung $M=\sum_{i}s_i$
+	\item Energie $E = \sum_{\langle ij \rangle}s_is_j$
+\end{itemize}
+Mit dem \textbf{Metropolis Algorithmus} wird pro Zeiteinheit ein Spin geflippt und geguckt, ob die Energie sich reduziert. Die Minimierung wird akzeptiert, wenn:
+\begin{enumerate}
+	\item $\triangle E \leq 0$: Exploitation mit WS = 1
+	\item $\triangle E < 0$ : Exploration mit Wahrscheinlichkeit $A = \exp(-\beta\triangle E)$, $\beta = \frac{1}{T}$
+\end{enumerate}
+\subsubsection{Perkolation (Versickerung)}
+Perkolation ist der Wasserfluss durch ein solides Substrat. \textbf{Perkolationstheorie} wird als Model für viele Szenarien verwendet, zb: Ausbreitung von \textbf{Epidemien}, \textbf{Waldbrände}, \textbf{Leitungsfähigkeit}...\\
+Dabei beobachtet man ein interessantes, nicht-lineares Verhalten. Es gibt eine \textbf{kritische Wahrscheinlichkeit} $p^*$, wodurch ein kleines Cluster zu einem maximal großem Cluster mutiert.\\ \textbf{Beispiel:} Ein Feuer würde bis $p^*$ ausgehen, danach jedoch immer durchbrennen.\\
+
+\begin{center}
+	\includegraphics[height = 9cm]{Percolation.png}
+\end{center}
+\subsubsection{Individuelle Entscheidungsfindung}
+Idee: Es gibt \textbf{Beweise} für eine der Alternativen, welche verarbeitet und \textbf{akkumuliert} werden bis eine \textbf{Schwelle} überschritten wird, nach der die \textbf{Entscheidung} getroffen wird.
+\subsection{Geschwindigkeit vs. Genauigkeit}
+Man kann schnell und ungenau sein, oder langsam und genau. Dies hängt nicht nur von Reaktionszeit ab!\\
+
+Bei Kollektiven bekommt man meist Informationen durch seine Nachbarn. Beim \textbf{Ising-Modell} sind die Nachbarn fix, bei regulären Schwärmen bewegen sich die Nachbarn ständig! Die \textbf{lokale Stichprobe ist repräsentativ} für die gesamte Situation. 
+\begin{itemize}
+	\item Majority Rule (MR): Zähle die Meinungen der Nachbarn, bleib bei der Mehrheit (schneller)
+	\item Voter Model (VM): Nimm einen zufälligen Nachbarn und übernimm seine Meinung (bei großen Schwärmen genauer)
+\end{itemize}
+
+\newpage
+\section{Modellierung von OC-Systemen}
+Start: Man möchte komplexe Systeme überwachen.
+\begin{itemize}
+	\item Was ist ein \textbf{System}?
+	\item Was ist ein \textbf{komplexes System}?
+	\item Wie können wir sie überwachen und \textbf{Performance} feststellen?
+\end{itemize}
+\subsection{Technische Begriffe}
+\subsubsection{System}
+Ein System ist eine Menge detaillierter Methoden, Prozeduren und Routinen, welche eine bestimmte \textbf{Aktivität} ausüben. Es ist eine organisierte \textbf{zweckgebundene Struktur}, die aus von einander abhängigen \textbf{Entitäten} abhängt. Diese Elemente beeinflussen sich gegenseitig und \textbf{erhalten die Existenz des Systems.}\\
+
+Das \textbf{lineare System} ist dabei die simpelste Form eines Systems. Eine Änderung/Störung löst eine Antwort des Systems aus, welche proportional zur Eingabe ist.
+$$y=Ax+B$$
+Bei \textbf{nicht-lineare Systemen} ist die Systemantwort dementsprechend nicht proportional zur Eingabe, aber dennoch \textbf{vorhersehbar}. 
+$$y = \sin x$$
+\textbf{Nicht-lineare chaotische Systeme} scheinen unvorhersehbar zu sein, obwohl deren Systemgleichungen deterministisch sind. Ein solches System ist stark von den \textbf{Anfangsbedingungen} abhängig.
+$$x_{n+1}=rx_n(1-x_n)$$
+\subsubsection{Komplex vs Kompliziert}
+Bei komplizierten Systemen ist die Lösungshierarchie \textbf{flach} (Evolution macht komplizierte Strukturen), während sie bei komplexen Systemen \textbf{vertikal}(Emergenz macht komplexe Strukturen) ist.
+\subsubsection{Systemperspektive}
+Betrachtung aller Verhalten des Systems als ein ganzes im Kontext seiner Umgebung ist die Systemperspektive. Bei der Systemperspektive soll das System bei weiterer Betrachtung nicht weiter reduziert werden.
+\subsubsection{Komplexität}
+Eigenschaft eines Systems, \textbf{alle} seine Eigenschaften nicht durch \textbf{einen} einzigen Formalismus adäquat beschreiben zu können.
+\subsubsection{Modellierung}
+Ein Modell ist eine vereinfachte Formalisierung der durch den Modellbauer verstandenen Welt (nicht zwingend realitätsgetreu). Für agenten-basierte Modelle modelliert man \textbf{Probleme}, \textbf{nicht Systeme}!\\
+
+Beim \textbf{Top Down} Ansatz wird das System vom ganzen ins kleine modelliert. Voraussetzung dafür ist, dass das Verhalten bekannt ist, welches man reproduzieren möchte. Man braucht also ein gutes \textbf{Verständnis vom gesamten System} und wie die Komponenten \textbf{interagieren}.\\
+
+Beim \textbf{Bottom Up} Ansatz wird das Verständnis vom System jedoch mehr gestärkt. Man versteht, wie relativ einfache Einheiten miteinander vernetzen, und wie ein \textbf{deterministischer Regelsatz} zur Entwicklung \textbf{komplexer Verhalten} führt.\\
+
+Zu den agenten-basierten Ansätzen gehören \textbf{KI} (Agent ist autonome Einheit, welche Probleme löst), \textbf{Multi-Agenten Systeme} (Verteilte Kontrolle, kollektive Zielverfolgung) und \textbf{agenten-basierte Modellierung}. 
+
+\subsection{Agenten}
+Ein Agent ist ein \textbf{eingekapselter} Computer, welcher in einer Umgebung ausgesetzt ist. Er kann durch \textbf{flexible, autonome Aktionen} in dieser Umgebung ein vorgegebenes Ziel verfolgen.
+\begin{center}
+	\includegraphics[height = 5cm]{Agent.png}
+\end{center}
+\subsubsection{Zustand / State}
+Ein Zustand ist das Wissen über den Status der Umgebung. Dieses kann \textbf{öffentlich} oder \textbf{intern} sein. Zu jedem bestimmten Zeitpunkt ist der Zustand $s$ als Element der Zustandsmenge $S=\{s_1,s_2,\dots \}$ (Intern: $I=\{i_1,i_2,\dots \}$) vorgegeben.
+\subsubsection{Regelnsatz}
+Neben Zuständen verfügt der Agent über einen Regelsatz, welche die interne Beschreibung der Prozesse darstellt. Dies können zB  Transitionsregeln sein. Dabei gibt es die Varianten
+\begin{itemize}
+	\item regelbasiert
+	\item abhängig von mehreren konkurrierenden Zielen
+	\item Heuristiken
+	\item Machine Learning
+\end{itemize} 
+\subsubsection{Aktion}
+Eine Aktion hängt von anderen Agenten, internem Zustand (indirekte Umgebung) und dem Regelsatz ab. Eine Aktion beeinflusst dabei genau diese.
+\subsubsection{Umgebung}
+Eine Umgebung ist alles, was kein Agent ist, aber relevant für das Modell ist. Sie gibt \textbf{Informationen}, \textbf{Struktur} und \textbf{Stimuli}. Sie beeinflusst die Agenten, und wird von ihnen beeinflusst.
+\subsubsection{Zeit}
+Bei Agentensystemen betrachtet man in der Regel \textbf{diskrete Zeit}. Ein Zeitschritt ist dabei alles zwischen zwei Zeitpunkten, in diesem Zeitschritt funktioniert alles \textbf{simultan}. Agenten-basierte Systeme laufen \textbf{parallel} und \textbf{asynchron}, die Auswahl der Erstberechnungen muss also \textbf{randomisiert} erfolgen, um \textbf{Unabhängigkeit} zu schaffen.
+\subsubsection{Agententypen}
+\begin{itemize}
+	\item \textbf{Agenten mit Wahrnehmung (Reflex Agenten):}\\
+	Sensordaten sind Wahrnehmung, aus der der Zustand der Umgebung bestimmt wird. Danach erfolgt eine Aktion.
+	\item \textbf{Agenten mit internen Zuständen:}\\
+	Agent hat internes Gedächtnis um den Zustand des Systems zu speichern. Der neue Zustand ist vom alten Zustand abhängig und der Wahrnehmung. Abhängig von \textbf{neuem} Zustand wird dann die Aktion ausgeführt.
+\end{itemize}
+
+\subsection{Multi-Agenten-Systeme}
+Eine Menge von Agenten die in der gleichen Umgebung koexistieren. Dadurch können Aufgaben auf mehrere Agenten \textbf{aufgeteilt} werden, um die \textbf{Systemperformance} zu erhöhen, oder es können \textbf{komplexe Probleme} gelöst werden, die eine einzelner Agent nicht lösen kann.\\
+
+\textbf{Wie koordiniert man die Agenten durch Kommunikation und Interaktion?}\\
+
+Wichtige Eigenschaften sind:
+\begin{itemize}
+	\item Die Agenten sind \textbf{autonom}
+	\item Ihnen steht nur \textbf{lokale} Information zur Verfügung
+	\item Das System ist \textbf{dezentralisiert}
+	\item Zur Kollaboration und Koordination müssen Aktionen \textbf{geplant}, \textbf{mitgeteilt} und \textbf{verhandelt} werden.
+\end{itemize}
+
+\subsection{Koordinationsmechanismen}
+Bei der \textbf{Korrelation} gibt es nur eine lose/zufällige Verbindung zwischen bestimmten Events. Es herrscht \textbf{keine Kausalität}.\\
+
+\textbf{Koordination} ist eine Eigenschaft der Agentengruppe, die eine Aufgabe löst. Es ist ein \textbf{kausaler} Prozess, der aus Kommunikation der Agenten entsteht.
+\subsubsection{Kommunikationstypen}
+Die Kommunikation von Agenten kann durch \textbf{Kommunikationstopologie}(Zentral, Dezentral) und \textbf{Informationsfluss}(Direkt, Indirekt) kategorisiert werden.
+\begin{itemize}
+	\item \textbf{Topologie:}\\
+	Zentral: kein Informationsfluss zwischen Slaves\\
+	Dezentral: Peer2Peer
+	\item \textbf{Informationsfluss:}\\
+	Direkt: Agent zu Agent, ohne Umgebung zu berücksichtigen\\
+	Indirket: Durch die Umgebung (Constraints durch Master)
+\end{itemize}
+\subsubsection{Typen von Koordinationsmechanismen}
+\begin{itemize}
+	\item \textbf{Markierung-basiert:} (Zeichen, Signal)\\
+	Markierungen können von anderen Agenten observiert werden, andere Agenten können Tags beeinflussen oder hinzufügen (Vertrauen und Sicherheit)
+	\item \textbf{Token-basiert:}(alles, was Agenten in einer Gruppe teilen können)\\
+	Für jedes Token gibt es nur wenige Instanzen, Agenten mit Token haben \textbf{exklusiven} Zugriff. (Selbstschutz und Rollenverteilung)
+	\item \textbf{Markt-basiert:} (Kaufen, Verkaufen)\\
+	Agenten kommunizieren durch Transaktionen (Ressourcen Zuweisung)
+\end{itemize}
+
+\textbf{Beispiel:} Ameisen nutzen Pheromone zur Kommunikation. Pheromone ist die akkumulierte Erfahrung aller Ameisen. Diese ``Information'' kann \textbf{aggregiert} werden oder \textbf{verdampfen}. Jeder Agent kann auf die Information zugreifen und Information hinzufügen. \textbf{(Dezentralisiert, Indirekt, Markierung-basiert)}
+\subsubsection{Self X (OC in anderen Ländern)}
+\begin{itemize}
+	\item \textbf{Self-Healing:} Das System kann sich von Fehlern erholen
+	\item \textbf{Self-Protection:} Das System identifiziert und wehrt sich gegen Angriffe
+	\item \textbf{Self-Optimizing:} Das System finden ein optimales Verhalten für ein Szenario
+	\item \textbf{Self-Adaptive:} Das System passt sich an Veränderungen der Umwelt an
+\end{itemize}
+\newpage
+
+\section{Architekturen}
+Man möchte das komplexe System, was man beobachtet, auch \textbf{beeinflussen}. Man möchte damit auch sicherstellen, dass das System innerhalb der \textbf{gegebenen Parameter} operiert.
+\subsection{Observer-Controller Architektur}
+\subsubsection{System under Observation and Control (SuOC)}
+\begin{center}
+	\includegraphics[height = 5cm]{SuOC.png}
+\end{center}
+\textbf{Start:} Ein einzelnes System, bestehend aus einer Gruppe von autonomen Robotern, welches als komplett bezeichnet werden kann. \\
+\textbf{Input} sind alle Informationen (\textbf{Umgebungseffekte}), die ein SuOC zum reagieren braucht, aber nicht beeinflussen kann.\\
+\textbf{Output} sind alle Informationen (\textbf{Parameter}) die vom SuOC bestimmt werden und von außen zugänglich sind.\\
+
+Ein SuOC muss dabei folgende Anforderungen erfüllen:
+\begin{itemize}
+	\item \textbf{Ziele} erreichen und \textbf{Constraints} einhalten
+	\item Verhalten von SuOC muss \textbf{beobachtbar} sein
+	\item Performance muss \textbf{messbar} sein
+	\item Muss \textbf{dynamische Kontrollfaktoren} besitzen
+\end{itemize}
+
+Der \textbf{Observer} (Beobachter) muss den aktuellen Systemzustand messen und evaluieren. Aus diesen Informationen muss er den nächsten Zustand vorhersagen können.\\
+
+
+Der \textbf{Controller} ``überwacht'' den Prozess. Er \textbf{beeinflusst} das System so, dass die \textbf{Ziele erreicht} und die \textbf{Einschränkungen eingehalten} werden.\\
+ Er unterbricht dabei \textbf{unerwünschtes emergentes} \textbf{Verhalten} und \textbf{rekonfiguriert} das System, um der Entwicklung von unerwünschtem Verhalten entgegenzuwirken. \\
+ 
+ Möglichkeiten, das SuOC zu beeinflussen, sind:
+ \begin{itemize}
+ 	\item Verhalten von Agenten ändern (\textbf{Regelsatz}) 
+ 	\item Das \textbf{Netzwerk} modifizieren um das Agentenverhalten zu ändern
+ 	\item Die \textbf{Anzahl} an Agenten(typen) erhöhen oder verringern
+ 	\item Die \textbf{Umgebung} modifizieren
+ \end{itemize}
+\subsubsection{Observer Modelle}
+Der Controller kann dem Observer vorgeben, nach welchem \textbf{Observer-Modell} er handeln soll. Das Observer-Modell entscheidet darüber, welche \textbf{Features} überwacht werden solle, wie die \textbf{Daten analysiert} werden und wie der \textbf{zukünftige Zustand} vorhergesagt wird.
+\subsubsection{Observer}
+Der Aufbau des Observers ist wie folgt:
+\begin{enumerate}
+	\item \textbf{Monitor:} Überwachung der ausgewählten \textbf{Parameter} zu vorgegebener\textbf{ Sampling-Rate}. Diese werden in einem \textbf{Log-File} festgehalten, welche als \textbf{Basis für Vorhersagen} genutzt wird.
+	\item \textbf{Pre-Prozessor:} Bereitet die Daten für das Verarbeiten vor (Filterung und Aggregation)
+	\item \textbf{Data Analyzer:} Generiert den aktuellen Systemzustand (Parameter, entstehende Effekte). Die Methoden der Analyse hängen dabei vom gewählten Observer-Modell ab
+	\item \textbf{Predictor:} Vorhersage des zukünftigen Systemzustands. Erlaubt dem Controller, Entscheidungen nicht nur abhängig von der Vergangenheit zu treffen. Dadurch wird die Reaktionszeit reduziert (Proaktives Verhalten)
+	\item \textbf{Aggregator:} Kombiniert die oben genannten Daten zu ``\textbf{Situationsparametern}'', die dem Controller übergeben werden.
+	
+\end{enumerate}
+\subsubsection{Controller}
+Der Aufbau des Controllers ist wie folgt:
+\begin{enumerate}
+	\item \textbf{Mapping:} Implementiert Reaktion $A_i$ auf bestimmte Situationsparameter $C_i$. Erlaubt auch \textbf{erlernte Reaktionen} für unbekannte Situationen
+	\item \textbf{Performance Evaluation:} Evaluation basiert auf Adaption von Selektoren. Abhängig davon wird das \textbf{Mapping} aktualisiert. \textbf{Online Learning} mit Historie von Aktions- und Situationsparametern
+	\item \textbf{Simulation Model:} Erlaubt das generieren und evaluieren neuer Regeln. Diese werden durch Modifikation anderer Regeln oder Neuschöpfen hinzugefügt, nachdem sie in der \textbf{Simulation erfolgreich} waren (\textbf{Offline Learning}). Bietet dadurch mehr Systemsicherheit.
+\end{enumerate}
+Die Organisation kann dabei \textbf{zentral}, \textbf{dezentral} oder\textbf{ multi-level} erfolgen.
+\subsubsection{Beispiel: Aufzugskontrolle}
+Observer observiert en Bunching Effekt, Controller sorgt dafür, dass die Aufzüge äquidistant verlaufen. 
+\subsection{Monitor-Analyze-Plan-Execute}
+Historie: Problem bei IBM. Rechnersysteme werden komplexer und die Administration wird komplizierter. Man benötigt ein Paradigmenwechsel, um weniger Leute einstellen zu müssen und Kunden zufrieden zu machen.
+\begin{center}
+	\includegraphics[height = 4cm]{MAPE.png}
+\end{center}
+\subsubsection{Autonomic Computing}
+Computer, die sich \textbf{selbst verwalten} können, wenn ihnen ein \textbf{high-level Ziel} gegeben wird. Ähnlich dem menschlichen Nervensystem sollen auch Computern oder Verteilten Systemen \textbf{vitale Funktionen} zur Verfügung stehen.\\
+Siehe auch: \textbf{Self-CHOP Prinzipien}
+\subsubsection{Architektur}
+\begin{itemize}
+	\item \textbf{Autonome Systeme} sind ein Verbund von interagierenden autonomen Elementen
+	\item \textbf{Autonome Elemente} besitzen Ressourcen und stellen Services zur Verfügung (für Nutzer oder andere AE). Sie interagieren mit anderen AE um Ziele zu erreichen. Sie haben einen oder mehrere zu verwaltende Elemente.
+	\item Managed Elements (ähnlich wie SuOC) können ihren eigenen Kontrollzyklus haben. Beispiel hierfür wären Hardware- oder Softwareressourcen.
+\end{itemize}
+Der Autonome Manager ist für die Automation des IT Management Funktionalität verantwortlich. Er ist in der Regel für vier Aufgaben zuständig:
+\begin{itemize}
+	\item \textbf{Überwachen} von ME
+	\item \textbf{Analyse} von Daten
+	\item \textbf{Planen} von Aktionen
+	\item \textbf{Ausführen} von Aktionen
+\end{itemize}
+\subsubsection{Monitor}
+Automatische \textbf{Kollektion}, \textbf{Aggregation}, \textbf{Korrelation} und \textbf{Filterung} von Informationen über die Managed Ressource. Die Daten werden gesammelt, bis ein Symptom entdeckt wird. Die beobachteten Symptome werden zur Analyse weitergereicht.
+\subsubsection{Analyse}
+Zustäandig für Einhaltung von Beschränkungen. Observiert und analysiert Symptome, lernt Systemverhalten und sagt zukünftige Zustände voraus.
+\subsubsection{Plan}
+Generiert und wählt Prozeduren aus die die Managed Ressource beeinflussen. Generiert einen Plan der von GuideLines abhängt.
+\subsubsection{Execute}
+Zeitplanung und Ausführung der geforderten Systemänderungen. Kann mehrere oder einen einzigen \textbf{Managed Ressource} beeinflussen.
+\subsubsection{Knowledge Source}
+Repositorium für Symptome, Guidelines, Änderungsanfragen etc. Kann von vielen AM aus zugegriffen werden.
+\subsection{Fazit}
+\begin{itemize}
+	\item ``Wissen'' ist über das O/C System verteilt
+	\item MAPE: Sequenz von Operationen, O/C: Architekturkomponenten
+	\item Bei O/C liegt der Fokus auf definierten Zielen
+	\item MAPE hat keine expliziten \textbf{Offline Learning} Regeln
+	\item Bei beiden gibt es keine Interaktion zwischen autonomen und organische Elementen
+\end{itemize}	
+\newpage
+
+\section{Schwarm Intelligenz (ACO)}
+	
+	
+	
+	
+	
+	
+\end{document}
