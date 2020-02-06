@@ -1,5 +1,5 @@
 \BOOKMARK [1][-]{section.1}{Einf\374hrung}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Was ist Ambeint Computing?}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.1}{Was ist Ambient Computing?}{section.1}% 2
 \BOOKMARK [2][-]{subsection.1.2}{Beispiele}{section.1}% 3
 \BOOKMARK [2][-]{subsection.1.3}{Evolution von Computing}{section.1}% 4
 \BOOKMARK [2][-]{subsection.1.4}{Wie weit soll man gehen?}{section.1}% 5
@@ -33,63 +33,61 @@
 \BOOKMARK [2][-]{subsection.5.5}{Singularit\344t}{section.5}% 33
 \BOOKMARK [2][-]{subsection.5.6}{Gefahren des exponentiellen Wachstums in der Wirtschaft}{section.5}% 34
 \BOOKMARK [2][-]{subsection.5.7}{Nanoroboter}{section.5}% 35
-\BOOKMARK [1][-]{section.6}{Wearable Computing}{}% 36
-\BOOKMARK [2][-]{subsection.6.1}{Formfaktoren}{section.6}% 37
-\BOOKMARK [2][-]{subsection.6.2}{Herausforderungen}{section.6}% 38
-\BOOKMARK [1][-]{section.7}{Smart Clothes}{}% 39
-\BOOKMARK [1][-]{section.8}{Energy Harvesting}{}% 40
-\BOOKMARK [2][-]{subsection.8.1}{Koomey'sches Gesetz}{section.8}% 41
-\BOOKMARK [2][-]{subsection.8.2}{Jevon's Paradoxon \(Rebound Effekt\)}{section.8}% 42
-\BOOKMARK [2][-]{subsection.8.3}{Das Energie-Problem}{section.8}% 43
-\BOOKMARK [2][-]{subsection.8.4}{M\366gliche L\366sungen}{section.8}% 44
-\BOOKMARK [3][-]{subsubsection.8.4.1}{Mensch als Quelle}{subsection.8.4}% 45
-\BOOKMARK [1][-]{section.9}{Neue Materialien und Formen}{}% 46
-\BOOKMARK [2][-]{subsection.9.1}{Electronische Tinte / Papier}{section.9}% 47
-\BOOKMARK [2][-]{subsection.9.2}{Neue Formen}{section.9}% 48
-\BOOKMARK [2][-]{subsection.9.3}{Konvergenz von Funktionen}{section.9}% 49
-\BOOKMARK [2][-]{subsection.9.4}{Modulares Design}{section.9}% 50
-\BOOKMARK [2][-]{subsection.9.5}{Displays}{section.9}% 51
-\BOOKMARK [1][-]{section.10}{Wearables}{}% 52
-\BOOKMARK [1][-]{section.11}{Smarte Kleidung}{}% 53
-\BOOKMARK [1][-]{section.12}{Kontektbewusstsein}{}% 54
-\BOOKMARK [2][-]{subsection.12.1}{Was ist Kontext?}{section.12}% 55
-\BOOKMARK [2][-]{subsection.12.2}{Kontextbewusstsein}{section.12}% 56
-\BOOKMARK [2][-]{subsection.12.3}{Kontextmodellierung und Anschaffung}{section.12}% 57
-\BOOKMARK [2][-]{subsection.12.4}{Sensortypen}{section.12}% 58
-\BOOKMARK [1][-]{section.13}{Kontext-Bewusste Software Architekturen}{}% 59
-\BOOKMARK [2][-]{subsection.13.1}{Frameworks und Toolkits}{section.13}% 60
-\BOOKMARK [3][-]{subsubsection.13.1.1}{Widget-basierte Systeme}{subsection.13.1}% 61
-\BOOKMARK [3][-]{subsubsection.13.1.2}{Blackboard-basierte Systeme}{subsection.13.1}% 62
-\BOOKMARK [3][-]{subsubsection.13.1.3}{Was ist nun besser?}{subsection.13.1}% 63
-\BOOKMARK [2][-]{subsection.13.2}{Ambient DynamiX}{section.13}% 64
-\BOOKMARK [2][-]{subsection.13.3}{Ambient Web}{section.13}% 65
-\BOOKMARK [1][-]{section.14}{Identifikation}{}% 66
-\BOOKMARK [2][-]{subsection.14.1}{Entit\344t, Identit\344t?}{section.14}% 67
-\BOOKMARK [2][-]{subsection.14.2}{Objekt, Subjekt?}{section.14}% 68
-\BOOKMARK [2][-]{subsection.14.3}{Identifikations-Technologien}{section.14}% 69
-\BOOKMARK [3][-]{subsubsection.14.3.1}{Visual Microphone}{subsection.14.3}% 70
-\BOOKMARK [3][-]{subsubsection.14.3.2}{Radio Frequency IDentification}{subsection.14.3}% 71
-\BOOKMARK [3][-]{subsubsection.14.3.3}{Transpondertypen}{subsection.14.3}% 72
-\BOOKMARK [2][-]{subsection.14.4}{Wozu?}{section.14}% 73
-\BOOKMARK [1][-]{section.15}{Ambiente Interaktion}{}% 74
-\BOOKMARK [2][-]{subsection.15.1}{Touch Interfaces}{section.15}% 75
-\BOOKMARK [2][-]{subsection.15.2}{Tangible Media \(TUI\)}{section.15}% 76
-\BOOKMARK [2][-]{subsection.15.3}{Ambient Awareness}{section.15}% 77
-\BOOKMARK [2][-]{subsection.15.4}{TUI Projekte}{section.15}% 78
-\BOOKMARK [2][-]{subsection.15.5}{OUI}{section.15}% 79
-\BOOKMARK [1][-]{section.16}{Smart Spaces}{}% 80
-\BOOKMARK [2][-]{subsection.16.1}{Smart Kitchen}{section.16}% 81
-\BOOKMARK [2][-]{subsection.16.2}{Persuasive Interfaces}{section.16}% 82
-\BOOKMARK [2][-]{subsection.16.3}{Smart Spaces?}{section.16}% 83
-\BOOKMARK [3][-]{subsubsection.16.3.1}{Smart Home}{subsection.16.3}% 84
-\BOOKMARK [3][-]{subsubsection.16.3.2}{Smart Museum}{subsection.16.3}% 85
-\BOOKMARK [3][-]{subsubsection.16.3.3}{Smart Neighborhood}{subsection.16.3}% 86
-\BOOKMARK [3][-]{subsubsection.16.3.4}{Smart City}{subsection.16.3}% 87
-\BOOKMARK [1][-]{section.17}{Ethical, Legal and Social Implications}{}% 88
-\BOOKMARK [2][-]{subsection.17.1}{Legalit\344t}{section.17}% 89
-\BOOKMARK [2][-]{subsection.17.2}{Datensicherheit}{section.17}% 90
-\BOOKMARK [2][-]{subsection.17.3}{Privatsph\344re}{section.17}% 91
-\BOOKMARK [2][-]{subsection.17.4}{Privatsph\344re in UbiComp}{section.17}% 92
-\BOOKMARK [2][-]{subsection.17.5}{Nachhaltigkeit}{section.17}% 93
-\BOOKMARK [2][-]{subsection.17.6}{Soziale Implikationen}{section.17}% 94
-\BOOKMARK [3][-]{subsubsection.17.6.1}{Intelligenz vs. Smartness}{subsection.17.6}% 95
+\BOOKMARK [1][-]{section.6}{Energy Harvesting}{}% 36
+\BOOKMARK [2][-]{subsection.6.1}{Koomey'sches Gesetz}{section.6}% 37
+\BOOKMARK [2][-]{subsection.6.2}{Jevon's Paradoxon \(Rebound Effekt\)}{section.6}% 38
+\BOOKMARK [2][-]{subsection.6.3}{Das Energie-Problem}{section.6}% 39
+\BOOKMARK [2][-]{subsection.6.4}{M\366gliche L\366sungen}{section.6}% 40
+\BOOKMARK [3][-]{subsubsection.6.4.1}{Mensch als Quelle}{subsection.6.4}% 41
+\BOOKMARK [1][-]{section.7}{Neue Materialien und Formen}{}% 42
+\BOOKMARK [2][-]{subsection.7.1}{Electronische Tinte / Papier}{section.7}% 43
+\BOOKMARK [2][-]{subsection.7.2}{Neue Formen}{section.7}% 44
+\BOOKMARK [2][-]{subsection.7.3}{Konvergenz von Funktionen}{section.7}% 45
+\BOOKMARK [2][-]{subsection.7.4}{Modulares Design}{section.7}% 46
+\BOOKMARK [2][-]{subsection.7.5}{Displays}{section.7}% 47
+\BOOKMARK [1][-]{section.8}{Wearable Computing}{}% 48
+\BOOKMARK [2][-]{subsection.8.1}{Formfaktoren}{section.8}% 49
+\BOOKMARK [2][-]{subsection.8.2}{Herausforderungen}{section.8}% 50
+\BOOKMARK [1][-]{section.9}{Smart Clothes}{}% 51
+\BOOKMARK [1][-]{section.10}{Kontektbewusstsein}{}% 52
+\BOOKMARK [2][-]{subsection.10.1}{Was ist Kontext?}{section.10}% 53
+\BOOKMARK [2][-]{subsection.10.2}{Kontextbewusstsein}{section.10}% 54
+\BOOKMARK [2][-]{subsection.10.3}{Kontextmodellierung und Anschaffung}{section.10}% 55
+\BOOKMARK [2][-]{subsection.10.4}{Sensortypen}{section.10}% 56
+\BOOKMARK [1][-]{section.11}{Kontext-Bewusste Software Architekturen}{}% 57
+\BOOKMARK [2][-]{subsection.11.1}{Frameworks und Toolkits}{section.11}% 58
+\BOOKMARK [3][-]{subsubsection.11.1.1}{Widget-basierte Systeme}{subsection.11.1}% 59
+\BOOKMARK [3][-]{subsubsection.11.1.2}{Blackboard-basierte Systeme}{subsection.11.1}% 60
+\BOOKMARK [3][-]{subsubsection.11.1.3}{Was ist nun besser?}{subsection.11.1}% 61
+\BOOKMARK [2][-]{subsection.11.2}{Ambient DynamiX}{section.11}% 62
+\BOOKMARK [2][-]{subsection.11.3}{Ambient Web}{section.11}% 63
+\BOOKMARK [1][-]{section.12}{Identifikation}{}% 64
+\BOOKMARK [2][-]{subsection.12.1}{Entit\344t, Identit\344t?}{section.12}% 65
+\BOOKMARK [2][-]{subsection.12.2}{Objekt, Subjekt?}{section.12}% 66
+\BOOKMARK [2][-]{subsection.12.3}{Identifikations-Technologien}{section.12}% 67
+\BOOKMARK [3][-]{subsubsection.12.3.1}{Visual Microphone}{subsection.12.3}% 68
+\BOOKMARK [3][-]{subsubsection.12.3.2}{Radio Frequency IDentification}{subsection.12.3}% 69
+\BOOKMARK [3][-]{subsubsection.12.3.3}{Transpondertypen}{subsection.12.3}% 70
+\BOOKMARK [2][-]{subsection.12.4}{Wozu?}{section.12}% 71
+\BOOKMARK [1][-]{section.13}{Ambiente Interaktion}{}% 72
+\BOOKMARK [2][-]{subsection.13.1}{Touch Interfaces}{section.13}% 73
+\BOOKMARK [2][-]{subsection.13.2}{Tangible Media \(TUI\)}{section.13}% 74
+\BOOKMARK [2][-]{subsection.13.3}{Ambient Awareness}{section.13}% 75
+\BOOKMARK [2][-]{subsection.13.4}{TUI Projekte}{section.13}% 76
+\BOOKMARK [2][-]{subsection.13.5}{OUI}{section.13}% 77
+\BOOKMARK [1][-]{section.14}{Smart Spaces}{}% 78
+\BOOKMARK [2][-]{subsection.14.1}{Smart Kitchen}{section.14}% 79
+\BOOKMARK [2][-]{subsection.14.2}{Persuasive Interfaces}{section.14}% 80
+\BOOKMARK [2][-]{subsection.14.3}{Smart Spaces?}{section.14}% 81
+\BOOKMARK [3][-]{subsubsection.14.3.1}{Smart Home}{subsection.14.3}% 82
+\BOOKMARK [3][-]{subsubsection.14.3.2}{Smart Museum}{subsection.14.3}% 83
+\BOOKMARK [3][-]{subsubsection.14.3.3}{Smart Neighborhood}{subsection.14.3}% 84
+\BOOKMARK [3][-]{subsubsection.14.3.4}{Smart City}{subsection.14.3}% 85
+\BOOKMARK [1][-]{section.15}{Ethical, Legal and Social Implications}{}% 86
+\BOOKMARK [2][-]{subsection.15.1}{Legalit\344t}{section.15}% 87
+\BOOKMARK [2][-]{subsection.15.2}{Datensicherheit}{section.15}% 88
+\BOOKMARK [2][-]{subsection.15.3}{Privatsph\344re}{section.15}% 89
+\BOOKMARK [2][-]{subsection.15.4}{Privatsph\344re in UbiComp}{section.15}% 90
+\BOOKMARK [2][-]{subsection.15.5}{Nachhaltigkeit}{section.15}% 91
+\BOOKMARK [2][-]{subsection.15.6}{Soziale Implikationen}{section.15}% 92
+\BOOKMARK [3][-]{subsubsection.15.6.1}{Intelligenz vs. Smartness}{subsection.15.6}% 93
