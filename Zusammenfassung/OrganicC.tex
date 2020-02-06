@@ -507,7 +507,7 @@ Ein Ansatz ist, dass die Ameisen ihre Pheromone nur auf dem \textbf{Rückweg} ab
 
 Noch eine Erweiterung wäre, den Ameisen eine \textbf{Erinnerung} an den\textbf{ bisherigen Pfad} und die entstandenen \textbf{Kosten} zu geben. Dadurch werden Zyklen detektiert. Die Menge der abgelegten Pheromone ist proportional zur Qualität der Lösung.
 
-\subsubsection{Simpler Ant Colony Algorithm}
+\subsubsection{Simple Ant Colony Algorithm}
 Die Pfadwahl ist \textbf{probabilistisch} und hängt von der Pheromon-Konzentration ab. Auf dem Weg zum Ziel werden keine Pheromone abgelegt. Die Sequenz der \textbf{Wegpunkte} wird gespeichert. Durch \textbf{Backtracking} werden die Pheromone aktualisiert, die \textbf{Kosten} für den gefundenen Pfad werden berechnet und die \textbf{Evaporation} der Pheromone wird simuliert.\\
 
 Die Pheromon-Konzentration $\tau_{ij}$ von $i$ zu $j$ ist initial $= 1$.\\
@@ -764,49 +764,172 @@ Die Robustheit wird dann anhand der nichtleeren Menge $D=\{\delta_0, \delta_1,\d
 Es ist \textbf{stark robust} in Bezug auf $D$ wenn es für alle $\delta \in D$ im idealen Zustandsraum (TS) bleibt, sogar wenn sich Parameter ändern.\\
  Das System ist \textbf{schwach robust} in Bezug auf $D$ wenn es für alle $\delta \in D$ im akzeptablen Zustandsraum bleibt (AS)\\
  
- Ein System ist \textbf{adaptiv}, wenn es in Bezug auf $D$ ohne Fremdeinwirkung in AS zurückkehren kann. Es besitzt \textbf{Potenzial zur Adaptivität} wenn es nur mithilfe eines \textbf{externen Einflusses} zurückkehren kann.
+ Ein System ist \textbf{adaptiv}, wenn es in Bezug auf $D$ ohne Fremdeinwirkung in AS zurückkehren kann. Es besitzt \textbf{Potenzial zur Adaptivität} wenn es nur mithilfe eines \textbf{externen Einflusses} zurückkehren kann.\\
+ 
+\textbf{ Wichtig:}\\
+\textbf{Flexibilität} bedeutet, dass ein System $S$ nach Änderung der \textbf{Spezifikation} oder Ziele zu AS zurückkehrt.\\
+\textbf{Robustheit} bedeutet dass ein System $S$ nach einer \textbf{Störung} zu AS zurückkehrt.
 
+\subsubsection{Arten von Unsicherheiten}
+\begin{itemize}
+	\item \textbf{Aleatorische Unsicherheiten} (=stochastische) durch \textbf{natürliche Variabilität} der Prozesse. Können nicht vom Menschen beeinflusst werden. Diese Unsicherheiten werden als Wahrscheinlichkeitsfunktion modelliert. Das benötigt jedoch eine Menge Daten, die oft nicht verfügbar ist.
+	\item \textbf{Epistemische Unsicherheiten} (=subjektive) durch \textbf{unvollständiges Wissen} über den Prozess und die Modelle. Dazu gehören Unsicherheiten in
+	\begin{itemize}
+		\item Parameter: Input und Systemzustand
+		\item Model: unvollständig oder falsch
+		\item Szenario: relevantes Szenario, was nicht betrachtet wurde
+		\item Numerik: Rundungsfehler
+	\end{itemize}
+\end{itemize}
 
+\begin{center}
+	\includegraphics[height = 4cm]{RobustMax.png}
+\end{center}
 
+Um eine möglichst robuste Lösung zu bestimmen, versucht man das \textbf{minimal mögliche Resultat zu maximieren}. Dies ist vor allem für Probleme nützlich, wo eine \textbf{absolute Zuverlässigkeit} benötigt wird. Dabei gibt es einen Tradeoff zwischen \textbf{Qualität} und \textbf{Varianz} der Lösung.\\
 
+Maximierung der erwarteten Performance:
+$$f_{eff} = E(f(x+\delta)) = \int_{-\infty}^{+\infty}p(\delta)f(x+\delta)d\delta$$
+Da $f$ oft unbekannt ist, schätzt man die Funktion mit \textbf{Monte-Carlo Estimation}, ``empirisch ermitteltes Mitteln'', ab. Ein Wert $x_0$ kann durch $n$ Samples $\hat{x}_i = x_0+\delta_i$ in der Nachbarschaft von $x_0$:
+$$f_{eff}(x_0)=\dfrac{1}{n}\sum_{i=1}^{n}f(\hat{x}_i)$$
+\subsubsection{Sampling}
+\begin{itemize}
+	\item \textbf{Zufällig}
+	\item \textbf{Antithetisch:} $+\delta$ un $-\delta$, Mittelwert 0
+	\item \textbf{Rasterbasiert:} Samples in kleinen Subgruppen, repräsentativ
+	\item \textbf{Latin Hypercube Sampling:} Aufteilung in $k$ Teile, wobei jedes Teil nur von einem okkupiert wird
+\end{itemize}
 
+Ein Design ist \textbf{robust}, wenn die Varianz der Performance Function minimal ist.\\
+Ein Design ist \textbf{zuverlässig}, wenn die Wahrscheinlichkeit von Systemversagen minimal ist.\\
 
+\subsubsection{Zuverlässigkeit bestimmen}
+\textbf{Reliability Based Design Optimization:}\\
+Man möchte die Fitnessfunktion $f(\mathbf{x},\delta)$ so minimieren, sodass alle $J$ Constraints
+$g_J(\mathbf{x},\delta)$ (Abstand zu \textit{infeasable space}) eingehalten werden (Linear Programming?):
+$$min \ f(\mathbf{x},\delta)$$
+$$\text{such that} \ Prob(g_k(\mathbf{x},\delta)\geq 0) \geq R_j, \ j\in\{1,2,\dots, J\}$$
+$R_j$: W'keit dass Constraint $j$ erfüllt ist.\\
 
+\textbf{Solution Based:}\\
+Man generiere $n$ Lösungen $x+\delta$ und prüft für jede Lösung on $g_j(\mathbf{x},\delta)$ erfüllt. Misst man $r_j$ erfolgreiche Fälle, so kann man die $Prob-$Funktion zu
+$$\dfrac{r_j}{n}\geq R_j$$
+abschätzen. Natürlich muss man dabei nach Lösungen suchen, wo $R_J \not = 1$, um den Abstand zu minimieren.
+Dabei ist das \textbf{globale} Optimum gar nicht so wichtig, da es in der Praxis weniger signifikant ist. Es wird nicht die \textbf{Sensibilität} des Systems betrachtet. 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\subsubsection{Robustheit - 2 Typen}
+\begin{itemize}
+	\item[\textbf{Typ 1:}] minimiert $f_{eff}$ in einer $\delta$-Nachbarschaft
+	\item[\textbf{Typ 2:}] minimiert prozentuale Abweichung $|f_p(x)-f(x)\leq \eta|$: $f(x)$ soll besser sein als die gestörte Funktion $f_p(x)$ 
+\end{itemize}
+\subsubsection{Separated Consideration}
+Neue Fitnessfunktion, die objective function und constraint violatoin trennt:
+$$F(\mathbf{x})=\left\{\begin{matrix}
+f(\mathbf{x}, \ \text{for} \ g_j(\mathbf{x})\geq0, \forall j\in\{1,2,\dots,J\}
+)\\
+f_{max} + \sum_{j=1}^{J} |g_j(\mathbf{x})|, \ \text{else}
+\end{matrix}
+\right.$$
+\subsubsection{Pareto-Optimal und Paretodominanz}
+Eine Lösung $x^*$ ist Pareto-Optimal, wenn es kein $\mathbf{x}\in S$ gibt, welches besser ist (Optimalität) und es in einer Dimension echt besser ist (?). Das $x$ muss also in einigen Dimensionen besser sein, aber im Schnitt schlechter abschneiden.
 
 \subsection{Vertrauen}
+``\textit{Vertrauen ist eine Wette mit bestimmten Risiko, nämlich dem, was mit durch Vertrauen gewonnen und verloren werden kann.}''\\
+
+``\textit{Die Bereitschaft, sich für andere verwundbar zu machen, auf Grundlage der Erwartung, dass der Andere eine Aktion ausführt, die dem Vertrauensgeber wichtig ist.}''\\
+
+Nutzer eines OC-Systems müssen Kontrolle aufgeben, da das System \textbf{selbst-organisiert} ist. Auch der Entwickler kann aufgrund der \textbf{Komplexität} des OC Systems keine klassischen Methoden anwenden. Im System selbst muss eine Einheit entscheiden, ob es einer anderen Einheit trauen kann.\\
+
+\subsubsection{Aspekte von Vertrauen}
+\begin{itemize}
+	\item \textbf{Korrektheit:} Tut, was es soll. \textbf{Formale Methoden}
+	\item \textbf{Sicherheit:} Autorisierter Zugriff. \textbf{Authentität}, \textbf{Autorisierung}, \textbf{Integrität}
+	\item \textbf{Sicherheit:} Unerwartete Nebeneffekte. \textbf{Systemgrenzen}
+	\item \textbf{Verfügbarkeit:} Verfügbar oder Erreichbar? \textbf{MTTF}, \textbf{MTTR}, \textbf{MTBF}
+	\item \textbf{Robustheit:} Funktionalität unter verschiedenen Konditionen
+	\item \textbf{Privatsphäre:} Nutzung privater Daten. \textbf{Persönliche Informationen}
+	\item \textbf{Performance:} gewünschte Antwortzeiten
+	\item \textbf{Glaubwürdigkeit:} Kommunkation mit Nutzer transparent? \textbf{Falsche Agenten}
+	\item \textbf{Nutzbarkeit:} User Interface?
+\end{itemize}
+\subsubsection{Wie misst man Vertrauen?}
+In verteilten OC Systemen wird Vertrauen auf die Verfügbarkeit reduziert, die von anderen Knoten observiert werden kann.\\
+
+Dafür verwendbare Metriken wären die Anzahl der angekommenen \textbf{Delayed ACK}:
+\begin{itemize}
+	\item Mittel: $\dfrac{\sum_{i=1}^{n}x_i}{n}$
+	\item Gewichtetes Mittel: $\dfrac{\sum_{i=1}^{n}\frac{i}{n}x_i}{\sum_{i=1}^{n}\frac{i}{n}}$
+	\item Invers Gewichtetes Mittel: $\dfrac{\sum_{i=1}^{n}\frac{n-i}{n}x_i}{\sum_{i=1}^{n}\frac{n-i}{n}}$
+\end{itemize}
+\newpage
+
+\section{Anwendungen}
+\subsection{Urban Traffic Control}
+Verkehrskontrolle und -management ist durch die hohe Dynamik sehr komplex. Es interagieren viele Teilnehmer parallel zueinander, wobei die Teilnehmer aufgrund verschiedener Ziele oft im Konflikt zueinander stehen.\\
+
+Ein zentralisierter Ansatz skaliert nicht, da die benötigte Verarbeitung der Datenmanegen in Echtzeit schwer möglich ist.\\
+Ein dezentralisierter Ansatz hingegen reduziert die Komplexität des Optimierungsproblems, und führt zu kürzeren Reaktionszeiten.\\
+
+Zur Optimierung des Verkehrsflusses müssen
+\begin{itemize}
+	\item adaptive Lernmechanismen für Ampelschaltungen,
+	\item selbst-organisierte Koordination von grünen Wellen,
+	\item aktives und adaptives Verkehrsleitsystem
+\end{itemize}
+betrachtet werden.\\
+Entworfen wird ein OC System mit mehrschichtiger Architektur mit einer \textbf{reaktiven} Schicht (aktuelle Verkehrslage), einer \textbf{reflektiven} Schicht (Optimierung, falls Layer 1 Hilfe benötigt) und einer \textbf{Nutzerschicht} (Ziele durch Operatoren).\\
+\subsubsection{Decentralized Progressive Signal System}
+DPSS ist ein Prozess der auf drei Schritten basiert:
+\begin{enumerate}
+	\item\textbf{ Partnerschaft:} Kreuzungen finden und kollaborieren mit Partnern. Diese sind vom Demand abhängig! Stärkster Fluss wird bestimmt.
+	\item \textbf{Zykluszeit:} Kollaboratoren einigen sich auf einen gemeinsamen Zyklus. Maximum der benötigten Zykluszeiten entlang der Verkehrsrichtung muss erfasst werden!
+	\item \textbf{Signal Plan:} Auswahl der Pläne, Berechnung des Versatzes (grüne Welle)
+\end{enumerate}
+\subsubsection{Hierarchical Progressive Signal System}
+Lokale Lösungen sind oft suboptimal. Der Fluss einer Straße ist oft nicht so groß wie de Fluss mehrerer Parallelstraßen.
+\begin{enumerate}
+	\item \textbf{Netzwerkgraph} wird erstellt, der die Netzwerktopologie repräsentiert, Gewichte an Kanten sind der aktuelle Flow.
+	\item \textbf{Verkehrsstrom} bestimmen anhand einer Heuristik
+	\item \textbf{Strömungssystem} wird bestimmt, wobei Ströme sich nicht überschneiden dürfen.
+\end{enumerate}
+
+\subsection{Trust Communities in offenen verteilten Systemen}
+Komponenten in OC Systemen sind \textbf{unzuverlässig}, mit gewissen Unsicherheiten muss gerechnet werden. Die Idee ist, dass Agenten das Verhalten anderer bewerten und Trust Communities formen, um maliziöse Teilnehmer auszugrenzen und die Kommunikation zu vertrauten Agenten zu vereinfachen (weniger Overhead).
+\subsubsection{Stereotypische Verhalten}
+\begin{itemize}
+	\item Adaptiver Agent: Kooperativ. Reputation relativ zur Systemauslastung
+	\item Free Rider: Lehnt alle Job Requests ab, erhöht Systemauslastung
+	\item Egoist: Akzeptiert Requests, gibt aber falsche Werte aus, verringert Nutzbarkeit
+	\item Listige Agenten: Periodisch kooperativ/egoistisch, verringert Nutzbarkeit
+	\item Altruisten: Akzeptieren jeden Request, auch den von maliziösen Agenten
+\end{itemize}
+\subsubsection{Implicit Trust Community}
+\textbf{Dezentraler} Ansatz, der nicht unbedingt auf Gegenseitigkeit beruht. Reputation wird in $Rep\in[-1,+1]$ gewertet, wobei $<0$ \textbf{ausgeschlossen} wird. Agenten, dessen Reputation höher als ein Trust Treshold sind ($Rep>TT^{sub}$) werden als \textbf{kooperative} Agenten gewertet.\\
+
+Dieser Ansatz konvergiert schnell und funktioniert in der Regel gut in Sensornetzen, da auch da Kommunikation auf lokaler Interaktion basiert.
+
+\subsubsection{Explicit Trust Community}
+Hierbei gibt es eine explizite \textbf{Mitgliedschaftsfunktion}. Agenten eröffnen zunächst ein iTC, wählen dann in ihrere Gemeinschaft einen \textbf{Trust Community Manager (TCM)}, der dann die Reputation der Agenten administriert und mit allen Agenten teilt. Dadruch wird eine erhöhte Performanz versprochen (Reduktion der Sicherheitsmechanismen).\\
+
+Jedoch können Probleme auftreten:
+\begin{itemize}
+	\item \textbf{Vertrauenspanne:} Viele Angreifer treten der Gemeinschaft bei, die allen Teilnehmern eine schlechte Bewertung geben, sodass niemand mehr jemanden traut. (\textbf{Schlammschlacht})
+	\item \textbf{Geheime Absprachen:} Ähnlich wie oben, nur dass sich Teilnehmer gegenseitig gut Bewerten und die Reputation erhöhen. Dadurch wird ein Beitritt in eine Gemeinschaft erleichtert.
+\end{itemize}
+\subsubsection{Normative Trust Community}
+Ganz anderer Ansatz: Es gibt eine globale Instanz (Norm Manager) der die Systembelastung und Vertrauensbrüche observiert.
+\begin{itemize}
+	\item Vertrauensgraph: Wer traut wem?
+	\item Jobgraph: Wer gibt wem Jobs?
+	\item Führt Graph-Analysen durch (Schadhaftes Verhalten erkennen)
+\end{itemize}
+\subsection{Electric Power Management}
+Ein rein reaktives Verhalten reicht nicht aus, um Angebot-Nachfrage Balance aufrechtzuerhalten. Aufgrund von \textbf{witterungsbedingten Energiequellen} ist das Angebot unsicher. Es werden proaktive Funktionen benötigt.\\
+
+Idee: \textbf{Repeated Scheduling}. Alle 15min wird anhand eines Models abgeschätzt, wie weit die benötige Nachfrage sinkt oder steigt.\\
+
+\textbf{Virtual Power Plants} sind zielorientierte und kurzlebige Koalitionen von Kraftwerken. Sie können ohne fremde Hilfe auf kleine \textbf{Veränderungen} reagieren, \textbf{unabhängig} handeln und helfen dabei, das Energienetz in \textbf{microgrids} aufzuteilen.\\
+
+Die (A)VPPs müssen dabei non-dispatchable Kraftwerek enthalten und dürfen in der internen Struktur nicht homogen sein, da sich sonst Cluster von unähnlichen Systemen mit verschiedenen Zuverlässigkeiten bilden.
+
 \end{document}

@@ -67,7 +67,7 @@
 \BOOKMARK [3][-]{subsubsection.6.1.1}{Double Bridge Experiment}{subsection.6.1}% 67
 \BOOKMARK [3][-]{subsubsection.6.1.2}{Double Bridge Experiment als diskretes Model}{subsection.6.1}% 68
 \BOOKMARK [3][-]{subsubsection.6.1.3}{K\374rzeste Pfade in Graphen}{subsection.6.1}% 69
-\BOOKMARK [3][-]{subsubsection.6.1.4}{Simpler Ant Colony Algorithm}{subsection.6.1}% 70
+\BOOKMARK [3][-]{subsubsection.6.1.4}{Simple Ant Colony Algorithm}{subsection.6.1}% 70
 \BOOKMARK [3][-]{subsubsection.6.1.5}{Fazit}{subsection.6.1}% 71
 \BOOKMARK [2][-]{subsection.6.2}{ACO Metaheuristik}{section.6}% 72
 \BOOKMARK [2][-]{subsection.6.3}{Traveling Salesman Problem}{section.6}% 73
@@ -89,4 +89,22 @@
 \BOOKMARK [3][-]{subsubsection.8.1.1}{System Modell}{subsection.8.1}% 89
 \BOOKMARK [3][-]{subsubsection.8.1.2}{Adaptivit\344t}{subsection.8.1}% 90
 \BOOKMARK [3][-]{subsubsection.8.1.3}{St\366rung und unterteilter Zustandsraum}{subsection.8.1}% 91
-\BOOKMARK [2][-]{subsection.8.2}{Vertrauen}{section.8}% 92
+\BOOKMARK [3][-]{subsubsection.8.1.4}{Arten von Unsicherheiten}{subsection.8.1}% 92
+\BOOKMARK [3][-]{subsubsection.8.1.5}{Sampling}{subsection.8.1}% 93
+\BOOKMARK [3][-]{subsubsection.8.1.6}{Zuverl\344ssigkeit bestimmen}{subsection.8.1}% 94
+\BOOKMARK [3][-]{subsubsection.8.1.7}{Robustheit - 2 Typen}{subsection.8.1}% 95
+\BOOKMARK [3][-]{subsubsection.8.1.8}{Separated Consideration}{subsection.8.1}% 96
+\BOOKMARK [3][-]{subsubsection.8.1.9}{Pareto-Optimal und Paretodominanz}{subsection.8.1}% 97
+\BOOKMARK [2][-]{subsection.8.2}{Vertrauen}{section.8}% 98
+\BOOKMARK [3][-]{subsubsection.8.2.1}{Aspekte von Vertrauen}{subsection.8.2}% 99
+\BOOKMARK [3][-]{subsubsection.8.2.2}{Wie misst man Vertrauen?}{subsection.8.2}% 100
+\BOOKMARK [1][-]{section.9}{Anwendungen}{}% 101
+\BOOKMARK [2][-]{subsection.9.1}{Urban Traffic Control}{section.9}% 102
+\BOOKMARK [3][-]{subsubsection.9.1.1}{Decentralized Progressive Signal System}{subsection.9.1}% 103
+\BOOKMARK [3][-]{subsubsection.9.1.2}{Hierarchical Progressive Signal System}{subsection.9.1}% 104
+\BOOKMARK [2][-]{subsection.9.2}{Trust Communities in offenen verteilten Systemen}{section.9}% 105
+\BOOKMARK [3][-]{subsubsection.9.2.1}{Stereotypische Verhalten}{subsection.9.2}% 106
+\BOOKMARK [3][-]{subsubsection.9.2.2}{Implicit Trust Community}{subsection.9.2}% 107
+\BOOKMARK [3][-]{subsubsection.9.2.3}{Explicit Trust Community}{subsection.9.2}% 108
+\BOOKMARK [3][-]{subsubsection.9.2.4}{Normative Trust Community}{subsection.9.2}% 109
+\BOOKMARK [2][-]{subsection.9.3}{Electric Power Management}{section.9}% 110
